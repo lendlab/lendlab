@@ -1,5 +1,4 @@
 import {Heading, Stack, Text} from "@chakra-ui/layout";
-import {Input} from "@chakra-ui/react";
 import {Form, Formik} from "formik";
 import React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -26,13 +25,26 @@ const Login = () => {
           <Formik
             initialValues={{
               cedula: "",
+              password: "",
             }}
             validationSchema={validationSchema}
           >
             {(formik) => (
               <Form>
-                <FormControl label="Cedula" name="cedula" type="text" w="80%" />
-                <FormControl label="Contraseña" name="password" type="password" w="80%" />
+                <FormControl
+                  label="Cedula"
+                  name="cedula"
+                  placeholder="ej. 54548246"
+                  type="text"
+                  w="80%"
+                />
+                <FormControl
+                  label="Contraseña"
+                  name="password"
+                  placeholder="ej. ********"
+                  type="password"
+                  w="80%"
+                />
               </Form>
             )}
           </Formik>
