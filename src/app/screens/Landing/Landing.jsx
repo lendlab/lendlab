@@ -9,7 +9,7 @@ import LandingLayout from "~/app/layouts/LandingLayout";
 const Landing = () => {
   return (
     <LandingLayout>
-      <Stack as="main" direction="row" h="48em" w="full">
+      <Stack as="main" direction="row" minH="80vh" w="full">
         <Stack justifyContent="center" spacing={4} w="50%">
           <Stack alignItems="center" direction="row">
             <Image src={landingData.main.flag} />
@@ -25,7 +25,7 @@ const Landing = () => {
           <Text fontWeight="bold">{landingData.main.features}</Text>
           <Stack spacing={0}>
             <Text>{landingData.main.information}</Text>
-            <Stack direction="row">
+            <Stack direction="row" spacing={1}>
               <Text>{landingData.main.joinNow}</Text>
               <Text fontWeight="bold" marginTop={0} paddingTop={0}>
                 {landingData.main.price}
@@ -36,7 +36,7 @@ const Landing = () => {
             {landingData.main.button.text}
           </Button>
         </Stack>
-        <Image objectFit="contain" src="/images/computerIllustration.svg" />
+        <Image maxH="80vh" objectFit="contain" src="/images/computerIllustration.svg" />
       </Stack>
       <Stack direction="row" spacing={28} w="full">
         <Image src="/images/mediumSizeCircle.svg" />
