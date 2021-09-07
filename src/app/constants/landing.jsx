@@ -30,7 +30,7 @@ export const landingData = {
   main: {
     flag: "/images/uruguayanFlag.svg",
     institutionCount: "345",
-    institutionChoice: "DE INSTITUCIONES YA NOS ELIGEN",
+    institutionChoice: "INSTITUCIONES YA NOS ELIGEN",
     titleOne: "Tu institución",
     titleTwo: "en una pantalla",
     features: "MATERIALES, PRÉSTAMOS, RESERVAS, SALAS Y MÁS",
