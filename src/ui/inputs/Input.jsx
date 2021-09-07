@@ -1,12 +1,10 @@
 import {Input as ChakraInput, InputGroup} from "@chakra-ui/input";
 import React from "react";
 
-import LoginIcon from "../icons/LoginIcon";
-
-const Input = ({children, ...props}) => {
+const Input = ({children, w, ...props}) => {
   return (
-    <InputGroup>
-      <ChakraInput {...props} bg="lendlab.gray.input" size="lg" variant="filled" />
+    <InputGroup size="lg" w={w}>
+      <ChakraInput {...props} bg="lendlab.gray.input" variant="filled" />
       {children}
     </InputGroup>
   );
