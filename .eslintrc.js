@@ -32,7 +32,7 @@ module.exports = {
         tabWidth: 2,
         semi: true,
         singleQuote: false,
-        bracketSpacing: false,
+        bracketSpacing: true,
         arrowParens: "always",
         endOfLine: "auto",
       },
@@ -62,8 +62,8 @@ module.exports = {
     ],
     "padding-line-between-statements": [
       "error",
-      {blankLine: "always", prev: "*", next: "return"},
-      {blankLine: "always", prev: ["const", "let", "var"], next: "*"},
+      { blankLine: "always", prev: "*", next: "return" },
+      { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
       {
         blankLine: "any",
         prev: ["const", "let", "var"],
