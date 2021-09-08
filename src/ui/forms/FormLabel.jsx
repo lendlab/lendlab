@@ -1,6 +1,6 @@
 import React from "react";
-import {FormLabel as ChakraFormLabel, Text, Stack} from "@chakra-ui/react";
-const FormLabel = ({isRequired, name, children, ...props}) => {
+import { FormLabel as ChakraFormLabel, Text, Stack } from "@chakra-ui/react";
+const FormLabel = ({ isRequired, name, children, ...props }) => {
   return (
     <Stack>
       <ChakraFormLabel alignItems="center" display="flex" htmlFor={name} {...props}>
