@@ -1,11 +1,13 @@
-import {Heading, Stack, Text} from "@chakra-ui/layout";
-import {Form, Formik} from "formik";
+import { Stack } from "@chakra-ui/layout";
+import { Form, Formik } from "formik";
 import React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from "yup";
 
 import LoginLayout from "~/app/layouts/LoginLayout";
 import FormControl from "~/ui/forms/FormControl";
+import Heading from "~/ui/text/Heading";
+import Text from "~/ui/text/Text";
 
 const Login = () => {
   const validationSchema = Yup.object().shape({
