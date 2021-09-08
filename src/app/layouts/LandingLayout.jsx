@@ -1,8 +1,8 @@
-import {Container} from "@chakra-ui/layout";
+import { Container } from "@chakra-ui/layout";
 import React from "react";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
-const LandingLayout = ({children}) => {
+const LandingLayout = ({ children }) => {
   return (
     <>
       <Helmet>
