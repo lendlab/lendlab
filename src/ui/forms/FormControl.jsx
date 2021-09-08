@@ -1,12 +1,12 @@
-import {FormControl as ChakraFormControl, FormErrorMessage} from "@chakra-ui/form-control";
-import {ErrorMessage, useField} from "formik";
+import { FormControl as ChakraFormControl, FormErrorMessage } from "@chakra-ui/form-control";
+import { ErrorMessage, useField } from "formik";
 import React from "react";
 
 import Input from "~/ui/inputs/Input";
 
 import FormLabel from "./FormLabel";
 
-const Field = ({help, label, isRequired, children, ...props}) => {
+const Field = ({ help, label, isRequired, children, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
