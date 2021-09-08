@@ -1,8 +1,10 @@
-import {Heading, Stack} from "@chakra-ui/layout";
+import { Stack } from "@chakra-ui/layout";
 import React from "react";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const Logo = ({isNotHome}) => {
+import Heading from "~/ui/text/Heading";
+
+const Logo = ({ isNotHome }) => {
   const history = useHistory();
 
   const handleRedirectHome = () => {
@@ -16,12 +18,10 @@ const Logo = ({isNotHome}) => {
       direction="row"
       onClick={(e) => isNotHome && handleRedirectHome()}
     >
-      <Heading color="lendlab.black.200" fontSize="4xl" margin="0">
+      <Heading fontSize="4xl" margin="0">
         ll
       </Heading>
-      <Heading color="lendlab.black.200" fontSize="2xl">
-        lendlab
-      </Heading>
+      <Heading fontSize="2xl">lendlab</Heading>
     </Stack>
   );
 };
