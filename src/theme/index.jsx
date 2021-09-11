@@ -42,6 +42,9 @@ const theme = extendTheme({
       "::-webkit-scrollbar": {
         width: "14px",
       },
+      html: {
+        scrollBehavior: "smooth",
+      },
     },
   },
   sizes: {
@@ -63,6 +66,18 @@ const theme = extendTheme({
           boxShadow: "button",
           _hover: {
             bg: mode(whiten("lendlab.blue", 20), darken("lendlab.blue", 20))(props),
+          },
+        }),
+        secondary: (props) => ({
+          border: "1px",
+          borderColor: "lendlab.gray.300",
+          color: "lendlab.heading",
+          borderRadius: 17,
+          fontSize: 12,
+          fontWeight: "400",
+          cursor: "pointer",
+          _hover: {
+            borderColor: mode(darken("lendlab.gray.300", 20))(props),
           },
         }),
       },
