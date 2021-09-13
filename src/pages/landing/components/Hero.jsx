@@ -5,44 +5,66 @@ import { Container } from "@chakra-ui/react";
 import { HERO_DATA } from "@utils/constants/landing";
 import { Heading, Text, Bold } from "@components/texts";
 import WhiteCircle from "@components/static/WhiteCircle";
+import { motion } from "framer-motion";
+import InView from "react-intersection-observer";
+import Box from "@components/containers/Box";
 
 export const Hero = () => {
   return (
     <Container alignSelf="center" maxW="container.xl" minH="100vh">
-      <Stack
-        alignItems="center"
-        as="main"
-        direction="column"
-        justifyContent="center"
-        minH="90vh"
-        paddingTop={8}
-        spacing={4}
-        w="full"
-      >
-        <Heading as="h1" fontSize="6xl" maxW="15em">
-          {HERO_DATA.you}
-          <Heading
-            as="h2"
-            bgClip="text"
-            bgGradient="linear(to-l, lendlab.blue,#FFF)"
-            fontSize="6xl"
+      <InView>
+        {({ ref, inView }) => (
+          <Box
+            animate={inView && { y: 0, opacity: 1 }}
+            as={motion.div}
+            initial={{ y: "-10vh", opacity: 0 }}
+            innerRef={ref}
+            transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
           >
-            {HERO_DATA.gradient}
-          </Heading>
-          {HERO_DATA.nowOnline}
-        </Heading>
-        <Text w="70%">
-          {HERO_DATA.weLet}
-          <Bold>{HERO_DATA.bold}</Bold>
-        </Text>
-        <Button fontSize={15} leftIcon={HERO_DATA.button.icon()} size="lg" variant="primary">
-          {HERO_DATA.button.text}
-        </Button>
-      </Stack>
-      <Stack ali direction="row" spacing={28} w="full">
-        <WhiteCircle size="medium" />
-        <WhiteCircle size="little" />
-      </Stack>
+            <Stack
+              alignItems="center"
+              as="main"
+              direction="column"
+              justifyContent="center"
+              minH="90vh"
+              paddingTop={8}
+              spacing={4}
+              w="full"
+            >
+              <Heading fontSize="6xl" maxW="15em">
+                {HERO_DATA.you}
+                <Heading
+                  as="span"
+                  bgClip="text"
+                  bgGradient="linear(to-l, #031DB7, lendlab.blue)"
+                  fontSize="6xl"
+                  mx="5"
+                >
+                  {HERO_DATA.gradient}
+                </Heading>
+                {HERO_DATA.nowOnline}
+              </Heading>
+              <Text w="70%">
+                {HERO_DATA.weLet}
+                <Bold>{HERO_DATA.bold}</Bold>
+              </Text>
+
+              <Button
+                fontSize="16px"
+                rightIcon={HERO_DATA.button.icon()}
+                size="lg"
+                variant="primary"
+              >
+                {HERO_DATA.button.text}
+              </Button>
+            </Stack>
+            <Stack ali direction="row" spacing={28} w="full">
+              <WhiteCircle size="medium" />
+              <WhiteCircle size="little" />
+            </Stack>
+          </Box>
+        )}
+      </InView>
     </Container>
   );
 };

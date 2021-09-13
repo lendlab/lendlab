@@ -1,15 +1,19 @@
 import { Heading as ChakraHeading } from "@chakra-ui/layout";
+import { motion } from "framer-motion";
 import React from "react";
+
+const MotionHeading = motion(ChakraHeading);
 
 export const Heading = ({
   children,
+  innerRef,
   bgGradient,
   fontSize = "6xl",
   textAlign = "center",
   ...props
 }) => {
   return (
-    <ChakraHeading
+    <MotionHeading
       {...props}
       {...{
         ...(bgGradient == undefined
@@ -18,10 +22,11 @@ export const Heading = ({
               bgGradient,
             }),
       }}
+      ref={innerRef}
       fontSize={fontSize}
       textAlign={textAlign}
     >
       {children}
-    </ChakraHeading>
+    </MotionHeading>
   );
 };

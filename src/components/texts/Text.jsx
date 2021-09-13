@@ -1,9 +1,19 @@
 import { Text as ChakraText } from "@chakra-ui/layout";
+import { motion } from "framer-motion";
 import React from "react";
 
-export const Text = ({ children, fontSize = "xl", textAlign = "center", color, ...props }) => {
+const MotionText = motion(ChakraText);
+
+export const Text = ({
+  children,
+  innerRef,
+  fontSize = "xl",
+  textAlign = "center",
+  color,
+  ...props
+}) => {
   return (
-    <ChakraText
+    <MotionText
       {...props}
       {...{
         ...(color == undefined
@@ -12,10 +22,11 @@ export const Text = ({ children, fontSize = "xl", textAlign = "center", color, .
               color,
             }),
       }}
+      ref={innerRef}
       fontSize={fontSize}
       textAlign={textAlign}
     >
       {children}
-    </ChakraText>
+    </MotionText>
   );
 };

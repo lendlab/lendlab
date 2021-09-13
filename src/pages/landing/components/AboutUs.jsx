@@ -1,9 +1,13 @@
 import Icon from "@chakra-ui/icon";
-import { Box, Container, Stack } from "@chakra-ui/layout";
+import { Container, Stack } from "@chakra-ui/layout";
 import React from "react";
 import { ABOUT_US_DATA } from "@utils/constants/landing";
 import { Heading, Text, Bold } from "@components/texts";
 import WhiteCircle from "@components/static/WhiteCircle";
+import { motion } from "framer-motion";
+import InView from "react-intersection-observer";
+
+import Box from "../../../components/containers/Box";
 
 export const AboutUs = () => {
   const { aspects } = ABOUT_US_DATA;
@@ -13,7 +17,20 @@ export const AboutUs = () => {
       <Container alignSelf="center" maxW="container.xl">
         <Stack spacing={12}>
           <Stack spacing={6}>
-            <Heading>{ABOUT_US_DATA.title}</Heading>
+            <InView threshold={1}>
+              {({ ref, inView }) => (
+                <Heading
+                  animate={inView && { y: 0, opacity: 1 }}
+                  as={motion.h2}
+                  initial={{ y: "-10vh", opacity: 0 }}
+                  innerRef={ref}
+                  position="relative"
+                  transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
+                >
+                  {ABOUT_US_DATA.title}
+                </Heading>
+              )}
+            </InView>
             <Text>{ABOUT_US_DATA.subtitle}</Text>
           </Stack>
           <Stack direction="row" spacing={12}>
