@@ -3,11 +3,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Heading } from "@components/texts";
 
-const Logo = ({ isNotHome }) => {
+const Logo = ({ isNotHome, ...props }) => {
   const history = useHistory();
 
   const handleRedirectHome = () => {
-    history.push("/inicio");
+    history.push("/");
   };
 
   return (
@@ -16,6 +16,7 @@ const Logo = ({ isNotHome }) => {
       cursor={isNotHome && "pointer"}
       direction="row"
       onClick={(e) => isNotHome && handleRedirectHome()}
+      {...props}
     >
       <Heading fontSize="4xl" margin="0">
         ll
