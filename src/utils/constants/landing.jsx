@@ -19,7 +19,7 @@ import {
   Reserve,
   SMS,
   Trash,
-} from "@utils/icons";
+} from "@icons";
 
 export const NAV_DATA = {
   options: [
