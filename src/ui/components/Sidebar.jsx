@@ -1,3 +1,4 @@
+import React from "react";
 import {
   IconButton,
   Box,
@@ -13,76 +14,10 @@ import {
   StackDivider,
   Stack,
 } from "@chakra-ui/react";
-import { Prestamo, LoginIcon } from "@icons";
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { Logo } from "@ui";
-
-const Sections = [
-  {
-    sectionName: "General",
-    linkItems: [
-      {
-        name: "Resumen",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-    ],
-  },
-  {
-    sectionName: "Administracion",
-    linkItems: [
-      {
-        name: "Prestamos",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-      {
-        name: "Reservas",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-      {
-        name: "Materiales",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-      {
-        name: "Usuarios",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-      {
-        name: "Salas",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-    ],
-  },
-  {
-    sectionName: "SOPORTE",
-    linkItems: [
-      {
-        name: "Chat",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-      {
-        name: "Configuración",
-        icon() {
-          return <Prestamo />;
-        },
-      },
-    ],
-  },
-];
+import { SECTIONS } from "@utils/constants/sidebar";
+import { LoginIcon } from "@icons";
 
 export const Sidebar = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -125,7 +60,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
           <Logo />
           <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
         </Flex>
-        {Sections.map((section, index) => (
+        {SECTIONS.map((section, index) => (
           <NavItem key={index} linkItems={section.linkItems} name={section.sectionName} />
         ))}
       </Stack>
