@@ -7,7 +7,7 @@ import InView from "react-intersection-observer";
 
 export const Hero = () => {
   return (
-    <Container alignSelf="center" maxW="container.xl" minH="100vh">
+    <Container alignSelf="center" maxW="container.xl" minH="85vh">
       <InView>
         {({ ref, inView }) => (
           <Box
@@ -22,7 +22,7 @@ export const Hero = () => {
               as="main"
               direction="column"
               justifyContent="center"
-              minH="90vh"
+              minH="85vh"
               paddingTop={8}
               spacing={4}
               w="full"
