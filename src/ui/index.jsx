@@ -2,10 +2,12 @@ import React from "react";
 
 import { Bold } from "./components/Bold";
 import { Box } from "./components/Box";
+import { ExportButton } from "./components/ExportButton";
 import { FormControl } from "./components/FormControl";
 import { FormikStep } from "./components/FormikStep";
 import { FormikStepper } from "./components/FormikStepper";
 import { Heading } from "./components/Heading";
+import { Info } from "./components/Info";
 import { Input } from "./components/Input";
 import { Logo } from "./components/Logo";
 import { Nav } from "./components/Nav";
@@ -28,4 +30,6 @@ export {
   Sidebar,
   Text,
   WhiteCircle,
+  Info,
+  ExportButton,
 };
