@@ -45,25 +45,14 @@ export const Sidebar = ({ children }) => {
 
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
-    <Box
-      bg="white"
-      borderRight="1px"
-      borderRightColor="lendlab.gray.200"
-      h="full"
-      overflowY="auto"
-      pos="fixed"
-      w={{ base: "full", md: 80 }}
-      {...rest}
-    >
-      <Stack divider={<StackDivider alignSelf="center" color="lendlab.gray.200" w="80%" />}>
-        <Flex alignItems="center" h="20" justifyContent="space-between" mx="8">
-          <Logo />
-          <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-        </Flex>
-        {SECTIONS.map((section, index) => (
-          <NavItem key={index} linkItems={section.linkItems} name={section.sectionName} />
-        ))}
-      </Stack>
+    <Box bg="white" h="full" overflowY="auto" pos="fixed" w={{ base: "full", md: 80 }} {...rest}>
+      <Flex alignItems="center" h="20" justifyContent="space-between" mx="8">
+        <Logo />
+        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+      </Flex>
+      {SECTIONS.map((section, index) => (
+        <NavItem key={index} linkItems={section.linkItems} name={section.sectionName} />
+      ))}
     </Box>
   );
 };
@@ -111,9 +100,7 @@ const Nav = ({ onOpen, ...rest }) => {
   return (
     <Flex
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-      borderBottomWidth="1px"
+      bg="white"
       height="20"
       justifyContent="flex-start"
       ml={{ base: 0, md: 60 }}
