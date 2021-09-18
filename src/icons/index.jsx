@@ -14,6 +14,7 @@ import { Home } from "./Home";
 import { LoginIcon } from "./LoginIcon";
 import { LogoutIcon } from "./LogoutIcon";
 import { Messages } from "./Messages";
+import { NewPrestamo } from "./NewPrestamo";
 import { People } from "./People";
 import { Prestamo } from "./Prestamo";
 import { ProfileUser2 } from "./ProfileUser2";
@@ -46,4 +47,5 @@ export {
   DashboardIcon,
   Messages,
   Settings,
+  NewPrestamo,
 };
