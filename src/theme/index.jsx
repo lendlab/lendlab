@@ -8,6 +8,7 @@ const theme = extendTheme({
         100: "#F9F9F9",
         200: "#EAEAEC",
         300: "#b7bdc3",
+        400: "#787C7F",
         input: "#F3F3F5",
       },
       black: {
@@ -29,7 +30,7 @@ const theme = extendTheme({
   },
   fonts: {
     heading: "Basement Grotesque",
-    body: "Poppins",
+    body: "Sk-Modernist",
   },
   styles: {
     global: {
