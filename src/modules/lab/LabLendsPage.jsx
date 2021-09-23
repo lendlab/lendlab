@@ -25,48 +25,38 @@ export const LabLendsPage = () => {
   const btnRef = React.useRef();
 
   const [user, setUser] = React.useState("");
-  const [materialsFiltered, setMaterialsFiltered] = React.useState([]);
-  const [materialSelected, setMaterialSelected] = React.useState("");
+  const [usersFiltered, setUsersFiltered] = React.useState([]);
+  const [userSelected, setUserSelected] = React.useState("");
 
   React.useEffect(() => {
-    setMaterialsFiltered(
-      Materials.filter((material) => {
-        return material.nombre.includes(user);
+    setUsersFiltered(
+      Users.filter((userEl) => {
+        return userEl.nombre.toLowerCase().includes(user.toLowerCase());
       })
     );
   }, [user]);
 
   console.log("a");
-  const Materials = [
+  const Users = [
     {
-      nombre: "Ceibalita",
-      src: "https://www.lr21.com.uy/wp-content/uploads/2020/03/plan-ceibal.jpg",
+      nombre: "Marcos Cianzio",
+      src: "/images/Cianzio.jpg",
+      desc: "54548246",
+    },
+    {
+      nombre: "Francisco Fiorelli",
+      src: "/images/Fiorelli.jpg",
+      desc: "54548246",
+    },
+    {
+      nombre: "Nicolás Heredia",
+      src: "/images/Heredia.jpg",
       desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
     },
     {
-      nombre: "Auricular",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Earphones_BW_2011-12-10_15-49-08.JPG/1200px-Earphones_BW_2011-12-10_15-49-08.JPG",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
-    },
-    {
-      nombre: "Cargador",
-      src: "https://www.digitaloutlet.com.uy/imgs/productos/productos34_3721.jpg",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
-    },
-    {
-      nombre: "GOD ceibalita",
-      src: "https://icdn.dtcn.com/image/digitaltrends_es/185-xps-13-laptop-resized-2.jpg",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
-    },
-    {
-      nombre: "Martillo",
-      src: "https://geant.vteximg.com.br/arquivos/ids/268992-1000-1000/478372.jpg?v=637522818658200000",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
-    },
-    {
-      nombre: "Ceibalita",
-      src: "https://www.lr21.com.uy/wp-content/uploads/2020/03/plan-ceibal.jpg",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
+      nombre: "Iván Prestes",
+      src: "/Prestes.jpg",
+      desc: "54548246",
     },
   ];
 
@@ -77,7 +67,7 @@ export const LabLendsPage = () => {
           Nuevo Prestamo
         </Button>
       }
-      description="En la sección de prestamos, puedes revisar y administrar todos los prestamos con sus detalles. Puedes ver, editar y eliminar cualquier tipo de información como la reserva de todos los materiales, ordenados por IDs, fechas, y tipo de prestamo. El acceso a esta área es limitada. Solo Laboratoristas pueden alcanzarla. Los cambios que hagas son irreversibles."
+      description="En la sección de prestamos, puedes revisar y administrar todos los prestamos con sus detalles. Puedes ver, editar y eliminar cualquier tipo de información como la reserva de todos los useres, ordenados por IDs, fechas, y tipo de prestamo. El acceso a esta área es limitada. Solo Laboratoristas pueden alcanzarla. Los cambios que hagas son irreversibles."
       icon={<Prestamo size="big" />}
       title="Prestamos"
     >
@@ -103,7 +93,7 @@ export const LabLendsPage = () => {
               <Button
                 bg="lendlab.gray.100"
                 borderRadius="14px"
-                color="lendlab.gray.300"
+                color={userSelected == "" ? "lendlab.gray.300" : "lendlab.black"}
                 display="block"
                 fontSize="13px"
                 fontWeight="normal"
@@ -111,7 +101,7 @@ export const LabLendsPage = () => {
                 textAlign="left"
                 onClick={onModalOpen}
               >
-                {materialSelected == "" ? "Buscar usuario" : materialSelected}
+                {userSelected == "" ? "Buscar usuario" : userSelected}
               </Button>
             }
             {...{ isDrawerOpen, onDrawerClose, btnRef }}
@@ -130,14 +120,14 @@ export const LabLendsPage = () => {
               <ModalBody>
                 <Stack spacing={4}>
                   {user == ""
-                    ? Materials.slice(0, 3).map((material, index) => (
+                    ? Users.slice(0, 3).map((user, index) => (
                         <Stack
                           key={index}
                           cursor="pointer"
                           direction="row"
                           spacing={4}
                           onClick={() => {
-                            setMaterialSelected(material.nombre);
+                            setUserSelected(user.nombre);
                             onModalClose();
                           }}
                         >
@@ -145,26 +135,26 @@ export const LabLendsPage = () => {
                             borderRadius="12px"
                             boxSize="70px"
                             objectFit="cover"
-                            src={material.src}
+                            src={user.src}
                           />
                           <Stack justifyContent="center">
                             <Text color="black" fontSize="3" fontWeight="bold" textAlign="left">
-                              {material.nombre}
+                              {user.nombre}
                             </Text>
                             <Text fontSize="3" noOfLines={1} textAlign="left">
-                              {material.desc}
+                              {user.desc}
                             </Text>
                           </Stack>
                         </Stack>
                       ))
-                    : materialsFiltered.map((material, index) => (
+                    : usersFiltered.map((user, index) => (
                         <Stack
                           key={index}
                           cursor="pointer"
                           direction="row"
                           spacing={4}
                           onClick={() => {
-                            setMaterialSelected(material.nombre);
+                            setusersSelected([...usersSelected, user]);
                             onModalClose();
                           }}
                         >
@@ -172,14 +162,14 @@ export const LabLendsPage = () => {
                             borderRadius="12px"
                             boxSize="70px"
                             objectFit="cover"
-                            src={material.src}
+                            src={user.src}
                           />
                           <Stack justifyContent="center">
                             <Text color="black" fontSize="3" fontWeight="bold" textAlign="left">
-                              {material.nombre}
+                              {user.nombre}
                             </Text>
                             <Text fontSize="3" noOfLines={1} textAlign="left">
-                              {material.desc}
+                              {user.desc}
                             </Text>
                           </Stack>
                         </Stack>
