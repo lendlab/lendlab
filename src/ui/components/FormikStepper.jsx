@@ -2,7 +2,7 @@ import { Button } from "@chakra-ui/button";
 import { Stack } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import { Arrow, LoginIcon, Arrow2 } from "@icons";
+import { Arrow, LoginIcon } from "@icons";
 
 export const FormikStepper = ({ children, ...props }) => {
   const childrenArray = React.Children.toArray(children);
@@ -35,7 +35,7 @@ export const FormikStepper = ({ children, ...props }) => {
             <Button
               isLoading={isSubmitting}
               loadingText="Iniciando sesión"
-              rightIcon={isLastStep() ? <LoginIcon /> : <Arrow2 fill="white" />}
+              rightIcon={isLastStep() ? <LoginIcon /> : <Arrow fill="white" />}
               type="submit"
               variant="primary"
               w="full"
@@ -46,7 +46,7 @@ export const FormikStepper = ({ children, ...props }) => {
             {step > 0 ? (
               <Button
                 isLoading={isSubmitting}
-                leftIcon={<Arrow fill="#2c3e50" />}
+                leftIcon={<Arrow direction="left" fill="#2c3e50" />}
                 loadingText="Iniciando sesión"
                 type="submit"
                 variant="secondary"

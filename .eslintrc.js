@@ -25,6 +25,7 @@ module.exports = {
     "no-console": "warn",
     "react/prop-types": "off",
     "react/no-children-prop": "off",
+    "react/display-name": "off",
     "prettier/prettier": [
       "error",
       {

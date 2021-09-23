@@ -4,14 +4,14 @@ import React from "react";
 export const Select = ({ children, w, options, ...props }) => {
   return (
     <ChakraSelect
+      bg="lendlab.gray.100"
+      borderRadius="17"
+      color="lendlab.gray.heading"
+      fontSize="13px"
       size="lg"
+      variant="filled"
       w={w}
       {...props}
-      bg="lendlab.gray.input"
-      borderRadius="17"
-      color="lendlab.gray.300"
-      fontSize="13px"
-      variant="filled"
     >
       {options &&
         options.map((option, index) => (

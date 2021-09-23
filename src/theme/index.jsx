@@ -14,7 +14,7 @@ const theme = extendTheme({
       black: {
         100: "#292D32s",
         200: "#000000",
-        heading: "#2c3e50",
+        heading: "#000",
       },
       white: "#FFFFFF",
       blue: "#1a5cff",
@@ -31,7 +31,9 @@ const theme = extendTheme({
   fonts: {
     heading: "Basement Grotesque",
     body: "Sk-Modernist",
+    mono: "Sk-Modernist",
   },
+
   styles: {
     global: {
       "::-webkit-scrollbar-thumb": {
@@ -54,6 +56,17 @@ const theme = extendTheme({
   shadows: {
     button: "1px 4px 40px 6px rgba(26,92,255,0.19)",
   },
+  fontSizes: {
+    1: "11px",
+    2: "13px",
+    3: "15px",
+    4: "17px",
+    5: "19px",
+    6: "21px",
+    7: "27px",
+    8: "35px",
+    9: "59px",
+  },
   components: {
     Button: {
       variants: {
@@ -61,7 +74,7 @@ const theme = extendTheme({
           bg: "lendlab.blue",
           color: "lendlab.white",
           borderRadius: 17,
-          fontSize: 12,
+          fontSize: 2,
           fontWeight: "400",
           cursor: "pointer",
           boxShadow: "button",
@@ -74,7 +87,7 @@ const theme = extendTheme({
           borderColor: "lendlab.gray.300",
           color: "lendlab.heading",
           borderRadius: 17,
-          fontSize: 12,
+          fontSize: 2,
           fontWeight: "400",
           cursor: "pointer",
           _hover: {

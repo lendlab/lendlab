@@ -5,15 +5,14 @@ import {
   CloseButton,
   Flex,
   Icon,
-  useColorModeValue,
   Link,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
-  StackDivider,
   Stack,
 } from "@chakra-ui/react";
+import { useLocation } from "react-router";
 import { NavLink } from "react-router-dom";
 import { Logo } from "@ui";
 import { SECTIONS } from "@utils/constants/sidebar";
@@ -45,7 +44,7 @@ export const Sidebar = ({ children }) => {
 
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
-    <Box bg="white" h="full" overflowY="auto" pos="fixed" w={{ base: "full", md: 80 }} {...rest}>
+    <Box bg="white" h="full" overflowY="auto" pos="fixed" w={{ base: "full", md: 60 }} {...rest}>
       <Flex alignItems="center" h="20" justifyContent="space-between" mx="8">
         <Logo />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
@@ -58,6 +57,8 @@ const SidebarContent = ({ onClose, ...rest }) => {
 };
 
 const NavItem = ({ icon, children, name, linkItems, ...rest }) => {
+  const { pathname } = useLocation();
+
   return (
     <>
       <Text
@@ -71,19 +72,22 @@ const NavItem = ({ icon, children, name, linkItems, ...rest }) => {
         {name}
       </Text>
       {linkItems.map((item, index) => (
-        <Link key={index} as={NavLink} style={{ textDecoration: "none", boxShadow: "none" }} to="#">
+        <Link
+          key={index}
+          as={NavLink}
+          style={{ textDecoration: "none", boxShadow: "none" }}
+          to={item.path}
+        >
           <Stack
-            _hover={{
-              bg: "lendlab.gray.200",
-            }}
             align="center"
+            bg={pathname == item.path ? "lendlab.gray.100" : ""}
             borderRadius="14px"
             direction="row"
             mx="4"
             p="4"
             role="group"
-            {...rest}
             spacing={4}
+            {...rest}
           >
             {item.icon && <Icon as={item.icon} />}
             <Text color="lendlab.black.100" fontSize="14px">

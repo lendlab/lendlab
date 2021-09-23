@@ -7,7 +7,7 @@ export const Input = ({ children, w, ...props }) => {
       <ChakraInput
         {...props}
         _placeholder={{ color: "lendlab.gray.300", fontSize: "13px" }}
-        bg="lendlab.gray.input"
+        bg="lendlab.gray.100"
         borderRadius="17"
         fontSize="13px"
         variant="filled"
