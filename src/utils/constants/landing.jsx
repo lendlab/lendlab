@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Arrow2,
+  Arrow,
   BriefCase,
   Bucket,
   Card,
@@ -51,7 +51,7 @@ export const HERO_DATA = {
   gradient: "Institución",
   nowOnline: "ahora en forma online",
   weLet:
-    "Te permitimos realizar los prestamos de tu institución. ¿Eres laboratorista?, olvidate del lapiz y papel, gestiona ahora! ",
+    "Te permitimos realizar los préstamos de tu institución. ¿Eres laboratorista? ¡Olvidate del lapiz y papel, gestiona ahora!",
   bold: "Gratuitamente",
   button: {
     text: "Empezar ahora",
@@ -90,14 +90,14 @@ export const BENEFITS_DATA = {
         return <ProfileUser2 />;
       },
       name: "Usuarios",
-      description: "Obtén un listado de todos los usuarios, junto con sus analiticas",
+      description: "Obtén un listado de todos los usuarios, junto con sus analíticas",
     },
     {
       icon() {
         return <Prestamo />;
       },
-      name: "Prestamos",
-      description: "Gestiona los prestamos activos, autorizados por ti, etc",
+      name: "Préstamos",
+      description: "Gestiona los préstamos activos, autorizados por ti, etc",
     },
     {
       icon() {
@@ -114,12 +114,12 @@ export const FEATURES_DATA = {
     {
       direction: "row",
       illustration: "/images/prestamoIllustration.svg",
-      title: "Administración de prestamos",
-      description: "Con Lendlab, puedes administrar todos tus prestamos de forma inmediata",
+      title: "Administración de préstamos",
+      description: "Con Lendlab, puedes administrar todos tus préstamos de forma inmediata",
       button: {
         text: "Probar Ahora",
         icon() {
-          return <Arrow2 fill="#fff" />;
+          return <Arrow fill="#fff" />;
         },
       },
     },
@@ -132,7 +132,7 @@ export const FEATURES_DATA = {
       button: {
         text: "Probar Ahora",
         icon() {
-          return <Arrow2 fill="#fff" />;
+          return <Arrow fill="#fff" />;
         },
       },
     },

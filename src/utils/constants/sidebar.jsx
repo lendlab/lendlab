@@ -19,6 +19,7 @@ export const SECTIONS = [
         icon() {
           return <DashboardIcon />;
         },
+        path: "/app/resumen",
       },
     ],
   },
@@ -26,34 +27,39 @@ export const SECTIONS = [
     sectionName: "Administracion",
     linkItems: [
       {
-        name: "Prestamos",
+        name: "Préstamos",
         icon() {
           return <Prestamo />;
         },
+        path: "/app/prestamos",
       },
       {
         name: "Reservas",
         icon() {
           return <Reserve />;
         },
+        path: "/app/reservas",
       },
       {
         name: "Materiales",
         icon() {
           return <BriefCase />;
         },
+        path: "/app/materiales",
       },
       {
         name: "Usuarios",
         icon() {
           return <ProfileUser2 />;
         },
+        path: "/app/usuarios",
       },
       {
         name: "Salas",
         icon() {
           return <Home />;
         },
+        path: "/app/salas",
       },
     ],
   },
@@ -65,12 +71,14 @@ export const SECTIONS = [
         icon() {
           return <Messages />;
         },
+        path: "/app/chat",
       },
       {
         name: "Configuración",
         icon() {
           return <Settings />;
         },
+        path: "/app/configuracion",
       },
     ],
   },
