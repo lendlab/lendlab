@@ -65,7 +65,9 @@ export const Table = ({ mock_data, mock_columns, placeholder }) => {
             Header: ({ getToggleAllRowsSelectedProps }) => (
               <Checkbox {...getToggleAllRowsSelectedProps()} />
             ),
-            Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
+            Cell: ({ row }) => (
+              <Checkbox {...row.getToggleRowSelectedProps()} onClick={(e) => e.stopPropagation()} />
+            ),
             disableGlobalFilter: true,
           },
           ...columns,

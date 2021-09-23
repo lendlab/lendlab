@@ -30,12 +30,17 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
               key={index}
               {...row.getRowProps({
                 onClick: (e) => {
-                  onOpen();
-                  const { original: rowData } = row;
+                  console.log(e);
+                  if (e.target.tagName == "TD") {
+                    onOpen();
+                    console.log(row);
+                    const { original: rowData } = row;
 
-                  setModalInfo(rowData);
+                    setModalInfo(rowData);
+                  }
                 },
               })}
+              cursor="pointer"
             >
               {row.cells.map((cell, index) => {
                 return (
