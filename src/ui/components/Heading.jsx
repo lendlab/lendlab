@@ -10,6 +10,7 @@ export const Heading = ({
   bgGradient,
   fontSize = "6xl",
   textAlign = "center",
+  color,
   ...props
 }) => {
   return (
@@ -17,13 +18,16 @@ export const Heading = ({
       {...props}
       {...{
         ...(bgGradient == undefined
-          ? { color: "lendlab.black.heading" }
+          ? color == undefined
+            ? { color: "lendlab.black.heading" }
+            : { color }
           : {
               bgGradient,
             }),
       }}
       ref={innerRef}
       fontSize={fontSize}
+      fontWeight="900"
       textAlign={textAlign}
     >
       {children}
