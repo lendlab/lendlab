@@ -11,8 +11,10 @@ import { Table as ChakraTable } from "@chakra-ui/react";
 import { Box, Drawer } from "@ui";
 import { Trash } from "@icons";
 import { useDisclosure } from "@chakra-ui/hooks";
+import { useMutation } from "@apollo/client";
 
 import { Checkbox } from "../Checkbox";
+import { DELETE_MATERIAL } from "../../../graphql/mutations/materials";
 
 import { TableHeader } from "./TableHeader";
 import { TableBody } from "./TableBody";
@@ -20,11 +22,10 @@ import { TablePagination } from "./TablePagination";
 import { TableSearch } from "./TableSearch";
 import { TableColumnFilter } from "./TableColumnFilter";
 
-export const Table = ({ mock_data, mock_columns, placeholder }) => {
-  const columns = useMemo(() => mock_columns, []);
-  const data = useMemo(() => mock_data, []);
+export const Table = ({ data, columns: memoColumns, placeholder }) => {
+  const columns = useMemo(() => memoColumns, []);
   const { onClose } = useDisclosure();
-
+  const [deleteMaterial, { data: mutationData, loading, error }] = useMutation(DELETE_MATERIAL);
   const [message, setMessage] = React.useState("");
 
   const defaultColumn = useMemo(() => {
@@ -49,6 +50,7 @@ export const Table = ({ mock_data, mock_columns, placeholder }) => {
     pageCount,
     setPageSize,
     selectedFlatRows,
+    selectedRowIds,
   } = useTable(
     {
       columns,
@@ -120,17 +122,6 @@ export const Table = ({ mock_data, mock_columns, placeholder }) => {
           pageOptions={pageOptions}
           previousPage={previousPage}
         />
-        {/* <pre>
-          <code>
-            {JSON.stringify(
-              {
-                selectedFlatRows: selectedFlatRows.map((row) => row.original),
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre> */}
       </Box>
       <Drawer
         hasNotBody
@@ -142,7 +133,28 @@ export const Table = ({ mock_data, mock_columns, placeholder }) => {
         isText
         blockScrollOnMount={false}
         closeOnOverlayClick={false}
-        header={<Trash />}
+        header={
+          <Trash
+            onClick={(e) => {
+              const id_material = Number(
+                selectedFlatRows.map((row) => {
+                  return row.original.id_material;
+                })
+              );
+
+              deleteMaterial({
+                variables: {
+                  deleteMaterialIdMaterial: id_material,
+                },
+                update: (cache) => {
+                  cache.evict({
+                    id_material: "Material:" + id_material,
+                  });
+                },
+              });
+            }}
+          />
+        }
         isOpen={selectedFlatRows.length > 0}
         placement="top"
         title={message}
