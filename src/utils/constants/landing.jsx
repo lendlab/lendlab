@@ -24,14 +24,14 @@ import {
 export const NAV_DATA = {
   options: [
     {
-      name: "Sobre nosotros",
+      name: "SOBRE NOSOTROS",
       link: "#aboutUs",
       icon() {
         return <People />;
       },
     },
     {
-      name: "Caracteristicas",
+      name: "CARACTERISTICAS",
       link: "#features",
       icon() {
         return <FlashCircle />;
@@ -52,7 +52,7 @@ export const HERO_DATA = {
   nowOnline: "ahora en forma online",
   weLet:
     "Te permitimos realizar los préstamos de tu institución. ¿Eres laboratorista? ¡Olvidate del lapiz y papel, gestiona ahora!",
-  bold: "Gratuitamente",
+  bold: " Gratuitamente",
   button: {
     text: "Empezar ahora",
     icon() {
