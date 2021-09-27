@@ -1,5 +1,5 @@
 import React from "react";
-import { SectionInfo, Tab, Input, Text } from "@ui";
+import { SectionInfo, Tab, Input, Text, LendsDrawer } from "@ui";
 import { Prestamo, NewPrestamo } from "@icons";
 import {
   Button,
@@ -13,52 +13,52 @@ import {
   ModalHeader,
   ModalBody,
   Image,
+  Icon,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
 
 import AllLendsTable from "../Lends/AllLendsTable";
-import LendsDrawer from "../../ui/components/LendsDrawer";
+import { useUser } from "../../hooks/useUser";
 
 export const LabLendsPage = () => {
   const { isOpen: isDrawerOpen, onOpen: onDrawerOpen, onClose: onDrawerClose } = useDisclosure();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const [user, setUser] = React.useState("");
-  const [usersFiltered, setUsersFiltered] = React.useState([]);
-  const [userSelected, setUserSelected] = React.useState("");
+  const Users = React.useMemo(
+    () => [
+      {
+        nombre: "Marcos Cianzio",
+        src: "/images/Cianzio.jpg",
+        desc: "54548246",
+      },
+      {
+        nombre: "Francisco Fiorelli",
+        src: "/images/Fiorelli.jpg",
+        desc: "54548246",
+      },
+      {
+        nombre: "Nicolás Heredia",
+        src: "/images/Heredia.jpg",
+        desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
+      },
+      {
+        nombre: "Iván Prestes",
+        src: "/images/Prestes.jpg",
+        desc: "54548246",
+      },
+    ],
+    []
+  );
 
-  React.useEffect(() => {
-    setUsersFiltered(
-      Users.filter((userEl) => {
-        return userEl.nombre.toLowerCase().includes(user.toLowerCase());
-      })
-    );
-  }, [user]);
-
-  console.log("a");
-  const Users = [
-    {
-      nombre: "Marcos Cianzio",
-      src: "/images/Cianzio.jpg",
-      desc: "54548246",
-    },
-    {
-      nombre: "Francisco Fiorelli",
-      src: "/images/Fiorelli.jpg",
-      desc: "54548246",
-    },
-    {
-      nombre: "Nicolás Heredia",
-      src: "/images/Heredia.jpg",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
-    },
-    {
-      nombre: "Iván Prestes",
-      src: "/Prestes.jpg",
-      desc: "54548246",
-    },
-  ];
+  const {
+    user,
+    usersFiltered,
+    userSelected,
+    handleUserChange,
+    handleUsersSelected,
+    handleUserSelected,
+  } = useUser(Users);
 
   return (
     <SectionInfo
@@ -78,7 +78,7 @@ export const LabLendsPage = () => {
         paddingX={{ base: 0, md: 40 }}
       >
         <Tab>
-          <Prestamo /> TODOS
+          <Icon as={Prestamo} h="none" marginRight={2} w="none" /> TODOS
         </Tab>
         <Tab>FINALIZADOS</Tab>
         <Tab>SIN DEVOLVER</Tab>
@@ -114,7 +114,7 @@ export const LabLendsPage = () => {
                   name="user"
                   placeholder="Buscar Usuario"
                   value={user}
-                  onChange={(e) => setUser(e.target.value)}
+                  onChange={handleUserChange}
                 />
               </ModalHeader>
               <ModalBody>
@@ -127,13 +127,14 @@ export const LabLendsPage = () => {
                           direction="row"
                           spacing={4}
                           onClick={() => {
-                            setUserSelected(user.nombre);
+                            handleUserSelected(user);
                             onModalClose();
                           }}
                         >
                           <Image
                             borderRadius="12px"
                             boxSize="70px"
+                            fallbackSrc="/images/fallback.jpg"
                             objectFit="cover"
                             src={user.src}
                           />
@@ -154,13 +155,14 @@ export const LabLendsPage = () => {
                           direction="row"
                           spacing={4}
                           onClick={() => {
-                            setusersSelected([...usersSelected, user]);
+                            handleUserSelected(user);
                             onModalClose();
                           }}
                         >
                           <Image
                             borderRadius="12px"
                             boxSize="70px"
+                            fallbackSrc="/images/fallback.jpg"
                             objectFit="cover"
                             src={user.src}
                           />
