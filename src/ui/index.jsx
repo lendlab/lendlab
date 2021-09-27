@@ -1,12 +1,14 @@
 import { Bold } from "./components/Bold";
 import { Box } from "./components/Box";
+import { CartItem } from "./components/CartItem";
+import { Drawer } from "./components/Drawer";
 import { ExportButton } from "./components/ExportButton";
 import { FormControl } from "./components/FormControl";
 import { FormikStep } from "./components/FormikStep";
 import { FormikStepper } from "./components/FormikStepper";
 import { Heading } from "./components/Heading";
-import { Info } from "./components/Info";
 import { Input } from "./components/Input";
+import LendsDrawer from "./components/LendsDrawer";
 import { Logo } from "./components/Logo";
 import { Nav } from "./components/Nav";
 import { Searchbar } from "./components/Searchbar";
@@ -33,11 +35,13 @@ export {
   Sidebar,
   Text,
   WhiteCircle,
-  Info,
   ExportButton,
   SectionInfo,
   Tab,
   Searchbar,
   Table,
   TableColumnFilter,
+  LendsDrawer,
+  Drawer,
+  CartItem,
 };
