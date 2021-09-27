@@ -5,18 +5,7 @@ import { CartContext } from "./CartContext";
 import { cartReducer } from "./cartReducer";
 
 const INITIAL_STATE = {
-  cart: [
-    {
-      nombre: "Ceibalita",
-      src: "https://www.lr21.com.uy/wp-content/uploads/2020/03/plan-ceibal.jpg",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
-    },
-    {
-      nombre: "Auricular",
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Earphones_BW_2011-12-10_15-49-08.JPG/1200px-Earphones_BW_2011-12-10_15-49-08.JPG",
-      desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
-    },
-  ],
+  cart: [],
   materials,
   selectedMaterials: [],
 };
