@@ -4,6 +4,7 @@ import React from "react";
 export const Input = ({ children, w, maxW, ...props }) => {
   return (
     <InputGroup maxW={maxW} size="lg" w={w}>
+      {children}
       <ChakraInput
         {...props}
         _placeholder={{ color: "lendlab.gray.300", fontSize: "13px" }}
@@ -12,7 +13,6 @@ export const Input = ({ children, w, maxW, ...props }) => {
         fontSize="13px"
         variant="filled"
       />
-      {children}
     </InputGroup>
   );
 };
