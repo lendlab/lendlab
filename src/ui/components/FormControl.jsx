@@ -11,8 +11,9 @@ export const FormControl = ({
   help,
   label,
   isCentered,
+  isRequired,
   control,
-  labelAlign,
+  isLabelLeft,
   children,
   ...props
 }) => {
@@ -43,14 +44,10 @@ export const FormControl = ({
         ...(isCentered && { display: "flex", alignItems: "center", flexDirection: "column" }),
       }}
       isInvalid={meta.touched && meta.error}
+      isRequired={isRequired}
     >
-      <FormLabel htmlFor={field.name}>
-        <Text
-          fontSize="12px"
-          {...{
-            ...(labelAlign == undefined ? { textAlign: "left" } : { textAlign: labelAlign }),
-          }}
-        >
+      <FormLabel display="inline-block" htmlFor={field.name}>
+        <Text display="inline-block" fontSize="12px" textAlign={isLabelLeft && "left"}>
           {label}
         </Text>
       </FormLabel>
