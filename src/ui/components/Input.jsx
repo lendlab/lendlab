@@ -1,9 +1,9 @@
 import { Input as ChakraInput, InputGroup } from "@chakra-ui/input";
 import React from "react";
 
-export const Input = ({ children, w, ...props }) => {
+export const Input = ({ children, w, maxW, ...props }) => {
   return (
-    <InputGroup size="lg" w={w}>
+    <InputGroup maxW={maxW} size="lg" w={w}>
       <ChakraInput
         {...props}
         _placeholder={{ color: "lendlab.gray.300", fontSize: "13px" }}
