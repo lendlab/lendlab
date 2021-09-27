@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, Tabs } from "@chakra-ui/react";
-import { Heading, Text, Info, ExportButton, Box } from "@ui";
+import { Heading, Text, ExportButton, Box } from "@ui";
 
 export const SectionInfo = ({ icon, button, children, title, description }) => {
   return (
@@ -19,7 +19,6 @@ export const SectionInfo = ({ icon, button, children, title, description }) => {
                 <Heading fontSize="4xl" textAlign="left">
                   {title}
                 </Heading>
-                <Info tooltip="No se" />
               </Stack>
               <Stack direction="row">
                 {button}
