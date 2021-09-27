@@ -171,16 +171,28 @@ export const HomePage = () => {
       <Drawer
         body={
           <Stack spacing={4}>
-            {cart.map(({ nombre, desc, src }, index) => (
-              <CartItem
-                key={index}
-                deleteMaterialFromCart={deleteMaterialFromCart}
-                desc={desc}
-                nombre={nombre}
-                src={src}
-              />
-            ))}
+            {cartCount > 0 ? (
+              cart.map(({ nombre, desc, src }, index) => (
+                <CartItem
+                  key={index}
+                  deleteMaterialFromCart={deleteMaterialFromCart}
+                  desc={desc}
+                  nombre={nombre}
+                  src={src}
+                />
+              ))
+            ) : (
+              <Heading fontSize="6">No tienes elementos en tu carrito. Agrega ya</Heading>
+            )}
           </Stack>
+        }
+        footer={
+          cartCount > 0 && (
+            <Button variant="primary">
+              Pedir {cartCount > 1 ? "prestados" : "prestado"} ({cartCount}){" "}
+              {cartCount > 1 ? "materiales" : "material"}
+            </Button>
+          )
         }
         isOpen={isCartOpen}
         size="md"
