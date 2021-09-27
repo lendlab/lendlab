@@ -1,9 +1,9 @@
 import * as React from "react";
 
-export function LogoutIcon(props) {
+export function LogoutIcon({ fill = "#fff" }, ...props) {
   return (
     <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" {...props}>
-      <g fill="#fff">
+      <g fill={fill}>
         <path
           d="M13.24 2a.86.86 0 01.86.86v18.29a.86.86 0 01-.86.86 9.565 9.565 0 01-10-10A9.579 9.579 0 0113.24 2z"
           opacity={0.4}
