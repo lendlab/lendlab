@@ -8,7 +8,9 @@ import LabUsersPage from "@pages/lab/users";
 
 import { CartProvider } from "../context/CartProvider";
 
-export const LabRouter = () => {
+export const LabRouter = (props) => {
+  localStorage.setItem("lastPath", props.location.pathname);
+
   return (
     <CartProvider>
       <Sidebar />
