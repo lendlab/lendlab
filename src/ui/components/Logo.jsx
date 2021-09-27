@@ -18,10 +18,12 @@ export const Logo = ({ isNotHome, ...props }) => {
       onClick={(e) => isNotHome && handleRedirectHome()}
       {...props}
     >
-      <Heading fontSize="4xl" margin="0">
+      <Heading fontFamily="Basement Grotesque" fontSize="4xl" margin="0">
         ll
       </Heading>
-      <Heading fontSize="2xl">lendlab</Heading>
+      <Heading fontFamily="Basement Grotesque" fontSize="2xl">
+        lendlab
+      </Heading>
     </Stack>
   );
 };
