@@ -1,17 +1,9 @@
-import { Button } from "@chakra-ui/button";
+import { Button, Stack } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { Input } from "@chakra-ui/input";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-} from "@chakra-ui/modal";
 import { Tbody, Td, Tr } from "@chakra-ui/table";
 import React, { useState } from "react";
+import { Text, Drawer } from "@ui";
+import { Prestamo, ProfileUser2, Frame, SMS, Messages, Grid, Edit, Trash } from "@icons";
 
 export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,10 +22,8 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
               key={index}
               {...row.getRowProps({
                 onClick: (e) => {
-                  console.log(e);
                   if (e.target.tagName == "TD") {
                     onOpen();
-                    console.log(row);
                     const { original: rowData } = row;
 
                     setModalInfo(rowData);
@@ -54,22 +44,83 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
         })}
       </Tbody>
 
-      <Drawer finalFocusRef={btnRef} isOpen={isOpen} placement="right" onClose={onClose}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Prestamo: #{modalInfo.lendId}</DrawerHeader>
-
-          <DrawerBody>Usuario: {modalInfo.user}</DrawerBody>
-
-          <DrawerFooter>
-            <Button mr={3} variant="outline" onClick={onClose}>
-              Cancel
+      <Drawer
+        hasDivider
+        body={
+          <Stack spacing={8}>
+            <Stack alignItems="center" direction="row" justifyContent="space-between">
+              <Stack alignItems="center" direction="row">
+                <Prestamo />
+                <Text fontSize="3">ID</Text>
+              </Stack>
+              <Text color="black" fontSize="3">
+                {modalInfo.lendId}
+              </Text>
+            </Stack>
+            <Stack alignItems="center" direction="row" justifyContent="space-between">
+              <Stack alignItems="center" direction="row">
+                <ProfileUser2 />
+                <Text fontSize="3">Usuario</Text>
+              </Stack>
+              <Text color="black" fontSize="3">
+                {modalInfo.user}
+              </Text>
+            </Stack>
+            <Stack alignItems="center" direction="row" justifyContent="space-between">
+              <Stack alignItems="center" direction="row">
+                <Frame />
+                <Text fontSize="3">Laboratorista</Text>
+              </Stack>
+              <Text color="black" fontSize="3">
+                {modalInfo.laboratorist}
+              </Text>
+            </Stack>
+            <Stack alignItems="center" direction="row" justifyContent="space-between">
+              <Stack alignItems="center" direction="row">
+                <SMS />
+                <Text fontSize="3">Tipo</Text>
+              </Stack>
+              <Text color="black" fontSize="3">
+                {modalInfo.type}
+              </Text>
+            </Stack>
+            <Stack alignItems="center" direction="row" justifyContent="space-between">
+              <Stack alignItems="center" direction="row">
+                <Messages />
+                <Text fontSize="3">Plazo</Text>
+              </Stack>
+              <Text color="black" fontSize="3">
+                {modalInfo.term}
+              </Text>
+            </Stack>
+            <Stack alignItems="center" direction="row" justifyContent="space-between">
+              <Stack alignItems="center" direction="row">
+                <Grid />
+                <Text fontSize="3">Devolución</Text>
+              </Stack>
+              <Text color="black" fontSize="3">
+                {modalInfo.devolution}
+              </Text>
+            </Stack>
+          </Stack>
+        }
+        btnRef={btnRef}
+        header={
+          <Stack alignItems="center" direction="row" mt={5}>
+            <Button variant="secondary">
+              <Edit />
             </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
+            <Button variant="secondary">
+              <Trash />
+            </Button>
+          </Stack>
+        }
+        icon={Prestamo}
+        isOpen={isOpen}
+        placement="right"
+        title={`Prestamo #${modalInfo.lendId}`}
+        onClose={onClose}
+      />
     </>
   );
 };
