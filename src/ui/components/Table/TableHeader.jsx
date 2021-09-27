@@ -8,7 +8,7 @@ export const TableHeader = ({ headerGroups }) => {
         <Tr key={index} {...headerGroup.getHeaderGroupProps()}>
           {headerGroup.headers.map((column, index) => (
             <Th key={index}>
-              <chakra.span {...column.getHeaderProps(column.getSortByToggleProps())}>
+              <chakra.span color="black" {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render("Header")}
               </chakra.span>
               <chakra.span marginLeft="5">
