@@ -29,9 +29,8 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: "Basement Grotesque",
-    body: "Sk-Modernist",
-    mono: "Sk-Modernist",
+    heading: "Manrope",
+    body: "Archivo",
   },
 
   styles: {
@@ -52,9 +51,6 @@ const theme = extendTheme({
   },
   sizes: {
     nav: "4.25rem",
-  },
-  shadows: {
-    button: "1px 4px 40px 6px rgba(26,92,255,0.19)",
   },
   fontSizes: {
     1: "11px",
@@ -77,7 +73,6 @@ const theme = extendTheme({
           fontSize: 2,
           fontWeight: "400",
           cursor: "pointer",
-          boxShadow: "button",
           _hover: {
             bg: mode(whiten("lendlab.blue", 20), darken("lendlab.blue", 20))(props),
           },
@@ -94,6 +89,19 @@ const theme = extendTheme({
             borderColor: mode(darken("lendlab.gray.300", 20))(props),
           },
         }),
+      },
+    },
+    Drawer: {
+      variants: {
+        alwaysOpen: {
+          parts: ["dialog, dialogContainer"],
+          dialog: {
+            pointerEvents: "auto",
+          },
+          dialogContainer: {
+            pointerEvents: "none",
+          },
+        },
       },
     },
   },
