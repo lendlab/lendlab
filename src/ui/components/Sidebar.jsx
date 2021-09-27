@@ -11,14 +11,19 @@ import {
   Text,
   useDisclosure,
   Stack,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import { useLocation } from "react-router";
 import { NavLink } from "react-router-dom";
-import { Logo } from "@ui";
+import { Logo, Select } from "@ui";
 import { SECTIONS } from "@utils/constants/sidebar";
-import { LoginIcon } from "@icons";
+import { LoginIcon, LogoutIcon, Notification } from "@icons";
 
-export const Sidebar = ({ children }) => {
+export const Sidebar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -90,7 +95,12 @@ const NavItem = ({ icon, children, name, linkItems, ...rest }) => {
             {...rest}
           >
             {item.icon && <Icon as={item.icon} />}
-            <Text color="lendlab.black.100" fontSize="14px">
+
+            <Text
+              color="lendlab.black.100"
+              fontSize="14px"
+              fontWeight={pathname == item.path ? "800" : "400"}
+            >
               {item.name}
             </Text>
           </Stack>
@@ -106,9 +116,9 @@ const Nav = ({ onOpen, ...rest }) => {
       alignItems="center"
       bg="white"
       height="20"
-      justifyContent="flex-start"
+      justifyContent={{ base: "space-between" }}
       ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 24 }}
+      px={{ base: 4, md: 36 }}
       {...rest}
     >
       <IconButton
@@ -119,7 +129,16 @@ const Nav = ({ onOpen, ...rest }) => {
         onClick={onOpen}
       />
 
-      <Logo display={{ base: "flex", md: "none" }} />
+      <Select placeholder="Selecciona una institución" w="auto" />
+      <Stack alignItems="center" direction="row" spacing={4}>
+        <Notification />
+        <Menu>
+          <MenuButton as={Avatar} cursor="pointer" src="/images/Cianzio.jpg" />
+          <MenuList>
+            <MenuItem icon={<LogoutIcon fill="#000" />}>Cerrar Sesión</MenuItem>
+          </MenuList>
+        </Menu>
+      </Stack>
     </Flex>
   );
 };
