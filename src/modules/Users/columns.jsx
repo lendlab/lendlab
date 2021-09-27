@@ -1,5 +1,4 @@
 import React from "react";
-import { TableColumnFilter } from "@ui";
 import { Image } from "@chakra-ui/image";
 
 export const COLUMNS = [
