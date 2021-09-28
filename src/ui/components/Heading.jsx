@@ -29,6 +29,7 @@ export const Heading = ({
       fontSize={fontSize}
       fontWeight="900"
       textAlign={textAlign}
+      letterSpacing="tighter"
     >
       {children}
     </MotionHeading>
