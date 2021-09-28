@@ -112,6 +112,7 @@ export const LabMaterialsPage = () => {
                     variables: { newMaterialData: values },
                     update: (cache) => {
                       cache.evict({ fieldName: "getMaterials" });
+                      onClose();
                     },
                   });
                 }}
@@ -198,7 +199,6 @@ export const LabMaterialsPage = () => {
                 isLoading={mutationLoading}
                 type="submit"
                 variant="primary"
-                onClick={() => onClose()}
               >
                 Crear nuevo material
               </Button>
@@ -208,7 +208,7 @@ export const LabMaterialsPage = () => {
             title="Crear nuevo material"
             onClose={onClose}
           />
-          <Table columns={COLUMNS} data={data.getMaterials} />
+          <Table columns={COLUMNS} data={data.getMaterials} placeholder="Buscar material"/>
         </TabPanel>
         <TabPanel />
         <TabPanel>
