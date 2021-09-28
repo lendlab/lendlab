@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { Text, Drawer } from "@ui";
 import { Prestamo, ProfileUser2, Frame, SMS, Messages, Grid, Edit, Trash } from "@icons";
 import { useLocation } from "react-router";
+import { DELETE_MATERIAL } from "../../../graphql/mutations/materials";
+import { useMutation } from "@apollo/client";
 
 export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked }) => {
   const { isOpen: isLendOpen, onOpen: onLendOpen, onClose: onLendClose } = useDisclosure();
@@ -14,6 +16,8 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
     onClose: onMaterialClose,
   } = useDisclosure();
   const btnRef = React.useRef();
+  const [deleteMaterial, { data: mutationData, loading, error }] = useMutation(DELETE_MATERIAL);
+
 
   const { pathname } = useLocation();
 
@@ -200,8 +204,22 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
             <Button variant="secondary">
               <Edit />
             </Button>
-            <Button variant="secondary">
-              <Trash />
+            <Button variant="secondary" isLoading={loading}>
+              <Trash onClick={(e) => {
+              deleteMaterial({
+                variables: {
+                  deleteMaterialIdMaterial: modalInfo.id_material,
+                },
+                update: (cache) => {
+                  cache.evict({
+                    id_material: "Material:" + modalInfo.id_material,
+                  });
+                  onMaterialClose();
+                },
+              });
+            }
+            
+            }/>
             </Button>
           </Stack>
         }
