@@ -65,8 +65,7 @@ export const LabUsersPage = () => {
       accessor: "fecha_nacimiento",
       Cell({row}) {
         const sqlDate = row.original.fecha_nacimiento;
-        const jsDate = Date(Date.parse(sqlDate.replace(/-/g, '/')));
-        const date = moment(jsDate).format('L');
+        const date = moment(sqlDate).format('L');
 
         return date;
       }
@@ -130,7 +129,7 @@ export const LabUsersPage = () => {
                 }}
                 onSubmit={(values) => {
                   return createUser({
-                    variables: { registerData: {...values, reserva: ""} },
+                    variables: { registerData: values },
                     update: (cache) => {
                       cache.evict({ fieldName: "getUsers" });
                       onClose();
@@ -139,7 +138,7 @@ export const LabUsersPage = () => {
                 }}
               >
                 {({ isSubmitting }) => (
-                  <Form id="new-material-form">
+                  <Form id="new-user-form">
                     <Stack spacing={4}>
                       <FormControl
                         isLabelLeftç
@@ -217,17 +216,17 @@ export const LabUsersPage = () => {
             }
             footer={
               <Button
-                form="new-material-form"
+                form="new-user-form"
                 type="submit"
                 variant="primary"
                 isLoading={mutationLoading}
               >
-                Crear nuevo material
+                Crear nuevo usuario
               </Button>
             }
             isOpen={isOpen}
             size="md"
-            title="Crear nuevo material"
+            title="Crear nuevo usuario"
             onClose={onClose}
           />
         </TabPanel>
