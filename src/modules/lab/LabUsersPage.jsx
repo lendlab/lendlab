@@ -65,7 +65,7 @@ export const LabUsersPage = () => {
       accessor: "fecha_nacimiento",
       Cell({row}) {
         const sqlDate = row.original.fecha_nacimiento;
-        const date = moment(sqlDate).format('L');
+        const date = moment(sqlDate).format('l');
 
         return date;
       }
