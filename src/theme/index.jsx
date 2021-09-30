@@ -44,6 +44,12 @@ const theme = extendTheme({
       "::-webkit-scrollbar": {
         width: "14px",
       },
+      body: {
+        lineHeight: "base",
+        MozOsxFontSmoothing: "grayscale",
+        WebkitFontSmoothing: "antialiased",
+        textRendering: "optimizeLegibility",
+      },
       html: {
         scrollBehavior: "smooth",
       },
