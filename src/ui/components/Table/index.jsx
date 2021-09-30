@@ -21,12 +21,19 @@ import { TableBody } from "./TableBody";
 import { TablePagination } from "./TablePagination";
 import { TableSearch } from "./TableSearch";
 import { TableColumnFilter } from "./TableColumnFilter";
+import { useLocation } from "react-router-dom";
+import { DELETE_USER } from "../../../graphql/queries/users";
 
 export const Table = ({ data, columns: memoColumns, placeholder }) => {
   const columns = useMemo(() => memoColumns, []);
   const { onClose } = useDisclosure();
-  const [deleteMaterial, { data: mutationData, loading, error }] = useMutation(DELETE_MATERIAL);
+  const [deleteMaterial, ] = useMutation(DELETE_MATERIAL);
+  const [deleteUser, ] = useMutation(DELETE_USER);
   const [message, setMessage] = React.useState("");
+
+  const {pathname} = useLocation();
+
+  console.log(pathname)
 
   const defaultColumn = useMemo(() => {
     return { Filter: TableColumnFilter };
@@ -136,23 +143,44 @@ export const Table = ({ data, columns: memoColumns, placeholder }) => {
         header={
           <Trash
             onClick={(e) => {
-              const id_material = Number(
-                selectedFlatRows.map((row) => {
-                  return row.original.id_material;
-                })
-              );
-
-              deleteMaterial({
-                variables: {
-                  deleteMaterialIdMaterial: id_material,
-                },
-                update: (cache) => {
-                  cache.evict({
-                    id_material: "Material:" + id_material,
-                  });
-                },
-              });
+              if (pathname == "/app/materiales") {
+                const id_material = Number(
+                  selectedFlatRows.map((row) => {
+                    return row.original.id_material;
+                  })
+                );
+  
+                deleteMaterial({
+                  variables: {
+                    deleteMaterialIdMaterial: id_material,
+                  },
+                  update: (cache) => {
+                    cache.evict({
+                      id_material: "Material:" + id_material,
+                    });
+                  },
+                });
+              }
+              else if (pathname == "/app/usuarios") {
+                const cedula = Number(
+                  selectedFlatRows.map((row) => {
+                    return row.original.cedula;
+                  })
+                );
+                deleteUser({
+                  variables: {
+                    deleteUserCedula: cedula,
+                  },
+                  update: (cache) => {
+                    cache.evict({
+                      cedula: "User:" + cedula,
+                    });
+                  },
+                });
+              }
+              
             }}
+            cursor="pointer"
           />
         }
         isOpen={selectedFlatRows.length > 0}
