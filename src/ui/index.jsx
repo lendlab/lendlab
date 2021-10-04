@@ -20,6 +20,7 @@ import { Table } from "./components/Table";
 import { TableColumnFilter } from "./components/Table/TableColumnFilter";
 import { Text } from "./components/Text";
 import { WhiteCircle } from "./components/WhiteCircle";
+import { SkeletonTable } from "./components/Table/SkeletonTable";
 
 export {
   Bold,
@@ -44,4 +45,5 @@ export {
   LendsDrawer,
   Drawer,
   CartItem,
+  SkeletonTable,
 };
