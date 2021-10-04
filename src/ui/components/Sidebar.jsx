@@ -132,7 +132,7 @@ const Nav = ({ onOpen, ...rest }) => {
       <Select placeholder="Selecciona una institución" w="auto" />
       <Stack alignItems="center" direction="row" spacing={4}>
         <Notification />
-        <Menu>
+        <Menu isLazy>
           <MenuButton as={Avatar} cursor="pointer" src="/images/Cianzio.jpg" />
           <MenuList>
             <MenuItem icon={<LogoutIcon fill="#000" />}>Cerrar Sesión</MenuItem>
