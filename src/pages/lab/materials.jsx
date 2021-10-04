@@ -1,3 +1,3 @@
-import { LabMaterialsPage } from "@modules/lab/LabMaterialsPage";
+import { LabMaterialsPage } from "@modules/Laboratorist/Materials";
 
 export default LabMaterialsPage;

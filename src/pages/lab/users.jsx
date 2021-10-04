@@ -1,3 +1,3 @@
-import { LabUsersPage } from "@modules/lab/LabUsersPage";
+import { LabUsersPage } from "@modules/Laboratorist/Users";
 
 export default LabUsersPage;
