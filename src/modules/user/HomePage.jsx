@@ -10,12 +10,18 @@ import {
   Button,
   InputLeftElement,
   Icon,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Menu,
+  Circle,
 } from "@chakra-ui/react";
 import React from "react";
-import { Logo, Input, Text, Heading, Drawer, WhiteCircle, CartItem } from "@ui";
+import { Logo, Input, Text, Heading, Drawer, WhiteCircle, CartItem, FormControl } from "@ui";
 import { Cart, Notification, Search, BriefCase, Arrow, Trash } from "@icons";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { materials } from "@utils/constants/materials";
+import { Form, Formik } from "formik";
 
 import { useCart } from "../../hooks/useCart";
 
@@ -36,7 +42,6 @@ export const HomePage = () => {
     onClose: onMaterialClose,
   } = useDisclosure();
   const { isOpen: isCartOpen, onOpen: onCartOpen, onClose: onCartClose } = useDisclosure();
-
   const btnRef = React.useRef();
 
   const handleAddMaterialToCart = (material) => {
@@ -51,13 +56,42 @@ export const HomePage = () => {
           <Stack>
             <Stack alignItems="center" direction="row" justifyContent="space-between">
               <Logo />
-              <Input maxW={800} placeholder="Buscar Material">
-                <InputLeftElement children={<Search />} pointerEvents="none" />
-              </Input>
+              <Stack flex="1" maxW={800}>
+                <Formik
+                  initialValues={{
+                    material: "",
+                  }}
+                  onSubmit={(values) => {}}
+                >
+                  {(props) => (
+                    <Form>
+                      <FormControl
+                        isLabelLeft
+                        control="input"
+                        name="material"
+                        placeholder="Buscar material..."
+                        type="text"
+                      >
+                        <InputLeftElement children={<Search />} pointerEvents="none" />
+                      </FormControl>
+                    </Form>
+                  )}
+                </Formik>
+              </Stack>
 
               <Stack alignItems="center" direction="row" spacing={8}>
                 <Notification />
-                <Icon as={Cart} cursor="pointer" h="none" w="none" onClick={onCartOpen} />
+                <Stack direction="row" position="relative">
+                  <Icon as={Cart} cursor="pointer" h="none" w="none" onClick={onCartOpen} />
+                  {cartCount > 0 && (
+                    <Circle bg="lendlab.blue" h={4} position="absolute" right="-3" top="-1" w={4}>
+                      <Text color="white" fontSize="1">
+                        {cartCount}
+                      </Text>
+                    </Circle>
+                  )}
+                </Stack>
+
                 <Avatar name="Kent Dodds" size="sm" src="https://bit.ly/kent-c-dodds" />
               </Stack>
             </Stack>
@@ -70,13 +104,31 @@ export const HomePage = () => {
                 px={8}
                 py={3}
               >
-                <Text color="black" fontSize="2">
+                <Text color="black" fontSize="2" fontWeight="bold">
                   Inicio
                 </Text>
               </Stack>
-              <Text color="black" fontSize="2">
-                Categorias
-              </Text>
+              <Menu>
+                <MenuButton
+                  _focus={{ boxShadow: "none" }}
+                  as={Button}
+                  boxShadow="none"
+                  color="black"
+                  fontSize="2"
+                  fontWeight="regular"
+                  variant="unstyled"
+                >
+                  Categorias
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Download</MenuItem>
+                  <MenuItem>Create a Copy</MenuItem>
+                  <MenuItem>Mark as Draft</MenuItem>
+                  <MenuItem>Delete</MenuItem>
+                  <MenuItem>Attend a Workshop</MenuItem>
+                </MenuList>
+              </Menu>
+
               <Text color="black" fontSize="2">
                 Salas
               </Text>
@@ -87,7 +139,6 @@ export const HomePage = () => {
           <Box mt={8}>
             <Stack alignItems="center" direction="row" justifyContent="space-between">
               <Stack alignItems="center" direction="row">
-                <BriefCase />
                 <Heading fontSize="7" textAlign="left">
                   {" "}
                   Materiales Populares{" "}
