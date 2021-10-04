@@ -1,11 +1,24 @@
 import React from "react";
-import { Stack, Tabs } from "@chakra-ui/react";
+import { Stack, Tabs, Image } from "@chakra-ui/react";
 import { Heading, Text, ExportButton, Box } from "@ui";
 
-export const SectionInfo = ({ icon, button, children, title, description }) => {
+export const SectionInfo = ({
+  icon,
+  button,
+  children,
+  title,
+  description,
+  isSummary,
+  institution,
+}) => {
   return (
     <Box marginLeft={{ base: 0, md: 60 }}>
-      <Box bg="lendlab.gray.100" paddingX={{ base: 0, md: 40 }}>
+      <Box
+        borderRadius
+        bg="lendlab.gray.100"
+        borderBottomRadius={isSummary && "32px"}
+        paddingX={{ base: 0, md: 40 }}
+      >
         <Stack h="full" justifyContent="space-between" spacing={8}>
           <Stack spacing={6}>
             <Stack
@@ -25,15 +38,43 @@ export const SectionInfo = ({ icon, button, children, title, description }) => {
                 <ExportButton />
               </Stack>
             </Stack>
-            <Text color="lendlab.gray.400" fontSize="16px" noOfLines={[1, 2, 3]} textAlign="left">
-              {description}
-            </Text>
+            {!isSummary && (
+              <Text color="lendlab.gray.400" fontSize="16px" noOfLines={[1, 2, 3]} textAlign="left">
+                {description}
+              </Text>
+            )}
+            {isSummary && (
+              <Stack
+                bgGradient="linear(to-l, #031DB7, lendlab.blue)"
+                borderTopRadius="30px"
+                h="250px"
+                justifyContent="center"
+                paddingLeft={8}
+                position="relative"
+              >
+                <Image
+                  position="absolute"
+                  right="0"
+                  src="/images/summaryIllustration.svg"
+                  top="50%"
+                  transform="translateY(-50%)"
+                />
+                <Text color="#CFE1FF" textAlign="left">
+                  ESTAS ADMINISTRANDO
+                </Text>
+                <Heading color="white" textAlign="left">
+                  UTU MERCEDES
+                </Heading>
+              </Stack>
+            )}
           </Stack>
         </Stack>
       </Box>
-      <Tabs justifySelf="flex-end" variant="unstyled">
-        {children}
-      </Tabs>
+      {!isSummary && (
+        <Tabs justifySelf="flex-end" variant="unstyled">
+          {children}
+        </Tabs>
+      )}
     </Box>
   );
 };
