@@ -21,6 +21,7 @@
     "framer-motion": "^4.1.17",
     "graphql": "^15.6.0",
     "history": "^4.9.0",
+    "lottie-web": "^5.7.13",
     "moment": "^2.29.1",
     "react": "^17.0.0",
     "react-datetime-picker": "^3.4.0",
