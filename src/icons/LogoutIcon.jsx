@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function LogoutIcon({ fill = "#fff" }, ...props) {
+export function LogoutIcon({ fill = "#fff", ...props }) {
   return (
     <svg height={24} viewBox="0 0 24 24" width={24} xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill={fill}>
