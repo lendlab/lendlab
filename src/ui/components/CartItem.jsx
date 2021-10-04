@@ -6,7 +6,13 @@ import { Trash } from "@icons";
 export const CartItem = ({ nombre, desc, src, deleteMaterialFromCart, notShowTrash, ...props }) => {
   return (
     <Stack alignItems="center" direction="row" overflow="hidden" {...props}>
-      <Image borderRadius="14px" boxSize="80px" objectFit="cover" src={src} />
+      <Image
+        borderRadius="14px"
+        boxSize="80px"
+        fallbackSrc="/images/fallback.jpg"
+        objectFit="cover"
+        src={src}
+      />
       <Stack spacing={0} w="full">
         <Stack direction="row" justifyContent="space-between" w="full">
           <Text color="black" fontSize="2" fontWeight="bold" textAlign="left">
