@@ -15,14 +15,15 @@ export const FormControl = ({
   control,
   isLabelLeft,
   children,
+  maxW,
   ...props
 }) => {
-  const [field, meta] = useField(props);
+  const [field, meta, { setValue }] = useField(props);
 
   const inputTypes = {
     input() {
       return (
-        <Input {...field} {...props} name={field.name}>
+        <Input {...field} {...props} maxW={maxW} name={field.name} setValue={setValue}>
           {children}
         </Input>
       );
@@ -46,11 +47,13 @@ export const FormControl = ({
       isInvalid={meta.touched && meta.error}
       isRequired={isRequired}
     >
-      <FormLabel display="inline-block" htmlFor={field.name}>
-        <Text display="inline-block" fontSize="12px" textAlign={isLabelLeft && "left"}>
-          {label}
-        </Text>
-      </FormLabel>
+      {label && (
+        <FormLabel display="inline-block" htmlFor={field.name}>
+          <Text display="inline-block" fontSize="12px" textAlign={isLabelLeft && "left"}>
+            {label}
+          </Text>
+        </FormLabel>
+      )}
       {selectedType}
       {meta.error ? <FormErrorMessage fontSize="12px"> {meta.error}</FormErrorMessage> : null}
     </ChakraFormControl>
