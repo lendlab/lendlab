@@ -12,7 +12,6 @@ import {
   Frame,
   Home,
   LoginIcon,
-  LogoutIcon,
   People,
   Prestamo,
   ProfileUser2,
