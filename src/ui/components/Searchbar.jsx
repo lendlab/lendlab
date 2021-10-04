@@ -13,7 +13,10 @@ export const Searchbar = React.memo(({ options, filter, setGlobalFilter, placeho
 
   return (
     <Input
+      isGlobalFilter
       placeholder={placeholder}
+      setGlobalFilter={setGlobalFilter}
+      setValue={setValue}
       value={value || ""}
       onChange={(e) => {
         setValue(e.target.value);
