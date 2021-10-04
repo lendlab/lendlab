@@ -35,8 +35,6 @@ export const Drawer = React.memo(
     isText,
     ...props
   }) => {
-    console.log("aS");
-
     return (
       <ChakraDrawer isOpen={isOpen} placement={placement} onClose={onClose} {...props}>
         {!hasNotOverlay && <DrawerOverlay />}
