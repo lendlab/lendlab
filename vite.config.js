@@ -19,6 +19,9 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "src/utils"),
       "@modules": path.resolve(__dirname, "src/modules"),
       "@icons": path.resolve(__dirname, "src/icons"),
+      "@graphql": path.resolve(__dirname, "src/graphql"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
+      "@animations": path.resolve(__dirname, "src/animations"),
     },
   },
 });
