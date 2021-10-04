@@ -28,8 +28,8 @@ export const Heading = ({
       ref={innerRef}
       fontSize={fontSize}
       fontWeight="900"
-      textAlign={textAlign}
       letterSpacing="tighter"
+      textAlign={textAlign}
     >
       {children}
     </MotionHeading>
