@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_USERS = gql`
-query Query {
+  query Query {
     getUsers {
       cedula
       nombre
@@ -11,10 +11,13 @@ query Query {
       tipo_usuario
       fecha_nacimiento
     }
-  }`;
+  }
+`;
 
-export const DELETE_USER = gql`mutation DeleteUserMutation($deleteUserCedula: Int!) {
+export const DELETE_USER = gql`
+  mutation DeleteUserMutation($deleteUserCedula: Int!) {
     deleteUser(cedula: $deleteUserCedula) {
       cedula
     }
-  }`
+  }
+`;

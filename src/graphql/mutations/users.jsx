@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_USER = gql`mutation Mutation($registerData: UserInput!) {
+export const CREATE_USER = gql`
+  mutation Mutation($registerData: UserInput!) {
     register(data: $registerData) {
       cedula
       nombre
@@ -11,4 +12,5 @@ export const CREATE_USER = gql`mutation Mutation($registerData: UserInput!) {
       tipo_usuario
       fecha_nacimiento
     }
-  }`;
+  }
+`;
