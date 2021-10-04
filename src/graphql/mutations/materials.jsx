@@ -28,3 +28,20 @@ export const DELETE_MATERIAL = gql`
     }
   }
 `;
+
+export const UPDATE_MATERIAL = gql`
+  mutation UpdateMaterialMutation(
+    $updateMaterialData: MaterialUpdateInput!
+    $updateMaterialIdMaterial: Int!
+  ) {
+    updateMaterial(data: $updateMaterialData, id_material: $updateMaterialIdMaterial) {
+      nombre
+      etiqueta
+      categoria
+      descripcion
+      cantidad
+      estado
+      foto
+    }
+  }
+`;
