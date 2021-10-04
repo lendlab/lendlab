@@ -12,28 +12,26 @@ import { Box, Drawer } from "@ui";
 import { Trash } from "@icons";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useMutation } from "@apollo/client";
+import { useLocation } from "react-router-dom";
 
 import { Checkbox } from "../Checkbox";
 import { DELETE_MATERIAL } from "../../../graphql/mutations/materials";
+import { DELETE_USER } from "../../../graphql/queries/users";
 
 import { TableHeader } from "./TableHeader";
 import { TableBody } from "./TableBody";
 import { TablePagination } from "./TablePagination";
 import { TableSearch } from "./TableSearch";
 import { TableColumnFilter } from "./TableColumnFilter";
-import { useLocation } from "react-router-dom";
-import { DELETE_USER } from "../../../graphql/queries/users";
 
 export const Table = ({ data, columns: memoColumns, placeholder }) => {
   const columns = useMemo(() => memoColumns, []);
   const { onClose } = useDisclosure();
-  const [deleteMaterial, ] = useMutation(DELETE_MATERIAL);
-  const [deleteUser, ] = useMutation(DELETE_USER);
+  const [deleteMaterial] = useMutation(DELETE_MATERIAL);
+  const [deleteUser] = useMutation(DELETE_USER);
   const [message, setMessage] = React.useState("");
 
-  const {pathname} = useLocation();
-
-  console.log(pathname)
+  const { pathname } = useLocation();
 
   const defaultColumn = useMemo(() => {
     return { Filter: TableColumnFilter };
@@ -142,6 +140,7 @@ export const Table = ({ data, columns: memoColumns, placeholder }) => {
         closeOnOverlayClick={false}
         header={
           <Trash
+            cursor="pointer"
             onClick={(e) => {
               if (pathname == "/app/materiales") {
                 const id_material = Number(
@@ -149,7 +148,7 @@ export const Table = ({ data, columns: memoColumns, placeholder }) => {
                     return row.original.id_material;
                   })
                 );
-  
+
                 deleteMaterial({
                   variables: {
                     deleteMaterialIdMaterial: id_material,
@@ -160,13 +159,13 @@ export const Table = ({ data, columns: memoColumns, placeholder }) => {
                     });
                   },
                 });
-              }
-              else if (pathname == "/app/usuarios") {
+              } else if (pathname == "/app/usuarios") {
                 const cedula = Number(
                   selectedFlatRows.map((row) => {
                     return row.original.cedula;
                   })
                 );
+
                 deleteUser({
                   variables: {
                     deleteUserCedula: cedula,
@@ -178,9 +177,7 @@ export const Table = ({ data, columns: memoColumns, placeholder }) => {
                   },
                 });
               }
-              
             }}
-            cursor="pointer"
           />
         }
         isOpen={selectedFlatRows.length > 0}
