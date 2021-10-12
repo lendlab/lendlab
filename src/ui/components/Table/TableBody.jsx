@@ -7,26 +7,25 @@ import { Edit, Frame, Grid, Messages, Prestamo, ProfileUser2, SMS, Trash } from 
 import { Drawer, FormControl, Text } from "@ui";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked }) => {
-  const { isOpen: isLendOpen, onOpen: onLendOpen, onClose: onLendClose } = useDisclosure();
-  const {
-    isOpen: isMaterialOpen,
-    onOpen: onMaterialOpen,
-    onClose: onMaterialClose,
-  } = useDisclosure();
-  const btnRef = React.useRef();
-  const [deleteMaterial, { data: mutationData, loading, error }] = useMutation(DELETE_MATERIAL);
+  // const { isOpen: isLendOpen, onOpen: onLendOpen, onClose: onLendClose } = useDisclosure();
+  // const {
+  //   isOpen: isMaterialOpen,
+  //   onOpen: onMaterialOpen,
+  //   onClose: onMaterialClose,
+  // } = useDisclosure();
+  // const [deleteMaterial, { data: mutationData, loading, error }] = useMutation(DELETE_MATERIAL);
 
-  const [updateMaterial, { data: editData, loading: editLoading, error: editError }] =
-    useMutation(UPDATE_MATERIAL);
-  const toast = useToast();
+  // const [updateMaterial, { data: editData, loading: editLoading, error: editError }] =
+  //   useMutation(UPDATE_MATERIAL);
+  // const toast = useToast();
 
   const { pathname } = useLocation();
-
-  const [modalInfo, setModalInfo] = useState({});
-  const [editable, setEditable] = useState(false);
+  const history = useHistory();
+  // const [modalInfo, setModalInfo] = useState({});
+  // const [editable, setEditable] = useState(false);
 
   return (
     <>
@@ -37,17 +36,15 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
           return (
             <Tr
               key={index}
+              _hover={{ backgroundColor: "lendlab.gray.100" }}
               {...row.getRowProps({
                 onClick: (e) => {
                   if (e.target.tagName == "TD") {
                     if (pathname == "/app/prestamos") {
-                      onLendOpen();
+                      history.push(`/app/prestamo/${row.original.lendId}`);
                     } else if (pathname == "/app/materiales") {
-                      onMaterialOpen();
+                      history.push(`/app/material/${row.original.id_material}`);
                     }
-                    const { original: rowData } = row;
-
-                    setModalInfo(rowData);
                   }
                 },
               })}
@@ -55,7 +52,7 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
             >
               {row.cells.map((cell, index) => {
                 return (
-                  <Td key={index} {...cell.getCellProps}>
+                  <Td key={index} {...cell.getCellProps} fontSize="2">
                     {cell.render("Cell")}
                   </Td>
                 );
@@ -65,7 +62,7 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
         })}
       </Tbody>
 
-      <Drawer
+      {/* <Drawer
         hasDivider
         body={
           <Stack spacing={8}>
@@ -349,7 +346,7 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
           onMaterialClose();
           setEditable(false);
         }}
-      />
+      /> */}
     </>
   );
 };
