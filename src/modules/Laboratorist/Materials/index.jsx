@@ -1,21 +1,19 @@
-import React, { useEffect, useRef } from "react";
-import { SectionInfo, Tab, FormControl, Table, Drawer } from "@ui";
-import { Prestamo, NewPrestamo } from "@icons";
-import {
-  Button,
-  TabPanels,
-  TabPanel,
-  TabList,
-  Stack,
-  InputLeftAddon,
-  useToast,
-  Badge,
-  Spinner,
-} from "@chakra-ui/react";
-import { Form, Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import { useDisclosure } from "@chakra-ui/hooks";
+import {
+  Button,
+  InputLeftAddon,
+  Stack,
+  TabList,
+  TabPanel,
+  TabPanels,
+  useToast,
+} from "@chakra-ui/react";
 import { CREATE_MATERIAL } from "@graphql/mutations/materials";
+import { NewPrestamo, Prestamo } from "@icons";
+import { Drawer, FormControl, SectionInfo, Tab } from "@ui";
+import { Form, Formik } from "formik";
+import React, { useEffect, useRef } from "react";
 
 import { AllMaterials } from "./AllMaterials";
 
@@ -49,12 +47,7 @@ export const LabMaterialsPage = () => {
       icon={<Prestamo size="big" />}
       title="Materiales"
     >
-      <TabList
-        bg="lendlab.gray.100"
-        borderBottomRadius="32px"
-        paddingTop={8}
-        paddingX={{ base: 0, md: 40 }}
-      >
+      <TabList bg="lendlab.gray.100" paddingTop={8} paddingX={{ base: 0, md: 18 }}>
         <Tab>
           <Prestamo /> TODOS
         </Tab>
@@ -63,7 +56,7 @@ export const LabMaterialsPage = () => {
         <Tab>DEVUELTOS</Tab>
       </TabList>
       <TabPanels bg="white">
-        <TabPanel paddingX={{ base: 0, md: 40 }}>
+        <TabPanel paddingX={{ base: 0, md: 18 }}>
           <Drawer
             isNotCenter
             body={
