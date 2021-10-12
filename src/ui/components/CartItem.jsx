@@ -3,7 +3,15 @@ import { Stack, Image, Icon } from "@chakra-ui/react";
 import { Text } from "@ui";
 import { Trash } from "@icons";
 
-export const CartItem = ({ nombre, desc, src, deleteMaterialFromCart, notShowTrash, ...props }) => {
+export const CartItem = ({
+  id,
+  nombre,
+  desc,
+  src,
+  deleteMaterialFromCart,
+  notShowTrash,
+  ...props
+}) => {
   return (
     <Stack alignItems="center" direction="row" overflow="hidden" {...props}>
       <Image
@@ -25,7 +33,7 @@ export const CartItem = ({ nombre, desc, src, deleteMaterialFromCart, notShowTra
               h="none"
               variant="secondary"
               w="none"
-              onClick={(e) => deleteMaterialFromCart(nombre)}
+              onClick={(e) => deleteMaterialFromCart(id)}
             />
           )}
         </Stack>
