@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
 import { CREATE_LEND } from "@graphql/mutations/lends";
 import { CREATE_RESERVATION } from "@graphql/mutations/reservations";
@@ -30,7 +31,7 @@ const end = now.clone().add(1, "hours");
 const LendsDrawer = React.memo(
   ({ isDrawerOpen, onDrawerClose, userButton, btnRef, userSelected }) => {
     const [material, setMaterial] = React.useState("");
-
+    const toast = useToast();
     const [
       createLend,
       { data: createLendData, loading: createLendLoading, error: createLendError },
@@ -159,7 +160,7 @@ const LendsDrawer = React.memo(
               <Button
                 isFullWidth
                 colorScheme="blue"
-                isLoading={createLendLoading}
+                isLoading={createLendLoading || createReservationLoading}
                 variant="primary"
                 onClick={() => {
                   cart.map(({ id }, index) => {
@@ -179,6 +180,9 @@ const LendsDrawer = React.memo(
                           },
                         },
                       },
+                      update: (cache) => {
+                        cache.evict({ fieldName: "getReservations" });
+                      },
                     });
                   });
 
@@ -188,23 +192,28 @@ const LendsDrawer = React.memo(
                         id_lend: 0,
                         fecha_hora_presta: "",
                         fecha_vencimiento: dateEnd,
-                        fecha_devolucion: "000",
+                        fecha_devolucion: "",
                         reservation: {
                           id_reserva: 0,
-                          fecha_hora: "",
-                          finalizada: false,
                         },
                       },
                     },
                     update: (cache) => {
                       onDrawerClose();
+                      toast({
+                        title: `Se ha creado correctamente el prestamo!`,
+                        description: "Lo has hecho correctamente c:",
+                        status: "success",
+                        duration: 2000,
+                        isClosable: true,
+                      });
                     },
                   });
                 }}
               >
-                Crear nuevo prestamo
+                Crear nuevo préstamo
               </Button>
-              <Button isFullWidth mt={3} variant="secondary" onClick={onDrawerClose}>
+              <Button isFullWidth mt={3}  variant="secondary" onClick={onDrawerClose}>
                 Cancelar
               </Button>
             </>
@@ -212,7 +221,7 @@ const LendsDrawer = React.memo(
           icon={Prestamo}
           isOpen={isDrawerOpen}
           size="lg"
-          title="Crear Nuevo Prestamo"
+          title="Crear Nuevo Préstamo"
           onClose={() => {
             onDrawerClose();
             clearCart();
