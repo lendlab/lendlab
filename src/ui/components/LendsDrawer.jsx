@@ -1,107 +1,128 @@
-import React from "react";
+import { useMutation } from "@apollo/client";
+import { useDisclosure } from "@chakra-ui/hooks";
 import {
-  Stack,
-  FormLabel,
   Button,
-  Image,
-  Circle,
+  FormLabel,
   Modal,
-  ModalOverlay,
+  ModalBody,
   ModalContent,
   ModalHeader,
-  ModalBody,
-  Icon,
+  ModalOverlay,
+  Stack,
 } from "@chakra-ui/react";
-import { Text, Heading, Input, Select, Drawer } from "@ui";
-import { Prestamo, Trash } from "@icons";
-import { useDisclosure } from "@chakra-ui/hooks";
-import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
-import "react-datetime-picker/dist/DateTimePicker.css";
+import { CREATE_LEND } from "@graphql/mutations/lends";
+import { CREATE_RESERVATION } from "@graphql/mutations/reservations";
+import { useCart } from "@hooks/useCart";
+import { Prestamo } from "@icons";
+import { Drawer, Input, Select, Text } from "@ui";
+import moment from "moment";
+import React from "react";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
-import moment from "moment";
+import "react-datetime-picker/dist/DateTimePicker.css";
+import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 
-import { useCart } from "../../hooks/useCart";
 import { CartItem } from "..";
 
 const now = moment().minutes(0).seconds(0).add(1, "hours");
 const end = now.clone().add(1, "hours");
 
-const LendsDrawer = React.memo(({ isDrawerOpen, onDrawerClose, userButton, btnRef }) => {
-  const [material, setMaterial] = React.useState("");
+const LendsDrawer = React.memo(
+  ({ isDrawerOpen, onDrawerClose, userButton, btnRef, userSelected }) => {
+    const [material, setMaterial] = React.useState("");
 
-  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
+    const [
+      createLend,
+      { data: createLendData, loading: createLendLoading, error: createLendError },
+    ] = useMutation(CREATE_LEND);
 
-  const {
-    cart,
-    clearCart,
-    filterMaterials,
-    addMaterialToCart,
-    deleteMaterialFromCart,
-    cartCount,
-    materials,
-  } = useCart();
+    const [
+      createReservation,
+      {
+        data: createReservationData,
+        loading: createReservationLoading,
+        error: createReservationError,
+      },
+    ] = useMutation(CREATE_RESERVATION);
 
-  const [dateStart, setDateStart] = React.useState(now.toDate());
-  const [dateEnd, setDateEnd] = React.useState(end.toDate());
+    useMutation;
+    const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
 
-  const handleStartDateChange = (e) => {
-    setDateStart(e);
-    console.log(e);
-  };
+    const {
+      cart,
+      clearCart,
+      filterMaterials,
+      addMaterialToCart,
+      deleteMaterialFromCart,
+      cartCount,
+      materials,
+    } = useCart();
 
-  const handleEndDateChange = (e) => {
-    setDateEnd(e);
-    console.log(e);
-  };
+    const [dateStart, setDateStart] = React.useState(now.toDate());
+    const [dateEnd, setDateEnd] = React.useState(end.toDate());
 
-  return (
-    <>
-      <Drawer
-        isNotCenter
-        materialsSelected
-        body={
-          <Stack spacing={8}>
-            <Stack spacing={2}>
-              <FormLabel>Usuario</FormLabel>
-              {userButton}
-            </Stack>
+    const handleStartDateChange = (e) => {
+      setDateStart(e);
+    };
 
-            <Stack spacing={2}>
-              <FormLabel>Materiales ({cartCount})</FormLabel>
-              <Stack
-                bg="lendlab.gray.100"
-                borderRadius="17px"
-                maxH="300px"
-                overflowY="scroll"
-                padding={4}
-              >
-                <Stack alignItems="center" direction="row" justifyContent="space-between">
-                  <Text fontSize="2" textAlign="left">
-                    Puedes agregar más de 1 material
-                  </Text>
-                  <Button fontSize="1" variant="primary" onClick={onModalOpen}>
-                    Agregar material
-                  </Button>
-                </Stack>
-                <Stack>
-                  {cart.map(({ desc, nombre, src }, index) => (
-                    <CartItem
-                      key={index}
-                      deleteMaterialFromCart={deleteMaterialFromCart}
-                      desc={desc}
-                      nombre={nombre}
-                      src={src}
-                    />
-                  ))}
+    const handleEndDateChange = (e) => {
+      setDateEnd(e);
+    };
+
+    return (
+      <>
+        <Drawer
+          isNotCenter
+          materialsSelected
+          body={
+            <Stack spacing={8}>
+              <Stack spacing={2}>
+                <FormLabel>Usuario</FormLabel>
+                {userButton}
+              </Stack>
+
+              <Stack spacing={2}>
+                <FormLabel>Materiales ({cartCount})</FormLabel>
+                <Stack
+                  bg="lendlab.gray.100"
+                  borderRadius="17px"
+                  maxH="300px"
+                  overflowY="scroll"
+                  padding={4}
+                >
+                  <Stack alignItems="center" direction="row" justifyContent="space-between">
+                    <Text fontSize="2" textAlign="left">
+                      Puedes agregar más de 1 material
+                    </Text>
+                    <Button fontSize="1" variant="primary" onClick={onModalOpen}>
+                      Agregar material
+                    </Button>
+                  </Stack>
+                  <Stack>
+                    {cart.map(({ id, desc, nombre, src }, index) => (
+                      <CartItem
+                        key={index}
+                        deleteMaterialFromCart={deleteMaterialFromCart}
+                        desc={desc}
+                        id={id}
+                        nombre={nombre}
+                        src={src}
+                      />
+                    ))}
+                  </Stack>
                 </Stack>
               </Stack>
-            </Stack>
-            <Stack spacing={2}>
-              <FormLabel>Plazo</FormLabel>
-              <Stack alignItems="center" direction="row" position="relative" w="100%">
-                <DateTimePicker value={dateStart} onChange={handleStartDateChange} />
-                {/* <Circle
+              <Stack spacing={2}>
+                <FormLabel>Plazo</FormLabel>
+                <Stack alignItems="center" direction="row" position="relative" w="100%">
+                  <DateTimePicker
+                    customInput={Input}
+                    disabled={true}
+                    minDate={dateStart}
+                    value={dateStart}
+                    onChange={handleStartDateChange}
+                  />
+                  {/* <Circle
                     bg="lendlab.gray.100"
                     left="49%"
                     marginRight="auto"
@@ -112,86 +133,142 @@ const LendsDrawer = React.memo(({ isDrawerOpen, onDrawerClose, userButton, btnRe
                   >
                     -
                   </Circle> */}
-                <DateTimePicker value={dateEnd} onChange={handleEndDateChange} />
+                  <DateTimePicker
+                    minDate={dateStart}
+                    value={dateEnd}
+                    onChange={handleEndDateChange}
+                  />
+                </Stack>
+              </Stack>
+              <Stack spacing={2}>
+                <FormLabel>Tipo</FormLabel>
+
+                <Select
+                  options={[
+                    { key: "Externo", value: "Externo" },
+                    { key: "Interno", value: "Interno" },
+                  ]}
+                  placeholder="Selecciona un tipo"
+                />
               </Stack>
             </Stack>
-            <Stack spacing={2}>
-              <FormLabel>Tipo</FormLabel>
+          }
+          btnRef={btnRef}
+          footer={
+            <>
+              <Button
+                isFullWidth
+                colorScheme="blue"
+                isLoading={createLendLoading}
+                variant="primary"
+                onClick={() => {
+                  cart.map(({ id }, index) => {
+                    const fecha_hora = moment().add(index, "seconds").toDate();
 
-              <Select
-                options={[
-                  { key: "Externo", value: "Externo" },
-                  { key: "Interno", value: "Interno" },
-                ]}
-                placeholder="Selecciona un tipo"
+                    createReservation({
+                      variables: {
+                        data: {
+                          id_reserva: 0,
+                          finalizada: false,
+                          fecha_hora,
+                          user: {
+                            cedula: parseInt(userSelected.cedula),
+                          },
+                          material: {
+                            id_material: id,
+                          },
+                        },
+                      },
+                    });
+                  });
+
+                  createLend({
+                    variables: {
+                      data: {
+                        id_lend: 0,
+                        fecha_hora_presta: "",
+                        fecha_vencimiento: dateEnd,
+                        fecha_devolucion: "000",
+                        reservation: {
+                          id_reserva: 0,
+                          fecha_hora: "",
+                          finalizada: false,
+                        },
+                      },
+                    },
+                    update: (cache) => {
+                      onDrawerClose();
+                    },
+                  });
+                }}
+              >
+                Crear nuevo prestamo
+              </Button>
+              <Button isFullWidth mt={3} variant="secondary" onClick={onDrawerClose}>
+                Cancelar
+              </Button>
+            </>
+          }
+          icon={Prestamo}
+          isOpen={isDrawerOpen}
+          size="lg"
+          title="Crear Nuevo Prestamo"
+          onClose={() => {
+            onDrawerClose();
+            clearCart();
+          }}
+        />
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => {
+            onModalClose();
+            setMaterial("");
+          }}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              <Input
+                notWithFormik
+                name="material"
+                placeholder="Buscar Material"
+                value={material}
+                onChange={(e) => {
+                  setMaterial(e.target.value);
+                  filterMaterials(material);
+                }}
+                onResetClick={() => {
+                  setMaterial("");
+                  filterMaterials("");
+                }}
               />
-            </Stack>
-          </Stack>
-        }
-        btnRef={btnRef}
-        footer={
-          <>
-            <Button isFullWidth colorScheme="blue" variant="primary">
-              Crear nuevo prestamo
-            </Button>
-            <Button isFullWidth mt={3} variant="secondary" onClick={onDrawerClose}>
-              Cancelar
-            </Button>
-          </>
-        }
-        icon={Prestamo}
-        isOpen={isDrawerOpen}
-        size="lg"
-        title="Crear Nuevo Prestamo"
-        onClose={() => {
-          onDrawerClose();
-          clearCart();
-        }}
-      />
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => {
-          onModalClose();
-          setMaterial("");
-        }}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Input
-              name="material"
-              placeholder="Buscar Material"
-              value={material}
-              onChange={(e) => {
-                setMaterial(e.target.value);
-                filterMaterials(material);
-              }}
-            />
-          </ModalHeader>
-          <ModalBody>
-            <Stack spacing={4}>
-              {materials.slice(0, 3).map(({ src, nombre, desc }, index) => (
-                <CartItem
-                  key={index}
-                  notShowTrash
-                  cursor="pointer"
-                  deleteMaterialFromCart={deleteMaterialFromCart}
-                  desc={desc}
-                  nombre={nombre}
-                  src={src}
-                  onClick={() => {
-                    addMaterialToCart({ src, nombre, desc });
-                    onModalClose();
-                    setMaterial("");
-                  }}
-                />
-              ))}
-            </Stack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-});
+            </ModalHeader>
+            <ModalBody>
+              <Stack spacing={4}>
+                {materials.slice(0, 3).map(({ id, src, nombre, desc }, index) => (
+                  <CartItem
+                    key={index}
+                    notShowTrash
+                    cursor="pointer"
+                    deleteMaterialFromCart={deleteMaterialFromCart}
+                    desc={desc}
+                    id={id}
+                    nombre={nombre}
+                    src={src}
+                    onClick={() => {
+                      addMaterialToCart({ id, src, nombre, desc });
+                      onModalClose();
+                      setMaterial("");
+                    }}
+                  />
+                ))}
+              </Stack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </>
+    );
+  }
+);
 
 export default LendsDrawer;
