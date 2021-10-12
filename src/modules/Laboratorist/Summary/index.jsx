@@ -7,7 +7,7 @@ export const Summary = () => {
   return (
     <>
       <SectionInfo isSummary title="Resumen" />
-      <Box marginLeft={{ base: 0, md: 60 }} paddingX={{ base: 6, md: 40 }}>
+      <Box marginLeft={{ base: 0, md: 60 }} paddingX={{ base: 6, md: 18 }}>
         <Wrap align="center" justify="center" marginTop={8} spacing={8}>
           <WrapItem bg="lendlab.gray.100" borderRadius="14px" flex="1" h="200px" padding={4}>
             <Stack h="full" justifyContent="space-between" spacing={2} w="full">
