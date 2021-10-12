@@ -1,9 +1,9 @@
 import * as React from "react";
 
-export function Edit(props) {
+export function Edit({ fill = " #787c7f", ...props }) {
   return (
     <svg height={24} width={24} xmlns="http://www.w3.org/2000/svg" {...props}>
-      <g fill="#787c7f">
+      <g fill={fill}>
         <path
           d="M21 22H3a.755.755 0 01-.75-.75.755.755 0 01.75-.75h18a.755.755 0 01.75.75.755.755 0 01-.75.75zM19.02 3.48c-1.94-1.94-3.84-1.99-5.83 0l-1.21 1.21a.417.417 0 00-.1.4 8.129 8.129 0 005.53 5.53.5.5 0 00.12.02.4.4 0 00.29-.12l1.2-1.21a4.133 4.133 0 001.47-2.89 4.117 4.117 0 00-1.47-2.94z"
           opacity={0.4}
