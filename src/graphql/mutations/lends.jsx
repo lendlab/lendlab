@@ -9,8 +9,6 @@ export const CREATE_LEND = gql`
       fecha_hora_presta
       reservation {
         id_reserva
-        fecha_hora
-        finalizada
       }
     }
   }
