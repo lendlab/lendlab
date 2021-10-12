@@ -45,7 +45,7 @@ export const LabUsersPage = () => {
       icon={<Prestamo size="big" />}
       title="Usuarios"
     >
-      <TabList bg="lendlab.gray.100" borderBottomRadius="32px" paddingTop={8} paddingX={40}>
+      <TabList bg="lendlab.gray.100" paddingTop={8} paddingX={18}>
         <Tab>
           <Icon as={Prestamo} h="none" marginRight={2} w="none" /> TODOS
         </Tab>
@@ -54,7 +54,7 @@ export const LabUsersPage = () => {
         <Tab>DEVUELTOS</Tab>
       </TabList>
       <TabPanels bg="white">
-        <TabPanel paddingX={40}>
+        <TabPanel paddingX={18}>
           <AllUsers />
           <Drawer
             isNotCenter
