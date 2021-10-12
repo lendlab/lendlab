@@ -1,15 +1,23 @@
-import { useQuery } from "@apollo/client";
-import { Badge, Stack } from "@chakra-ui/layout";
-import { Table, Heading, Text, SkeletonTable } from "@ui";
-import { GET_ALL_MATERIALS } from "@graphql/queries/materials";
-import React, { useEffect, useRef } from "react";
-import Lottie from "lottie-web";
-import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/alert";
 import empty from "@animations/empty.json";
+import { useMutation, useQuery } from "@apollo/client";
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/alert";
+import { Button, IconButton } from "@chakra-ui/button";
+import { Badge, Stack } from "@chakra-ui/layout";
+import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { GET_ALL_MATERIALS } from "@graphql/queries/materials";
+import { SkeletonTable, Table, Text } from "@ui";
+import Lottie from "lottie-web";
+import React, { useEffect, useRef } from "react";
+import { Options, Trash, Edit } from "@icons";
+import { useToast } from "@chakra-ui/toast";
+import { DELETE_MATERIAL } from "@graphql/mutations/materials";
 
 export const AllMaterials = () => {
   const { loading, error, data } = useQuery(GET_ALL_MATERIALS);
   const container = useRef(null);
+  const toast = useToast();
+  const [deleteMaterial, { data: dataDelete, loading: loadingDelete, error: deleteError }] =
+    useMutation(DELETE_MATERIAL);
 
   useEffect(() => {
     const animation = Lottie.loadAnimation({
@@ -59,6 +67,9 @@ export const AllMaterials = () => {
     {
       Header: "ID",
       accessor: "id_material",
+      Cell({ row }) {
+        return <Badge>{row.original.id_material}</Badge>;
+      },
     },
     {
       Header: "Nombre",
@@ -92,6 +103,43 @@ export const AllMaterials = () => {
       accessor: "estado",
       Cell({ row }) {
         return <Badge colorScheme={colorSchemes[row.original.estado]}>{row.original.estado}</Badge>;
+      },
+    },
+    {
+      header: "",
+      id: "click-me-button",
+      Cell({ row }) {
+        return (
+          <Stack direction="row">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                deleteMaterial({
+                  variables: {
+                    deleteMaterialIdMaterial: row.original.id_material,
+                  },
+                  update: (cache) => {
+                    cache.evict({
+                      id_material: "Material:" + row.original.id_material,
+                    });
+                    toast({
+                      title: `Se ha borrado el material #${row.original.id_material}!`,
+                      description: "Lo has hecho correctamente c:",
+                      status: "success",
+                      duration: 2000,
+                      isClosable: true,
+                    });
+                  },
+                });
+              }}
+            >
+              <Trash />
+            </Button>
+            <Button variant="ghost">
+              <Edit />
+            </Button>
+          </Stack>
+        );
       },
     },
   ];
