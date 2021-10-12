@@ -28,30 +28,31 @@ export const LabLendsPage = () => {
   const Users = React.useMemo(
     () => [
       {
+        cedula: 54548246,
         nombre: "Marcos Cianzio",
         src: "/images/Cianzio.jpg",
-        desc: "54548246",
       },
       {
+        cedula: 4000,
         nombre: "Francisco Fiorelli",
         src: "/images/Fiorelli.jpg",
-        desc: "54548246",
       },
       {
+        cedula: 3500,
         nombre: "Nicolás Heredia",
         src: "/images/Heredia.jpg",
-        desc: "Lorem ipsum dolor sit amet, consectetur . Duis aute irure dolor in reprehenderit",
       },
       {
+        cedula: 300,
         nombre: "Iván Prestes",
         src: "/images/Prestes.jpg",
-        desc: "54548246",
       },
     ],
     []
   );
 
   const {
+    handleReset,
     user,
     usersFiltered,
     userSelected,
@@ -75,7 +76,7 @@ export const LabLendsPage = () => {
         bg="lendlab.gray.100"
         borderBottomRadius="32px"
         paddingTop={8}
-        paddingX={{ base: 0, md: 40 }}
+        paddingX={{ base: 0, md: 18 }}
       >
         <Tab>
           <Icon as={Prestamo} h="none" marginRight={2} w="none" /> TODOS
@@ -85,10 +86,12 @@ export const LabLendsPage = () => {
         <Tab>DEVUELTOS</Tab>
       </TabList>
       <TabPanels bg="white">
-        <TabPanel paddingX={{ base: 0, md: 40 }}>
+        <TabPanel paddingX={{ base: 0, md: 18 }}>
           <AllLends />
 
           <LendsDrawer
+            btnRef={btnRef}
+            isDrawerOpen={isDrawerOpen}
             userButton={
               <Button
                 bg="lendlab.gray.100"
@@ -101,20 +104,23 @@ export const LabLendsPage = () => {
                 textAlign="left"
                 onClick={onModalOpen}
               >
-                {userSelected == "" ? "Buscar usuario" : userSelected}
+                {Object.keys(userSelected).length === 0 ? "Buscar usuario" : userSelected.nombre}
               </Button>
             }
-            {...{ isDrawerOpen, onDrawerClose, btnRef }}
+            userSelected={userSelected}
+            onDrawerClose={onDrawerClose}
           />
           <Modal isOpen={isModalOpen} onClose={onModalClose}>
             <ModalOverlay />
             <ModalContent>
               <ModalHeader>
                 <Input
+                  notWithFormik
                   name="user"
                   placeholder="Buscar Usuario"
                   value={user}
                   onChange={handleUserChange}
+                  onResetClick={handleReset}
                 />
               </ModalHeader>
               <ModalBody>
@@ -143,7 +149,7 @@ export const LabLendsPage = () => {
                               {user.nombre}
                             </Text>
                             <Text fontSize="3" noOfLines={1} textAlign="left">
-                              {user.desc}
+                              {user.cedula}
                             </Text>
                           </Stack>
                         </Stack>
@@ -171,7 +177,7 @@ export const LabLendsPage = () => {
                               {user.nombre}
                             </Text>
                             <Text fontSize="3" noOfLines={1} textAlign="left">
-                              {user.desc}
+                              {user.cedula}
                             </Text>
                           </Stack>
                         </Stack>
