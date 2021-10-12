@@ -13,12 +13,7 @@ export const SectionInfo = ({
 }) => {
   return (
     <Box marginLeft={{ base: 0, md: 60 }}>
-      <Box
-        borderRadius
-        bg="lendlab.gray.100"
-        borderBottomRadius={isSummary && "32px"}
-        paddingX={{ base: 0, md: 40 }}
-      >
+      <Box bg="lendlab.gray.100" paddingX={{ base: 0, md: 18 }}>
         <Stack h="full" justifyContent="space-between" spacing={8}>
           <Stack spacing={6}>
             <Stack
