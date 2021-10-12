@@ -18,6 +18,7 @@ import { LogoutIcon } from "./LogoutIcon";
 import { Messages } from "./Messages";
 import { NewPrestamo } from "./NewPrestamo";
 import { Notification } from "./Notification";
+import { Options } from "./Options";
 import { People } from "./People";
 import { Prestamo } from "./Prestamo";
 import { ProfileUser2 } from "./ProfileUser2";
@@ -58,4 +59,5 @@ export {
   List,
   Notification,
   Cart,
+  Options,
 };
