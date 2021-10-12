@@ -118,7 +118,7 @@ const Nav = ({ onOpen, ...rest }) => {
       height="20"
       justifyContent={{ base: "space-between" }}
       ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 36 }}
+      px={{ base: 4, md: 18 }}
       {...rest}
     >
       <IconButton
