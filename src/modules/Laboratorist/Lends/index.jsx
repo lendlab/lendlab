@@ -65,7 +65,7 @@ export const LabLendsPage = () => {
     <SectionInfo
       button={
         <Button leftIcon={<NewPrestamo />} variant="primary" onClick={onDrawerOpen}>
-          Nuevo Prestamo
+          Nuevo Préstamo
         </Button>
       }
       description="En la sección de prestamos, puedes revisar y administrar todos los prestamos con sus detalles. Puedes ver, editar y eliminar cualquier tipo de información como la reserva de todos los useres, ordenados por IDs, fechas, y tipo de prestamo. El acceso a esta área es limitada. Solo Laboratoristas pueden alcanzarla. Los cambios que hagas son irreversibles."
