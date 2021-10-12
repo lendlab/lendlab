@@ -14,3 +14,18 @@ export const GET_ALL_MATERIALS = gql`
     }
   }
 `;
+
+export const GET_MATERIAL = gql`
+  query Query($idMaterial: Int!) {
+    getMaterial(id_material: $idMaterial) {
+      id_material
+      nombre
+      etiqueta
+      categoria
+      descripcion
+      cantidad
+      foto
+      estado
+    }
+  }
+`;
