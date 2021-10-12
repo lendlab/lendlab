@@ -11,9 +11,11 @@ export const Input = ({
   children,
   w,
   maxW,
+  onResetClick,
   setValue,
   isGlobalFilter,
   setGlobalFilter,
+  notWithFormik,
   ...props
 }) => {
   return (
@@ -28,10 +30,13 @@ export const Input = ({
               size="sm"
               variant="ghost"
               onClick={() => {
-                setValue("");
+                {
+                  !notWithFormik && setValue("");
+                }
                 {
                   isGlobalFilter && setGlobalFilter("");
                 }
+                onResetClick();
               }}
             >
               x
