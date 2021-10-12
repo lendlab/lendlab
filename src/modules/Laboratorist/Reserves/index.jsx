@@ -3,6 +3,8 @@ import { SectionInfo, Tab } from "@ui";
 import { Prestamo, NewPrestamo } from "@icons";
 import { Button, TabPanels, TabPanel, TabList } from "@chakra-ui/react";
 
+import { AllReserves } from "./AllReserves";
+
 export const LabReservesPage = () => {
   return (
     <SectionInfo
@@ -15,7 +17,7 @@ export const LabReservesPage = () => {
       icon={<Prestamo size="big" />}
       title="Reservas"
     >
-      <TabList bg="lendlab.gray.100" borderBottomRadius="32px" paddingTop={8} paddingX={40}>
+      <TabList bg="lendlab.gray.100" borderBottomRadius="32px" paddingTop={8} paddingX={18}>
         <Tab>
           <Prestamo /> TODOS
         </Tab>
@@ -25,7 +27,7 @@ export const LabReservesPage = () => {
       </TabList>
       <TabPanels bg="white">
         <TabPanel>
-          <p>1</p>
+          <AllReserves />
         </TabPanel>
         <TabPanel>
           <p>2</p>
