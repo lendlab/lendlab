@@ -17,8 +17,8 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: "ADD_MATERIAL", payload: material });
   };
 
-  const deleteMaterialFromCart = (nombre) => {
-    dispatch({ type: "DELETE_MATERIAL", payload: nombre });
+  const deleteMaterialFromCart = (id) => {
+    dispatch({ type: "DELETE_MATERIAL", payload: id });
   };
 
   const filterMaterials = (nombre) => {
