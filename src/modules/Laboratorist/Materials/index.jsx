@@ -34,7 +34,7 @@ export const LabMaterialsPage = () => {
         isClosable: true,
       });
     }
-  }, [mutationError]);
+  }, [mutationError, toast]);
 
   return (
     <SectionInfo
