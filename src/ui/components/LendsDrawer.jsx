@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Button,
@@ -22,6 +22,7 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
+import { GET_ALL_RESERVATIONS } from "@graphql/queries/reservations";
 
 import { CartItem } from "..";
 
@@ -30,8 +31,21 @@ const end = now.clone().add(1, "hours");
 
 const LendsDrawer = React.memo(
   ({ isDrawerOpen, onDrawerClose, userButton, btnRef, userSelected }) => {
+    const [dateStart, setDateStart] = React.useState(now.toDate());
+    const [dateEnd, setDateEnd] = React.useState(end.toDate());
     const [material, setMaterial] = React.useState("");
     const toast = useToast();
+    const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
+    const {
+      cart,
+      clearCart,
+      filterMaterials,
+      addMaterialToCart,
+      deleteMaterialFromCart,
+      cartCount,
+      materials,
+    } = useCart();
+
     const [
       createLend,
       { data: createLendData, loading: createLendLoading, error: createLendError },
@@ -46,21 +60,35 @@ const LendsDrawer = React.memo(
       },
     ] = useMutation(CREATE_RESERVATION);
 
-    useMutation;
-    const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
-
     const {
-      cart,
-      clearCart,
-      filterMaterials,
-      addMaterialToCart,
-      deleteMaterialFromCart,
-      cartCount,
-      materials,
-    } = useCart();
+      loading: loadingReservation,
+      error: errorReservation,
+      data: dataReservation,
+    } = useQuery(GET_ALL_RESERVATIONS);
 
-    const [dateStart, setDateStart] = React.useState(now.toDate());
-    const [dateEnd, setDateEnd] = React.useState(end.toDate());
+    if (loadingReservation) return <div>loading...</div>;
+
+    const groupAndMerge = (arr, groupBy, mergeInto) =>
+      Array.from(
+        arr
+          .reduce((m, o) => {
+            const curr = m.get(o[groupBy]);
+
+            return m.set(o[groupBy], {
+              ...o,
+              [mergeInto]: [...((curr && curr[mergeInto]) || []), o[mergeInto]],
+            });
+          }, new Map())
+          .values()
+      );
+
+    const reservationsGrouped = groupAndMerge(
+      dataReservation.getReservations,
+      "id_reserva",
+      "material"
+    );
+
+    const maxReserveId = reservationsGrouped.length + 1;
 
     const handleStartDateChange = (e) => {
       setDateStart(e);
@@ -169,7 +197,7 @@ const LendsDrawer = React.memo(
                     createReservation({
                       variables: {
                         data: {
-                          id_reserva: 0,
+                          id_reserva: maxReserveId,
                           finalizada: false,
                           fecha_hora,
                           user: {
@@ -194,11 +222,12 @@ const LendsDrawer = React.memo(
                         fecha_vencimiento: dateEnd,
                         fecha_devolucion: "",
                         reservation: {
-                          id_reserva: 0,
+                          id_reserva: maxReserveId,
                         },
                       },
                     },
                     update: (cache) => {
+                      cache.evict({ fieldName: "lend" });
                       onDrawerClose();
                       toast({
                         title: `Se ha creado correctamente el prestamo!`,
@@ -213,7 +242,7 @@ const LendsDrawer = React.memo(
               >
                 Crear nuevo préstamo
               </Button>
-              <Button isFullWidth mt={3}  variant="secondary" onClick={onDrawerClose}>
+              <Button isFullWidth mt={3} variant="secondary" onClick={onDrawerClose}>
                 Cancelar
               </Button>
             </>
