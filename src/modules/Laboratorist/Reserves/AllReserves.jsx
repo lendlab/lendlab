@@ -23,8 +23,6 @@ export const AllReserves = () => {
 
   if (error) return <p>Oh no... {error.message}</p>;
 
-  const arr = data.getReservations;
-
   const groupAndMerge = (arr, groupBy, mergeInto) =>
     Array.from(
       arr
@@ -39,7 +37,7 @@ export const AllReserves = () => {
         .values()
     );
 
-  const nashe = groupAndMerge(arr, "id_reserva", "material");
+  const reservationsGrouped = groupAndMerge(data.getReservations, "id_reserva", "material");
 
   const COLUMNS = [
     {
@@ -52,7 +50,7 @@ export const AllReserves = () => {
       Cell({ row }) {
         const sqlDate = parseInt(row.original.fecha_hora);
 
-        const date = moment(sqlDate).format("Mo [de] MMMM [del] YYYY [a las] H:mm");
+        const date = moment(sqlDate).format("Do [de] MMMM [del] YYYY [a las] H:mm");
 
         return (
           <Tooltip aria-label={moment(sqlDate).fromNow()} label={moment(sqlDate).fromNow()}>
@@ -103,5 +101,5 @@ export const AllReserves = () => {
     },
   ];
 
-  return <Table columns={COLUMNS} data={nashe} />;
+  return <Table columns={COLUMNS} data={reservationsGrouped} />;
 };
