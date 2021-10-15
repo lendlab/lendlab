@@ -1,22 +1,54 @@
-import React from "react";
-import { Table } from "@ui";
-import { Badge, Stack } from "@chakra-ui/layout";
-import { Spinner } from "@chakra-ui/spinner";
-import { GET_ALL_USERS } from "@graphql/queries/users";
-import moment from "moment";
+import empty from "@animations/empty.json";
 import { useQuery } from "@apollo/client";
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/alert";
+import { Badge, Stack } from "@chakra-ui/layout";
+import { GET_ALL_USERS } from "@graphql/queries/users";
+import { SkeletonTable, Table, Text } from "@ui";
+import Lottie from "lottie-web";
+import moment from "moment";
+import React, { useEffect, useRef } from "react";
 
 export const AllUsers = () => {
   const { loading, error, data } = useQuery(GET_ALL_USERS);
+  const container = useRef(null);
 
-  if (loading)
+  useEffect(() => {
+    const animation = Lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: empty,
+    });
+
+    return () => {
+      animation.destroy();
+    };
+  }, [loading, data]);
+
+  if (loading) return <SkeletonTable />;
+
+  if (error)
     return (
-      <Stack alignItems="center" h="full" justifyContent="center" w="full">
-        <Spinner color="blue.500" emptyColor="gray.200" size="xl" speed="0.65s" thickness="4px" />
-      </Stack>
+      <Alert
+        alignItems="center"
+        borderBottomRadius="18px"
+        flexDirection="column"
+        height="200px"
+        justifyContent="center"
+        status="error"
+        textAlign="center"
+        variant="subtle"
+      >
+        <AlertIcon boxSize="40px" mr={0} />
+        <AlertTitle fontSize="lg" mb={1} mt={4}>
+          Ha ocurrido un error: {error.message}
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          ¡No es tu culpa! Estamos trabajando para solucionarlo
+        </AlertDescription>
+      </Alert>
     );
-
-  if (error) return <p>Oh no... {error.message}</p>;
 
   const COLUMNS = [
     {
@@ -51,6 +83,7 @@ export const AllUsers = () => {
       accessor: "fecha_nacimiento",
       Cell({ row }) {
         const sqlDate = row.original.fecha_nacimiento;
+
         const date = moment(sqlDate).format("DD/MM/YYYY");
 
         return date;
@@ -58,5 +91,16 @@ export const AllUsers = () => {
     },
   ];
 
-  return <Table columns={COLUMNS} data={data.getUsers} />;
+  return (
+    <>
+      {data && data.getUsers.length == 0 ? (
+        <Stack align="center" justify="center">
+          <Stack ref={container} h="200px" w="200px" />
+          <Text color="lendlab.gray.400">Actualmente no hay usuarios. Crea nuevos ya!</Text>
+        </Stack>
+      ) : (
+        <Table columns={COLUMNS} data={data.getUsers} />
+      )}
+    </>
+  );
 };
