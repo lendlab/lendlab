@@ -1,27 +1,61 @@
-import React from "react";
-import { Table } from "@ui";
-import { Badge, Stack } from "@chakra-ui/layout";
-import { Spinner } from "@chakra-ui/spinner";
-import { GET_ALL_RESERVATIONS } from "@graphql/queries/reservations";
-import moment from "moment";
-import { useQuery } from "@apollo/client";
-import { Tooltip } from "@chakra-ui/tooltip";
-import es from "moment/locale/es";
+import empty from "@animations/empty.json";
+import { useMutation, useQuery } from "@apollo/client";
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/alert";
 import { Avatar } from "@chakra-ui/avatar";
+import { Button } from "@chakra-ui/button";
+import { Badge, Stack } from "@chakra-ui/layout";
 import { chakra } from "@chakra-ui/system";
-moment.locale("es", es);
+import { Tooltip } from "@chakra-ui/tooltip";
+import { GET_ALL_RESERVATIONS } from "@graphql/queries/reservations";
+import { SkeletonTable, Table, Text } from "@ui";
+import Lottie from "lottie-web";
+import moment from "moment";
+import { CREATE_LEND } from "@graphql/mutations/lends";
+import React, { useEffect, useRef } from "react";
 
 export const AllReserves = () => {
   const { loading, error, data } = useQuery(GET_ALL_RESERVATIONS);
+  const [createLend, { data: createLendData, loading: createLendLoading, error: createLendError }] =
+    useMutation(CREATE_LEND);
+  const container = useRef(null);
 
-  if (loading)
+  useEffect(() => {
+    const animation = Lottie.loadAnimation({
+      container: container.current,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData: empty,
+    });
+
+    return () => {
+      animation.destroy();
+    };
+  }, [loading, data]);
+
+  if (loading) return <SkeletonTable />;
+
+  if (error)
     return (
-      <Stack alignItems="center" h="full" justifyContent="center" w="full">
-        <Spinner color="blue.500" emptyColor="gray.200" size="xl" speed="0.65s" thickness="4px" />
-      </Stack>
+      <Alert
+        alignItems="center"
+        borderBottomRadius="18px"
+        flexDirection="column"
+        height="200px"
+        justifyContent="center"
+        status="error"
+        textAlign="center"
+        variant="subtle"
+      >
+        <AlertIcon boxSize="40px" mr={0} />
+        <AlertTitle fontSize="lg" mb={1} mt={4}>
+          Ha ocurrido un error: {error.message}
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          ¡No es tu culpa! Estamos trabajando para solucionarlo
+        </AlertDescription>
+      </Alert>
     );
-
-  if (error) return <p>Oh no... {error.message}</p>;
 
   const groupAndMerge = (arr, groupBy, mergeInto) =>
     Array.from(
@@ -99,7 +133,34 @@ export const AllReserves = () => {
         return output.join(", ");
       },
     },
+    {
+      header: "",
+      id: "click-me-button",
+      Cell({ row }) {
+        return row.original.finalizada ? null : (
+          <Stack direction="row">
+            <Button borderRadius="17" colorScheme="green" fontSize="2" fontWeight="400">
+              Aceptar
+            </Button>
+            <Button borderRadius="17" colorScheme="red" fontSize="2" fontWeight="400">
+              Rechazar
+            </Button>
+          </Stack>
+        );
+      },
+    },
   ];
 
-  return <Table columns={COLUMNS} data={reservationsGrouped} />;
+  return (
+    <>
+      {data && data.getReservations.length == 0 ? (
+        <Stack align="center" justify="center">
+          <Stack ref={container} h="200px" w="200px" />
+          <Text color="lendlab.gray.400">Actualmente no hay reservas. Crea nuevos ya!</Text>
+        </Stack>
+      ) : (
+        <Table columns={COLUMNS} data={reservationsGrouped} />
+      )}
+    </>
+  );
 };
