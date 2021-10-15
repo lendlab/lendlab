@@ -16,8 +16,8 @@ Tu institución, ahora en forma online.
 
 ## ¿Como puedo correr el proyecto?
 
-Primero que nada, clona este repositorio y el de lendlab-backend en tu computadora.
-Luego de clonar el repositorio del frontend (este mismo), ejecuta en la consola:
+* Clona este repositorio y el del backend https://github.com/LendLab/lendlab-backend.
+* Ejecutar en la consola:
 
 ```bash
 # npm
@@ -30,6 +30,7 @@ npm run dev
 
 ### ¿Qué necesito para que funcione correctamente?
 
-* La base de datos correctamente implementada (veasé el repositorio del backend)
+* La base de datos correctamente implementada (veasé el repositorio del backend https://github.com/LendLab/lendlab-backend)
 * El servidor corriendo
+* Xampp abierto
 
