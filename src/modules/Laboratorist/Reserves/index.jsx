@@ -8,16 +8,11 @@ import { AllReserves } from "./AllReserves";
 export const LabReservesPage = () => {
   return (
     <SectionInfo
-      button={
-        <Button leftIcon={<NewPrestamo />} variant="primary">
-          Nueva Reserva
-        </Button>
-      }
       description="En la sección de reservas, puedes revisar y administrar todas las reservas con sus detalles. Puedes ver y editar cualquier tipo de información como lo aceptar o rechazar reservas, ordenados por su fecha, id y usuario. El acceso a esta área es limitado. Solo Laboratoristas pueden alcanzarla. Los cambios que hagas son irreversibles"
       icon={<Prestamo size="big" />}
       title="Reservas"
     >
-      <TabList bg="lendlab.gray.100" borderBottomRadius="32px" paddingTop={8} paddingX={18}>
+      <TabList bg="lendlab.gray.100" paddingTop={8} paddingX={18}>
         <Tab>
           <Prestamo /> TODOS
         </Tab>
