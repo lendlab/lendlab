@@ -1,4 +1,4 @@
-import { Badge } from "@chakra-ui/layout";
+import { Badge, Box, Stack } from "@chakra-ui/layout";
 import { Tooltip } from "@chakra-ui/tooltip";
 import moment from "moment";
 import React from "react";
@@ -31,14 +31,28 @@ export const COLUMNS = [
 
       const date = moment(sqlDate).format("Do [de] MMMM [del] YYYY [a las] H:mm");
 
-      const fecha_inicio = moment(parseInt(row.original.fecha_hora_presta));
-
       return (
         <>
-          hasta el{" "}
-          <Tooltip aria-label={fecha_inicio.to(sqlDate)} label={fecha_inicio.to(sqlDate)}>
-            {date}
-          </Tooltip>
+          {moment(sqlDate) < moment(new Date()) ? (
+            <Badge colorScheme="red">
+              <Tooltip
+                aria-label={moment(new Date()).to(sqlDate)}
+                label={moment(new Date()).to(sqlDate)}
+              >
+                <Box>hasta el {date}</Box>
+              </Tooltip>
+            </Badge>
+          ) : (
+            <>
+              hasta el{" "}
+              <Tooltip
+                aria-label={moment(new Date()).to(sqlDate)}
+                label={moment(new Date()).to(sqlDate)}
+              >
+                {date}
+              </Tooltip>
+            </>
+          )}
         </>
       );
     },
@@ -47,8 +61,19 @@ export const COLUMNS = [
     Header: "Devolucion",
     accessor: "fecha_devolucion",
     Cell({ row }) {
-      if (row.original.fecha_devolucion == null)
+      if (
+        row.original.fecha_devolucion == null &&
+        moment(parseInt(row.original.fecha_vencimiento)) > moment(new Date())
+      )
         return <Badge colorScheme="yellow">NO DEVUELTO</Badge>;
+      else if (row.original.fecha_devolucion == null) {
+        return (
+          <Stack direction="row">
+            <Badge colorScheme="yellow">NO DEVUELTO</Badge>
+            <Badge colorScheme="red">ATRASADO</Badge>
+          </Stack>
+        );
+      }
 
       const sqlDate = parseInt(row.original.fecha_devolucion);
 
