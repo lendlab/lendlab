@@ -72,12 +72,7 @@ export const LabLendsPage = () => {
       icon={<Prestamo size="big" />}
       title="Prestamos"
     >
-      <TabList
-        bg="lendlab.gray.100"
-        borderBottomRadius="32px"
-        paddingTop={8}
-        paddingX={{ base: 0, md: 18 }}
-      >
+      <TabList bg="lendlab.gray.100" paddingTop={8} paddingX={{ base: 0, md: 18 }}>
         <Tab>
           <Icon as={Prestamo} h="none" marginRight={2} w="none" /> TODOS
         </Tab>
