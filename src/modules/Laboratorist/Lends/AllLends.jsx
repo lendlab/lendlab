@@ -49,7 +49,7 @@ export const AllLends = () => {
       >
         <AlertIcon boxSize="40px" mr={0} />
         <AlertTitle fontSize="lg" mb={1} mt={4}>
-          Ha ocurrido un error
+          Ha ocurrido un error: {error.message}
         </AlertTitle>
         <AlertDescription maxWidth="sm">
           ¡No es tu culpa! Estamos trabajando para solucionarlo
