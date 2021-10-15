@@ -67,6 +67,7 @@ const LendsDrawer = React.memo(
     } = useQuery(GET_ALL_RESERVATIONS);
 
     if (loadingReservation) return <div>loading...</div>;
+    if (errorReservation) return <div>{""}</div>;
 
     const groupAndMerge = (arr, groupBy, mergeInto) =>
       Array.from(
