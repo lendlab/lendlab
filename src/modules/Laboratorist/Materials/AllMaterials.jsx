@@ -1,16 +1,15 @@
 import empty from "@animations/empty.json";
 import { useMutation, useQuery } from "@apollo/client";
 import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/alert";
-import { Button, IconButton } from "@chakra-ui/button";
+import { Button } from "@chakra-ui/button";
 import { Badge, Stack } from "@chakra-ui/layout";
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/toast";
+import { DELETE_MATERIAL } from "@graphql/mutations/materials";
 import { GET_ALL_MATERIALS } from "@graphql/queries/materials";
+import { Edit, Trash } from "@icons";
 import { SkeletonTable, Table, Text } from "@ui";
 import Lottie from "lottie-web";
 import React, { useEffect, useRef } from "react";
-import { Options, Trash, Edit } from "@icons";
-import { useToast } from "@chakra-ui/toast";
-import { DELETE_MATERIAL } from "@graphql/mutations/materials";
 
 export const AllMaterials = () => {
   const { loading, error, data } = useQuery(GET_ALL_MATERIALS);
@@ -49,7 +48,7 @@ export const AllMaterials = () => {
       >
         <AlertIcon boxSize="40px" mr={0} />
         <AlertTitle fontSize="lg" mb={1} mt={4}>
-          Ha ocurrido un error
+          Ha ocurrido un error: {error.message}
         </AlertTitle>
         <AlertDescription maxWidth="sm">
           ¡No es tu culpa! Estamos trabajando para solucionarlo
