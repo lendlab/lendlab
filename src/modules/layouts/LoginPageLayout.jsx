@@ -6,7 +6,7 @@ export const LoginPageLayout = ({ children }) => {
   return (
     <>
       <Helmet>
-        <title>lendlab | login</title>
+        <title>login | lendlab</title>
       </Helmet>
       <Container
         alignSelf="center"
