@@ -7,6 +7,7 @@ import { SkeletonTable, Table, Text } from "@ui";
 import Lottie from "lottie-web";
 import moment from "moment";
 import React, { useEffect, useRef } from "react";
+import { Helmet } from "react-helmet";
 
 export const AllUsers = () => {
   const { loading, error, data } = useQuery(GET_ALL_USERS);
@@ -26,7 +27,13 @@ export const AllUsers = () => {
     };
   }, [loading, data]);
 
-  if (loading) return <SkeletonTable />;
+  if (loading)
+    return (
+      <Helmet>
+        <title>cargando... | lendlab</title>
+        <SkeletonTable />
+      </Helmet>
+    );
 
   if (error)
     return (
