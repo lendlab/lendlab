@@ -1,6 +1,6 @@
 import { Badge, Box, Stack } from "@chakra-ui/layout";
 import { Tooltip } from "@chakra-ui/tooltip";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import React from "react";
 
 export const COLUMNS = [
@@ -10,11 +10,15 @@ export const COLUMNS = [
   },
   {
     Header: "Fecha y hora",
-    accessor: "fecha_hora_presta",
+    accessor: (d) => {
+      return `${moment(parseInt(d.fecha_hora_presta)).format(
+        "D [de] MMMM [del] YYYY [a las] H:mm"
+      )} || ${moment(parseInt(d.fecha_hora_presta)).format("D[/]M[/]YY")}`;
+    },
     Cell({ row }) {
       const sqlDate = parseInt(row.original.fecha_hora_presta);
 
-      const date = moment(sqlDate).format("Do [de] MMMM [del] YYYY [a las] H:mm");
+      const date = moment(sqlDate).format("D [de] MMMM [del] YYYY [a las] H:mm");
 
       return (
         <Tooltip aria-label={moment(sqlDate).fromNow()} label={moment(sqlDate).fromNow()}>
@@ -25,11 +29,15 @@ export const COLUMNS = [
   },
   {
     Header: "Plazo",
-    accessor: "fecha_vencimiento",
+    accessor: (d) => {
+      return `hasta el ${moment(parseInt(d.fecha_vencimiento)).format(
+        "D [de] MMMM [del] YYYY [a las] H:mm"
+      )} || ${moment(parseInt(d.fecha_vencimiento)).format("D[/]M[/]YY")}`;
+    },
     Cell({ row }) {
       const sqlDate = parseInt(row.original.fecha_vencimiento);
 
-      const date = moment(sqlDate).format("Do [de] MMMM [del] YYYY [a las] H:mm");
+      const date = moment(sqlDate).format(" [de] MMMM [del] YYYY [a las] H:mm");
 
       return (
         <>
@@ -59,7 +67,19 @@ export const COLUMNS = [
   },
   {
     Header: "Devolucion",
-    accessor: "fecha_devolucion",
+    accessor: (d) => {
+      if (
+        d.fecha_devolucion == null &&
+        moment(parseInt(d.fecha_vencimiento)) > moment(new Date())
+      ) {
+        return "NO DEVUELTO";
+      } else if (d.fecha_devolucion == null) return `NO DEVUELTO || ATRASADO`;
+      else {
+        return `${moment(parseInt(d.fecha_devolucion)).format(
+          "D [de] MMMM [del] YYYY [a las] H:mm"
+        )}`;
+      }
+    },
     Cell({ row }) {
       if (
         row.original.fecha_devolucion == null &&
@@ -77,7 +97,7 @@ export const COLUMNS = [
 
       const sqlDate = parseInt(row.original.fecha_devolucion);
 
-      const date = moment(sqlDate).format("Do [de] MMMM [del] YYYY [a las] H:mm");
+      const date = moment(sqlDate).format("D [de] MMMM [del] YYYY [a las] H:mm");
 
       return (
         <Tooltip aria-label={moment(sqlDate).fromNow()} label={moment(sqlDate).fromNow()}>
