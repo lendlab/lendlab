@@ -2,21 +2,46 @@ import empty from "@animations/empty.json";
 import { useMutation, useQuery } from "@apollo/client";
 import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@chakra-ui/alert";
 import { Avatar } from "@chakra-ui/avatar";
-import { Button } from "@chakra-ui/button";
+import { Button, ButtonGroup } from "@chakra-ui/button";
 import { Badge, Stack } from "@chakra-ui/layout";
 import { chakra } from "@chakra-ui/system";
+import "moment/locale/es";
 import { Tooltip } from "@chakra-ui/tooltip";
 import { GET_ALL_RESERVATIONS } from "@graphql/queries/reservations";
 import { SkeletonTable, Table, Text } from "@ui";
 import Lottie from "lottie-web";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 import { CREATE_LEND } from "@graphql/mutations/lends";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Helmet } from "react-helmet";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  FormLabel,
+  Input,
+  useToast,
+} from "@chakra-ui/react";
+import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
+import "react-calendar/dist/Calendar.css";
+import "react-clock/dist/Clock.css";
+import "react-datetime-picker/dist/DateTimePicker.css";
+
+const now = moment().minutes(0).seconds(0).add(1, "hours");
+const end = now.clone().add(1, "hours");
+
+moment.locale("es");
 
 export const AllReserves = () => {
   const { loading, error, data } = useQuery(GET_ALL_RESERVATIONS);
   const [createLend, { data: createLendData, loading: createLendLoading, error: createLendError }] =
     useMutation(CREATE_LEND);
+  const toast = useToast();
   const container = useRef(null);
 
   useEffect(() => {
@@ -33,7 +58,13 @@ export const AllReserves = () => {
     };
   }, [loading, data]);
 
-  if (loading) return <SkeletonTable />;
+  if (loading)
+    return (
+      <Helmet>
+        <title>cargando... | lendlab</title>
+        <SkeletonTable />
+      </Helmet>
+    );
 
   if (error)
     return (
@@ -80,11 +111,15 @@ export const AllReserves = () => {
     },
     {
       Header: "Fecha y Hora",
-      accessor: "fecha_hora",
+      accessor: (d) => {
+        return `${moment(parseInt(d.fecha_hora)).format("D [de] MMMM [del] YYYY [a las] H:mm")} ||
+          ${moment(parseInt(d.fecha_hora)).format("D[/]M[/]YY")}
+        }`;
+      },
       Cell({ row }) {
         const sqlDate = parseInt(row.original.fecha_hora);
 
-        const date = moment(sqlDate).format("Do [de] MMMM [del] YYYY [a las] H:mm");
+        const date = moment(sqlDate).format("D [de] MMMM [del] YYYY [a las] H:mm");
 
         return (
           <Tooltip aria-label={moment(sqlDate).fromNow()} label={moment(sqlDate).fromNow()}>
@@ -95,9 +130,15 @@ export const AllReserves = () => {
     },
     {
       Header: "Finalizada",
-      accessor: "finalizada",
+      accessor: (d) => {
+        return d.finalizada ? `SI` : `NO`;
+      },
       Cell({ row }) {
-        return <Badge>{row.original.finalizada ? "SI" : "NO"}</Badge>;
+        return (
+          <Badge colorScheme={row.original.finalizada ? "green" : "red"}>
+            {row.original.finalizada ? "SI" : "NO"}
+          </Badge>
+        );
       },
     },
     {
@@ -137,14 +178,103 @@ export const AllReserves = () => {
       header: "",
       id: "click-me-button",
       Cell({ row }) {
+        const [dateEnd, setDateEnd] = useState(end.toDate());
+
         return row.original.finalizada ? null : (
           <Stack direction="row">
-            <Button borderRadius="17" colorScheme="green" fontSize="2" fontWeight="400">
-              Aceptar
-            </Button>
-            <Button borderRadius="17" colorScheme="red" fontSize="2" fontWeight="400">
-              Rechazar
-            </Button>
+            <Popover isLazy closeOnBlur={false} placement="auto">
+              {({ isOpen, onClose }) => (
+                <>
+                  <PopoverTrigger>
+                    <Button colorScheme="green" fontSize="2" fontWeight="normal">
+                      Aceptar
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverHeader fontWeight="semibold">Aceptar reserva</PopoverHeader>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody>
+                      <FormLabel fontSize="2">Fecha de vencimiento</FormLabel>
+                      <DateTimePicker
+                        minDate={now.toDate()}
+                        value={dateEnd}
+                        onChange={(e) => {
+                          setDateEnd(e);
+                        }}
+                      />
+                    </PopoverBody>
+                    <PopoverFooter d="flex" justifyContent="flex-end">
+                      <ButtonGroup size="sm">
+                        <Button variant="outline" onClick={onClose}>
+                          Cancelar
+                        </Button>
+                        <Button
+                          colorScheme="green"
+                          onClick={() => {
+                            createLend({
+                              variables: {
+                                data: {
+                                  id_lend: 0,
+                                  fecha_hora_presta: "",
+                                  fecha_vencimiento: dateEnd,
+                                  fecha_devolucion: "",
+                                  reservation: {
+                                    id_reserva: parseFloat(row.original.id_reserva),
+                                  },
+                                },
+                              },
+                              update: (cache) => {
+                                cache.evict({ fieldName: "lend" });
+                                onClose();
+                                toast({
+                                  title: `Se ha creado correctamente el prestamo!`,
+                                  description: "Lo has hecho correctamente c:",
+                                  status: "success",
+                                  duration: 2000,
+                                  isClosable: true,
+                                });
+                              },
+                            });
+                          }}
+                        >
+                          Aceptar
+                        </Button>
+                      </ButtonGroup>
+                    </PopoverFooter>
+                  </PopoverContent>
+                </>
+              )}
+            </Popover>
+            <Popover isLazy placement="auto">
+              {({ isOpen, onClose }) => (
+                <>
+                  <PopoverTrigger>
+                    <Button colorScheme="red" fontSize="2" fontWeight="normal">
+                      Rechazar
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <PopoverHeader fontWeight="semibold">
+                      ¿Quieres rechazar la reserva #{row.original.id_reserva}?
+                    </PopoverHeader>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverBody>
+                      Ten en cuenta que esta opcion es <Badge colorScheme="red">IRREVERSIBLE</Badge>
+                    </PopoverBody>
+                    <PopoverFooter d="flex" justifyContent="flex-end">
+                      <ButtonGroup size="sm">
+                        <Button variant="outline" onClick={onClose}>
+                          Cancelar
+                        </Button>
+                        <Button colorScheme="red">Rechazar</Button>
+                      </ButtonGroup>
+                    </PopoverFooter>
+                  </PopoverContent>
+                </>
+              )}
+            </Popover>
           </Stack>
         );
       },
