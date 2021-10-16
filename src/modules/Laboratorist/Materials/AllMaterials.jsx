@@ -10,6 +10,7 @@ import { Edit, Trash } from "@icons";
 import { SkeletonTable, Table, Text } from "@ui";
 import Lottie from "lottie-web";
 import React, { useEffect, useRef } from "react";
+import { Helmet } from "react-helmet";
 
 export const AllMaterials = () => {
   const { loading, error, data } = useQuery(GET_ALL_MATERIALS);
@@ -32,7 +33,13 @@ export const AllMaterials = () => {
     };
   }, [loading, data]);
 
-  if (loading) return <SkeletonTable />;
+  if (loading)
+    return (
+      <Helmet>
+        <title>cargando... | lendlab</title>
+        <SkeletonTable />
+      </Helmet>
+    );
 
   if (error)
     return (
