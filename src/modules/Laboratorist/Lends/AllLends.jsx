@@ -9,6 +9,7 @@ import React, { useEffect, useRef } from "react";
 import { Options, Trash, Edit } from "@icons";
 import { useToast } from "@chakra-ui/toast";
 import { GET_ALL_LENDS } from "@graphql/queries/lends";
+import { Helmet } from "react-helmet";
 
 import { COLUMNS } from "./Table/columns";
 
@@ -33,7 +34,13 @@ export const AllLends = () => {
     };
   }, [loading, data]);
 
-  if (loading) return <SkeletonTable />;
+  if (loading)
+    return (
+      <Helmet>
+        <title>cargando... | lendlab</title>
+        <SkeletonTable />
+      </Helmet>
+    );
 
   if (error)
     return (
