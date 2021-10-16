@@ -199,7 +199,7 @@ const LendsDrawer = React.memo(
                       variables: {
                         data: {
                           id_reserva: maxReserveId,
-                          finalizada: false,
+                          finalizada: true,
                           fecha_hora,
                           user: {
                             cedula: parseInt(userSelected.cedula),
