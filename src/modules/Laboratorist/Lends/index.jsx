@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SectionInfo, Tab, Input, Text, LendsDrawer } from "@ui";
 import { Prestamo, NewPrestamo } from "@icons";
 import {
@@ -17,8 +17,10 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useUser } from "@hooks/useUser";
+import { useQuery } from "@apollo/client";
 
 import { LendsPageLayout } from "../../layouts/Laboratorist/LendsPageLayout";
+import { GET_ALL_USERS } from "../../../graphql/queries/users";
 
 import { AllLends } from "./AllLends";
 
@@ -27,41 +29,24 @@ export const LabLendsPage = () => {
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
   const btnRef = React.useRef();
 
-  const Users = React.useMemo(
-    () => [
-      {
-        cedula: 54548246,
-        nombre: "Marcos Cianzio",
-        src: "/images/Cianzio.jpg",
-      },
-      {
-        cedula: 4000,
-        nombre: "Francisco Fiorelli",
-        src: "/images/Fiorelli.jpg",
-      },
-      {
-        cedula: 3500,
-        nombre: "Nicolás Heredia",
-        src: "/images/Heredia.jpg",
-      },
-      {
-        cedula: 300,
-        nombre: "Iván Prestes",
-        src: "/images/Prestes.jpg",
-      },
-    ],
-    []
-  );
-
   const {
-    handleReset,
-    user,
-    usersFiltered,
-    userSelected,
+    getUsers,
+    selectUser,
     handleUserChange,
-    handleUsersSelected,
-    handleUserSelected,
-  } = useUser(Users);
+    resetUser,
+    filterUsers,
+    users,
+    isSearching,
+    user,
+    userSelected,
+    foundUsers,
+  } = useUser();
+
+  const currentUser = isSearching ? foundUsers : users;
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <LendsPageLayout>
@@ -102,11 +87,14 @@ export const LabLendsPage = () => {
                   textAlign="left"
                   onClick={onModalOpen}
                 >
-                  {Object.keys(userSelected).length === 0 ? "Buscar usuario" : userSelected.nombre}
+                  {userSelected == null ? "Buscar usuario" : userSelected.nombre}
                 </Button>
               }
               userSelected={userSelected}
-              onDrawerClose={onDrawerClose}
+              onDrawerClose={() => {
+                onDrawerClose();
+                resetUser();
+              }}
             />
             <Modal isOpen={isModalOpen} onClose={onModalClose}>
               <ModalOverlay />
@@ -117,69 +105,43 @@ export const LabLendsPage = () => {
                     name="user"
                     placeholder="Buscar Usuario"
                     value={user}
-                    onChange={handleUserChange}
-                    onResetClick={handleReset}
+                    onChange={(e) => {
+                      handleUserChange(e);
+                      filterUsers(e);
+                    }}
+                    onResetClick={() => resetUser()}
                   />
                 </ModalHeader>
                 <ModalBody>
                   <Stack spacing={4}>
-                    {user == ""
-                      ? Users.slice(0, 3).map((user, index) => (
-                          <Stack
-                            key={index}
-                            cursor="pointer"
-                            direction="row"
-                            spacing={4}
-                            onClick={() => {
-                              handleUserSelected(user);
-                              onModalClose();
-                            }}
-                          >
-                            <Image
-                              borderRadius="12px"
-                              boxSize="70px"
-                              fallbackSrc="/images/fallback.jpg"
-                              objectFit="cover"
-                              src={user.src}
-                            />
-                            <Stack justifyContent="center">
-                              <Text color="black" fontSize="3" fontWeight="bold" textAlign="left">
-                                {user.nombre}
-                              </Text>
-                              <Text fontSize="3" noOfLines={1} textAlign="left">
-                                {user.cedula}
-                              </Text>
-                            </Stack>
-                          </Stack>
-                        ))
-                      : usersFiltered.map((user, index) => (
-                          <Stack
-                            key={index}
-                            cursor="pointer"
-                            direction="row"
-                            spacing={4}
-                            onClick={() => {
-                              handleUserSelected(user);
-                              onModalClose();
-                            }}
-                          >
-                            <Image
-                              borderRadius="12px"
-                              boxSize="70px"
-                              fallbackSrc="/images/fallback.jpg"
-                              objectFit="cover"
-                              src={user.src}
-                            />
-                            <Stack justifyContent="center">
-                              <Text color="black" fontSize="3" fontWeight="bold" textAlign="left">
-                                {user.nombre}
-                              </Text>
-                              <Text fontSize="3" noOfLines={1} textAlign="left">
-                                {user.cedula}
-                              </Text>
-                            </Stack>
-                          </Stack>
-                        ))}
+                    {currentUser.slice(0, 3).map((user, index) => (
+                      <Stack
+                        key={index}
+                        cursor="pointer"
+                        direction="row"
+                        spacing={4}
+                        onClick={() => {
+                          selectUser(user);
+                          onModalClose();
+                        }}
+                      >
+                        <Image
+                          borderRadius="12px"
+                          boxSize="70px"
+                          fallbackSrc="/images/fallback.jpg"
+                          objectFit="cover"
+                          src={user.src}
+                        />
+                        <Stack justifyContent="center">
+                          <Text color="black" fontSize="3" fontWeight="bold" textAlign="left">
+                            {user.nombre}
+                          </Text>
+                          <Text fontSize="3" noOfLines={1} textAlign="left">
+                            {user.cedula}
+                          </Text>
+                        </Stack>
+                      </Stack>
+                    ))}
                   </Stack>
                 </ModalBody>
               </ModalContent>
