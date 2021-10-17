@@ -2,7 +2,7 @@ import React from "react";
 import { SectionInfo, Tab, Table, Drawer, FormControl } from "@ui";
 import { Form, Formik } from "formik";
 import { Prestamo, NewPrestamo, Table as TableIcon } from "@icons";
-import { Button, TabPanels, TabPanel, TabList, Icon, Stack } from "@chakra-ui/react";
+import { Button, TabPanels, TabPanel, TabList, Icon, Stack, useToast } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_USER } from "@graphql/mutations/users";
@@ -16,6 +16,7 @@ export const LabUsersPage = () => {
   const btnRef = React.useRef();
   const [createUser, { data: mutationData, loading: mutationLoading, error: mutationError }] =
     useMutation(CREATE_USER);
+  const toast = useToast();
 
   const options = [
     {
@@ -79,6 +80,13 @@ export const LabUsersPage = () => {
                       update: (cache) => {
                         cache.evict({ fieldName: "getUsers" });
                         onClose();
+                        toast({
+                          title: `Se ha creado correctamente el usuario!`,
+                          description: "Lo has hecho correctamente c:",
+                          status: "success",
+                          duration: 2000,
+                          isClosable: true,
+                        });
                       },
                     });
                   }}
