@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Button,
@@ -13,11 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { CREATE_LEND } from "@graphql/mutations/lends";
 import { CREATE_RESERVATION } from "@graphql/mutations/reservations";
+import { GET_ALL_MATERIALS } from "@graphql/queries/materials";
 import { useCart } from "@hooks/useCart";
 import { Prestamo } from "@icons";
 import { Drawer, Input, Select, Text } from "@ui";
 import moment from "moment";
-import React from "react";
+import React, { useEffect } from "react";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import "react-datetime-picker/dist/DateTimePicker.css";
@@ -38,11 +39,14 @@ const LendsDrawer = React.memo(
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
     const {
       cart,
+      getMaterials,
       clearCart,
       filterMaterials,
       addMaterialToCart,
       deleteMaterialFromCart,
       cartCount,
+      isSearching,
+      foundMaterials,
       materials,
     } = useCart();
 
@@ -50,6 +54,10 @@ const LendsDrawer = React.memo(
       createLend,
       { data: createLendData, loading: createLendLoading, error: createLendError },
     ] = useMutation(CREATE_LEND);
+
+    useEffect(() => {
+      getMaterials();
+    }, []);
 
     const [
       createReservation,
@@ -99,6 +107,8 @@ const LendsDrawer = React.memo(
       setDateEnd(e);
     };
 
+    const currentMaterials = isSearching ? foundMaterials : materials;
+
     return (
       <>
         <Drawer
@@ -129,14 +139,14 @@ const LendsDrawer = React.memo(
                     </Button>
                   </Stack>
                   <Stack>
-                    {cart.map(({ id, desc, nombre, src }, index) => (
+                    {cart.map(({ id_material, descripcion, nombre, foto }, index) => (
                       <CartItem
                         key={index}
                         deleteMaterialFromCart={deleteMaterialFromCart}
-                        desc={desc}
-                        id={id}
+                        desc={descripcion}
+                        id={id_material}
                         nombre={nombre}
-                        src={src}
+                        src={foto}
                       />
                     ))}
                   </Stack>
@@ -192,7 +202,7 @@ const LendsDrawer = React.memo(
                 isLoading={createLendLoading || createReservationLoading}
                 variant="primary"
                 onClick={() => {
-                  cart.map(({ id }, index) => {
+                  cart.map(({ id_material }, index) => {
                     const fecha_hora = moment().add(index, "seconds").toDate();
 
                     createReservation({
@@ -205,7 +215,7 @@ const LendsDrawer = React.memo(
                             cedula: parseInt(userSelected.cedula),
                           },
                           material: {
-                            id_material: id,
+                            id_material,
                           },
                         },
                       },
@@ -230,6 +240,7 @@ const LendsDrawer = React.memo(
                     update: (cache) => {
                       cache.evict({ fieldName: "lend" });
                       onDrawerClose();
+                      clearCart();
                       toast({
                         title: `Se ha creado correctamente el prestamo!`,
                         description: "Lo has hecho correctamente c:",
@@ -274,7 +285,7 @@ const LendsDrawer = React.memo(
                 value={material}
                 onChange={(e) => {
                   setMaterial(e.target.value);
-                  filterMaterials(material);
+                  filterMaterials(e.target.value.trim());
                 }}
                 onResetClick={() => {
                   setMaterial("");
@@ -284,23 +295,26 @@ const LendsDrawer = React.memo(
             </ModalHeader>
             <ModalBody>
               <Stack spacing={4}>
-                {materials.slice(0, 3).map(({ id, src, nombre, desc }, index) => (
-                  <CartItem
-                    key={index}
-                    notShowTrash
-                    cursor="pointer"
-                    deleteMaterialFromCart={deleteMaterialFromCart}
-                    desc={desc}
-                    id={id}
-                    nombre={nombre}
-                    src={src}
-                    onClick={() => {
-                      addMaterialToCart({ id, src, nombre, desc });
-                      onModalClose();
-                      setMaterial("");
-                    }}
-                  />
-                ))}
+                {currentMaterials.length > 0 &&
+                  currentMaterials
+                    .slice(0, 10)
+                    .map(({ id_material, foto, nombre, descripcion }, index) => (
+                      <CartItem
+                        key={index}
+                        notShowTrash
+                        cursor="pointer"
+                        deleteMaterialFromCart={deleteMaterialFromCart}
+                        desc={descripcion}
+                        id={id_material}
+                        nombre={nombre}
+                        src={foto}
+                        onClick={() => {
+                          addMaterialToCart({ id_material, foto, nombre, descripcion });
+                          onModalClose();
+                          setMaterial("");
+                        }}
+                      />
+                    ))}
               </Stack>
             </ModalBody>
           </ModalContent>
