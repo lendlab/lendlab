@@ -14,7 +14,9 @@ import { Helmet } from "react-helmet";
 import { COLUMNS } from "./Table/columns";
 
 export const AllLends = () => {
-  const { loading, error, data } = useQuery(GET_ALL_LENDS);
+  const { loading, error, data } = useQuery(GET_ALL_LENDS, {
+    pollInterval: 500,
+  });
   const container = useRef(null);
   const toast = useToast();
   // const [deleteLend, { data: dataDelete, loading: loadingDelete, error: deleteError }] =
