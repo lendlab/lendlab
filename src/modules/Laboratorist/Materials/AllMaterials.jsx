@@ -13,7 +13,9 @@ import React, { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
 
 export const AllMaterials = () => {
-  const { loading, error, data } = useQuery(GET_ALL_MATERIALS);
+  const { loading, error, data } = useQuery(GET_ALL_MATERIALS, {
+    pollInterval: 500,
+  });
   const container = useRef(null);
   const toast = useToast();
   const [deleteMaterial, { data: dataDelete, loading: loadingDelete, error: deleteError }] =
