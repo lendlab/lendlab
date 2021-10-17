@@ -10,7 +10,9 @@ import React, { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
 
 export const AllUsers = () => {
-  const { loading, error, data } = useQuery(GET_ALL_USERS);
+  const { loading, error, data } = useQuery(GET_ALL_USERS, {
+    pollInterval: 10000,
+  });
   const container = useRef(null);
 
   useEffect(() => {
