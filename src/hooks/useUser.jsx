@@ -1,44 +1,23 @@
-import React, { useEffect } from "react";
+import { useContext } from "react";
 
-export const useUser = (Users) => {
-  const [usersFiltered, setUsersFiltered] = React.useState([]);
-  const [userSelected, setUserSelected] = React.useState({});
-  const [user, setUser] = React.useState("");
+import { UserContext } from "../context/UserContext";
 
-  const handleUserChange = ({ target }) => {
-    setUser(target.value);
-  };
+export const useUser = () => {
+  const { userState, getUsers, selectUser, handleUserChange, resetUser, filterUsers } =
+    useContext(UserContext);
 
-  const handleReset = () => {
-    setUser("");
-  };
-
-  const handleUserSelected = (user) => {
-    setUserSelected(user);
-  };
-
-  const handleUsersSelected = (user) => {
-    setusersSelected([...usersSelected, user]);
-  };
-
-  useEffect(() => {
-    setUsersFiltered(
-      Users.filter((userEl) => {
-        return (
-          userEl.nombre.toLowerCase().includes(user.toLowerCase()) ||
-          userEl.cedula.toString().includes(user)
-        );
-      })
-    );
-  }, [user]);
+  const { users, isSearching, user, userSelected, foundUsers } = userState;
 
   return {
-    handleReset,
-    user,
-    usersFiltered,
-    userSelected,
+    getUsers,
+    selectUser,
     handleUserChange,
-    handleUsersSelected,
-    handleUserSelected,
+    resetUser,
+    filterUsers,
+    users,
+    isSearching,
+    user,
+    userSelected,
+    foundUsers,
   };
 };
