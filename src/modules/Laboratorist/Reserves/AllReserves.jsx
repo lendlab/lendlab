@@ -38,7 +38,9 @@ const end = now.clone().add(1, "hours");
 moment.locale("es");
 
 export const AllReserves = () => {
-  const { loading, error, data } = useQuery(GET_ALL_RESERVATIONS);
+  const { loading, error, data } = useQuery(GET_ALL_RESERVATIONS, {
+    pollInterval: 500,
+  });
   const [createLend, { data: createLendData, loading: createLendLoading, error: createLendError }] =
     useMutation(CREATE_LEND);
   const toast = useToast();
