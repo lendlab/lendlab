@@ -37,7 +37,7 @@ export const COLUMNS = [
     Cell({ row }) {
       const sqlDate = parseInt(row.original.fecha_vencimiento);
 
-      const date = moment(sqlDate).format(" [de] MMMM [del] YYYY [a las] H:mm");
+      const date = moment(sqlDate).format("D [de] MMMM [del] YYYY [a las] H:mm");
 
       return (
         <>
