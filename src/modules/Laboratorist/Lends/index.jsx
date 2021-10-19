@@ -14,6 +14,7 @@ import {
   ModalBody,
   Image,
   Icon,
+  Avatar,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useUser } from "@hooks/useUser";
@@ -125,19 +126,13 @@ export const LabLendsPage = () => {
                           onModalClose();
                         }}
                       >
-                        <Image
-                          borderRadius="12px"
-                          boxSize="70px"
-                          fallbackSrc="/images/fallback.jpg"
-                          objectFit="cover"
-                          src={user.src}
-                        />
+                        <Avatar boxSize="70px" name={user.nombre} />
                         <Stack justifyContent="center">
                           <Text color="black" fontSize="3" fontWeight="bold" textAlign="left">
                             {user.nombre}
                           </Text>
                           <Text fontSize="3" noOfLines={1} textAlign="left">
-                            {user.cedula}
+                            CEDULA: {user.cedula}
                           </Text>
                         </Stack>
                       </Stack>
