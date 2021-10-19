@@ -120,11 +120,12 @@ export const AllMaterials = () => {
         return (
           <Stack direction="row">
             <Button
+              isLoading={loadingDelete}
               variant="ghost"
               onClick={() => {
                 deleteMaterial({
                   variables: {
-                    deleteMaterialIdMaterial: row.original.id_material,
+                    idMaterial: row.original.id_material,
                   },
                   update: (cache) => {
                     cache.evict({
