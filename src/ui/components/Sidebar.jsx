@@ -55,13 +55,18 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {SECTIONS.map((section, index) => (
-        <NavItem key={index} linkItems={section.linkItems} name={section.sectionName} />
+        <NavItem
+          key={index}
+          linkItems={section.linkItems}
+          name={section.sectionName}
+          onClose={onClose}
+        />
       ))}
     </Box>
   );
 };
 
-const NavItem = ({ icon, children, name, linkItems, ...rest }) => {
+const NavItem = ({ onClose, icon, children, name, linkItems, ...rest }) => {
   const { pathname } = useLocation();
 
   return (
@@ -82,6 +87,7 @@ const NavItem = ({ icon, children, name, linkItems, ...rest }) => {
           as={NavLink}
           style={{ textDecoration: "none", boxShadow: "none" }}
           to={item.path}
+          onClick={onClose}
         >
           <Stack
             align="center"
