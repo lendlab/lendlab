@@ -208,7 +208,7 @@ const LendsDrawer = React.memo(
                     createReservation({
                       variables: {
                         data: {
-                          id_reserva: maxReserveId,
+                          id_reserva: parseFloat(maxReserveId),
                           finalizada: true,
                           fecha_hora,
                           user: {
