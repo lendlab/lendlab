@@ -28,9 +28,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
+
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import "react-datetime-picker/dist/DateTimePicker.css";
+import { DELETE_RESERVATION, UPDATE_RESERVATION } from "../../../graphql/mutations/reservations";
 
 const now = moment().minutes(0).seconds(0).add(1, "hours");
 const end = now.clone().add(1, "hours");
@@ -43,6 +45,22 @@ export const AllReserves = () => {
   });
   const [createLend, { data: createLendData, loading: createLendLoading, error: createLendError }] =
     useMutation(CREATE_LEND);
+  const [
+    updateReservation,
+    {
+      data: updateReservationData,
+      loading: updateReservationLoading,
+      error: updateReservationError,
+    },
+  ] = useMutation(UPDATE_RESERVATION);
+  const [
+    deleteReservation,
+    {
+      data: deleteReservationData,
+      loading: deleteReservationLoading,
+      error: deleteReservationError,
+    },
+  ] = useMutation(DELETE_RESERVATION);
   const toast = useToast();
   const container = useRef(null);
 
@@ -213,6 +231,7 @@ export const AllReserves = () => {
                         </Button>
                         <Button
                           colorScheme="green"
+                          isLoading={createLendLoading || updateReservationLoading}
                           onClick={() => {
                             createLend({
                               variables: {
@@ -228,6 +247,17 @@ export const AllReserves = () => {
                               },
                               update: (cache) => {
                                 cache.evict({ fieldName: "lend" });
+                              },
+                            });
+                            updateReservation({
+                              variables: {
+                                idReserva: parseFloat(row.original.id_reserva),
+                                data: {
+                                  finalizada: true,
+                                },
+                              },
+                              update: (cache) => {
+                                cache.evict({ fieldName: "getReservations" });
                                 onClose();
                                 toast({
                                   title: `Se ha creado correctamente el prestamo!`,
@@ -267,10 +297,39 @@ export const AllReserves = () => {
                     </PopoverBody>
                     <PopoverFooter d="flex" justifyContent="flex-end">
                       <ButtonGroup size="sm">
-                        <Button variant="outline" onClick={onClose}>
+                        <Button
+                          isLoading={deleteReservationLoading}
+                          variant="outline"
+                          onClick={onClose}
+                        >
                           Cancelar
                         </Button>
-                        <Button colorScheme="red">Rechazar</Button>
+                        <Button
+                          colorScheme="red"
+                          isLoading={deleteReservationLoading}
+                          onClick={() => {
+                            deleteReservation({
+                              variables: {
+                                idReserva: parseFloat(row.original.id_reserva),
+                              },
+                              update: (cache) => {
+                                cache.evict({
+                                  id_reserva: "Reservation:" + parseFloat(row.original.id_material),
+                                });
+                                onClose();
+                                toast({
+                                  title: `Reserva rechazada con exito`,
+                                  description: "Lo has hecho correctamente c:",
+                                  status: "success",
+                                  duration: 2000,
+                                  isClosable: true,
+                                });
+                              },
+                            });
+                          }}
+                        >
+                          Rechazar
+                        </Button>
                       </ButtonGroup>
                     </PopoverFooter>
                   </PopoverContent>
