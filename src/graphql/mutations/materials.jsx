@@ -15,17 +15,8 @@ export const CREATE_MATERIAL = gql`
 `;
 
 export const DELETE_MATERIAL = gql`
-  mutation DeleteMaterialMutation($deleteMaterialIdMaterial: Int!) {
-    deleteMaterial(id_material: $deleteMaterialIdMaterial) {
-      id_material
-      nombre
-      etiqueta
-      categoria
-      descripcion
-      cantidad
-      foto
-      estado
-    }
+  mutation DeleteReservationMutation($idMaterial: Int!) {
+    deleteMaterial(id_material: $idMaterial)
   }
 `;
 
