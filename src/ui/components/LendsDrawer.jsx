@@ -11,8 +11,6 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react";
-import { CREATE_LEND } from "@graphql/mutations/lends";
-import { CREATE_RESERVATION } from "@graphql/mutations/reservations";
 import { GET_ALL_MATERIALS } from "@graphql/queries/materials";
 import { useCart } from "@hooks/useCart";
 import { Prestamo } from "@icons";
@@ -23,9 +21,9 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import "react-datetime-picker/dist/DateTimePicker.css";
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
-import { GET_ALL_RESERVATIONS } from "@graphql/queries/reservations";
 
 import { CartItem } from "..";
+import { useLend } from "../../hooks/useLend";
 
 const now = moment().minutes(0).seconds(0).add(1, "hours");
 const end = now.clone().add(1, "hours");
@@ -50,54 +48,17 @@ const LendsDrawer = React.memo(
       materials,
     } = useCart();
 
-    const [
-      createLend,
-      { data: createLendData, loading: createLendLoading, error: createLendError },
-    ] = useMutation(CREATE_LEND);
-
     useEffect(() => {
       getMaterials();
     }, []);
 
-    const [
-      createReservation,
-      {
-        data: createReservationData,
-        loading: createReservationLoading,
-        error: createReservationError,
-      },
-    ] = useMutation(CREATE_RESERVATION);
-
     const {
-      loading: loadingReservation,
-      error: errorReservation,
-      data: dataReservation,
-    } = useQuery(GET_ALL_RESERVATIONS);
-
-    if (loadingReservation) return <div>loading...</div>;
-    if (errorReservation) return <div>{""}</div>;
-
-    const groupAndMerge = (arr, groupBy, mergeInto) =>
-      Array.from(
-        arr
-          .reduce((m, o) => {
-            const curr = m.get(o[groupBy]);
-
-            return m.set(o[groupBy], {
-              ...o,
-              [mergeInto]: [...((curr && curr[mergeInto]) || []), o[mergeInto]],
-            });
-          }, new Map())
-          .values()
-      );
-
-    const reservationsGrouped = groupAndMerge(
-      dataReservation.getReservations,
-      "id_reserva",
-      "material"
-    );
-
-    const maxReserveId = reservationsGrouped.length + 1;
+      createReservationLoading,
+      createLendLoading,
+      maxReserveId,
+      createLend,
+      createReservation,
+    } = useLend();
 
     const handleStartDateChange = (e) => {
       setDateStart(e);
@@ -202,7 +163,7 @@ const LendsDrawer = React.memo(
                 isLoading={createLendLoading || createReservationLoading}
                 variant="primary"
                 onClick={() => {
-                  cart.map(({ id_material }, index) => {
+                  cart.map(({ id_material }, index, arr) => {
                     const fecha_hora = moment().add(index, "seconds").toDate();
 
                     createReservation({
@@ -219,36 +180,37 @@ const LendsDrawer = React.memo(
                           },
                         },
                       },
-                      update: (cache) => {
+                      update: (cache, { data: { createReservation } }) => {
                         cache.evict({ fieldName: "getReservations" });
+                        if (arr.length - 1 === index) {
+                          createLend({
+                            variables: {
+                              data: {
+                                fecha_hora_presta: fecha_hora,
+                                fecha_vencimiento: dateEnd,
+                                fecha_devolucion: "",
+                                reservation: {
+                                  id_reserva: createReservation.id_reserva,
+                                  fecha_hora: fecha_hora,
+                                },
+                              },
+                            },
+                            update: (cache) => {
+                              cache.evict({ fieldName: "lend" });
+                              onDrawerClose();
+                              clearCart();
+                              toast({
+                                title: `Se ha creado correctamente el prestamo!`,
+                                description: "Lo has hecho correctamente c:",
+                                status: "success",
+                                duration: 2000,
+                                isClosable: true,
+                              });
+                            },
+                          });
+                        }
                       },
                     });
-                  });
-
-                  createLend({
-                    variables: {
-                      data: {
-                        id_lend: 0,
-                        fecha_hora_presta: "",
-                        fecha_vencimiento: dateEnd,
-                        fecha_devolucion: "",
-                        reservation: {
-                          id_reserva: maxReserveId,
-                        },
-                      },
-                    },
-                    update: (cache) => {
-                      cache.evict({ fieldName: "lend" });
-                      onDrawerClose();
-                      clearCart();
-                      toast({
-                        title: `Se ha creado correctamente el prestamo!`,
-                        description: "Lo has hecho correctamente c:",
-                        status: "success",
-                        duration: 2000,
-                        isClosable: true,
-                      });
-                    },
                   });
                 }}
               >
