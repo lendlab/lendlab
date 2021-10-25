@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "start": "run dev"
+    "start": "npm run dev"
   },
   "dependencies": {
     "@apollo/client": "^3.4.13",
