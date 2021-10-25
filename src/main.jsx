@@ -4,7 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 import "@babel/polyfill";
-import App from "./app";
+import App from "./App";
 import theme from "./theme/index";
 import "@fontsource/manrope";
 import "@fontsource/archivo";
@@ -13,6 +13,7 @@ import Fonts from "./theme/fonts";
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
+  credentials: "include",
 });
 
 ReactDOM.render(
