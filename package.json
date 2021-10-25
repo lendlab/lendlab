@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "start": "npm run dev"
   },
   "dependencies": {
     "@apollo/client": "^3.4.13",
@@ -16,13 +17,13 @@
     "@emotion/styled": "^11.3.0",
     "@fontsource/archivo": "^4.5.1",
     "@fontsource/manrope": "^4.5.0",
-    "destiny": "^0.7.1",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "graphql": "^15.6.0",
     "history": "^4.9.0",
     "lottie-web": "^5.7.13",
     "moment": "^2.29.1",
+    "query-string": "^7.0.1",
     "react": "^17.0.0",
     "react-datetime-picker": "^3.4.0",
     "react-dom": "^17.0.0",
