@@ -10,6 +10,7 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
+    port: process.env.PORT || 3000,
   },
   resolve: {
     alias: {
