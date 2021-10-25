@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "start": "npm run dev"
+    "start": "run dev"
   },
   "dependencies": {
     "@apollo/client": "^3.4.13",
@@ -23,7 +23,6 @@
     "history": "^4.9.0",
     "lottie-web": "^5.7.13",
     "moment": "^2.29.1",
-    "query-string": "^7.0.1",
     "react": "^17.0.0",
     "react-datetime-picker": "^3.4.0",
     "react-dom": "^17.0.0",
