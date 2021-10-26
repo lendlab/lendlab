@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   cart: [],
   materials: [],
   isSearching: false,
+  isOpen: false,
   selectedMaterials: [],
   foundMaterials: [],
 };
@@ -43,6 +44,14 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: "CLEAR_CART" });
   };
 
+  const openCart = () => {
+    dispatch({ type: "OPEN_CART" });
+  };
+
+  const closeCart = () => {
+    dispatch({ type: "CLOSE_CART" });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -52,6 +61,8 @@ export const CartProvider = ({ children }) => {
         deleteMaterialFromCart,
         filterMaterials,
         clearCart,
+        openCart,
+        closeCart,
       }}
     >
       {children}
