@@ -22,6 +22,9 @@ import { NavLink } from "react-router-dom";
 import { Logo, Select } from "@ui";
 import { SECTIONS } from "@utils/constants/sidebar";
 import { LoginIcon, LogoutIcon, Notification } from "@icons";
+import { useMutation } from "@apollo/client";
+
+import { LOGOUT } from "../../graphql/mutations/auth";
 
 export const Sidebar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -117,6 +120,8 @@ const NavItem = ({ onClose, icon, children, name, linkItems, ...rest }) => {
 };
 
 const Nav = ({ onOpen, ...rest }) => {
+  const [logout] = useMutation(LOGOUT);
+
   return (
     <Flex
       alignItems="center"
@@ -141,7 +146,18 @@ const Nav = ({ onOpen, ...rest }) => {
         <Menu isLazy>
           <MenuButton as={Avatar} cursor="pointer" src="/images/Cianzio.jpg" />
           <MenuList>
-            <MenuItem icon={<LogoutIcon fill="#000" />}>Cerrar Sesión</MenuItem>
+            <MenuItem
+              icon={<LogoutIcon fill="#000" />}
+              onClick={() => {
+                logout({
+                  update: (cache) => {
+                    cache.evict({ fieldName: "me" });
+                  },
+                });
+              }}
+            >
+              Cerrar Sesión
+            </MenuItem>
           </MenuList>
         </Menu>
       </Stack>
