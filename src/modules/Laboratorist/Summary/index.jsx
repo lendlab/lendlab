@@ -14,7 +14,7 @@ export const Summary = () => {
               <Stack>
                 <Stack alignItems="center" direction="row" justifyContent="space-between" w="full">
                   <Text color="black" fontSize="2" fontWeight="bold">
-                    PRESTAMOS
+                    PRÉSTAMOS
                   </Text>
                   <Link color="blue" fontSize="2">
                     Ver todos
@@ -35,7 +35,7 @@ export const Summary = () => {
               <Stack>
                 <Stack alignItems="center" direction="row" justifyContent="space-between" w="full">
                   <Text color="black" fontSize="2" fontWeight="bold">
-                    PRESTAMOS
+                    PRÉSTAMOS
                   </Text>
                   <Link color="blue" fontSize="2">
                     Ver todos
@@ -56,7 +56,7 @@ export const Summary = () => {
               <Stack>
                 <Stack alignItems="center" direction="row" justifyContent="space-between" w="full">
                   <Text color="black" fontSize="2" fontWeight="bold">
-                    PRESTAMOS
+                    PRÉSTAMOS
                   </Text>
                   <Link color="blue" fontSize="2">
                     Ver todos
@@ -77,7 +77,7 @@ export const Summary = () => {
               <Stack>
                 <Stack alignItems="center" direction="row" justifyContent="space-between" w="full">
                   <Text color="black" fontSize="2" fontWeight="bold">
-                    PRESTAMOS
+                    PRÉSTAMOS
                   </Text>
                   <Link color="blue" fontSize="2">
                     Ver todos
@@ -140,7 +140,7 @@ export const Summary = () => {
           <WrapItem bg="lendlab.gray.100" borderRadius="14px" flex="1" h="200px" padding={4}>
             <Stack alignItems="center" direction="row" justifyContent="space-between" w="full">
               <Text color="black" fontSize="2" fontWeight="bold">
-                PRESTAMOS
+                PRÉSTAMOS
               </Text>
               <Link color="blue" fontSize="2">
                 Ver todos
