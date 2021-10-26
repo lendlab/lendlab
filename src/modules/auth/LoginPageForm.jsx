@@ -2,27 +2,12 @@ import React from "react";
 import { FormikStep, FormikStepper, FormControl } from "@ui";
 import { Card } from "@icons";
 import { InputLeftElement } from "@chakra-ui/input";
-import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "@graphql/mutations/auth";
+import { toErrorMap } from "@utils/toErrorMap";
 
 export const LoginPageForm = () => {
-  const validationSchema1 = Yup.object().shape({
-    cedula: Yup.string()
-      .matches(/^[0-9]+$/, "Solo números")
-      .max(9, "No hay cedula de 10 cifras")
-      .required("Se requiere este campo"),
-  });
-
-  const validationSchema2 = Yup.object().shape({
-    password: Yup.string()
-      .min(2, "Muy corto")
-      .max(45, "Muy largo")
-      .required("Se requiere este campo"),
-    institution: Yup.string().required("Se requiere este campo"),
-  });
-
-  const handleSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => setSubmitting(false), 2000);
-  };
+  const [login] = useMutation(LOGIN);
 
   return (
     <FormikStepper
@@ -31,11 +16,22 @@ export const LoginPageForm = () => {
         password: "",
         institution: "",
       }}
-      onSubmit={async (values) => {
-        await sleep(3000);
+      onSubmit={async (values, { setErrors }) => {
+        const response = await login({
+          variables: {
+            options: { cedula: parseInt(values.cedula), password: values.password },
+          },
+          update: (cache) => {
+            cache.evict({ fieldName: "me" });
+          },
+        });
+
+        if (response.data?.login.errors) {
+          setErrors(toErrorMap(response.data.login.errors));
+        }
       }}
     >
-      <FormikStep validationSchema={validationSchema1}>
+      <FormikStep>
         <FormControl
           control="input"
           label="Continua con tu cedula"
@@ -47,8 +43,6 @@ export const LoginPageForm = () => {
         >
           <InputLeftElement children={<Card />} pointerEvents="none" />
         </FormControl>
-      </FormikStep>
-      <FormikStep validationSchema={validationSchema2}>
         <FormControl
           control="input"
           label="Continua con tu contraseña"
