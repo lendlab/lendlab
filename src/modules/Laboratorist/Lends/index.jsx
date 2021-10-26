@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { SectionInfo, Tab, Input, Text, LendsDrawer } from "@ui";
-import { Prestamo, NewPrestamo } from "@icons";
+import { useDisclosure } from "@chakra-ui/hooks";
 import {
+  Avatar,
   Button,
-  TabPanels,
-  TabPanel,
-  TabList,
-  Stack,
+  Icon,
   Modal,
-  ModalOverlay,
+  ModalBody,
   ModalContent,
   ModalHeader,
-  ModalBody,
-  Image,
-  Icon,
-  Avatar,
+  ModalOverlay,
+  Stack,
+  TabList,
+  TabPanel,
+  TabPanels,
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/hooks";
 import { useUser } from "@hooks/useUser";
-import { useQuery } from "@apollo/client";
+import { NewPrestamo, Prestamo } from "@icons";
+import { Input, LendsDrawer, SectionInfo, Tab, Text } from "@ui";
+import React, { useEffect } from "react";
 
 import { LendsPageLayout } from "../../layouts/Laboratorist/LendsPageLayout";
-import { GET_ALL_USERS } from "../../../graphql/queries/users";
 
 import { AllLends } from "./AllLends";
 
