@@ -1,4 +1,4 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Button,
@@ -11,8 +11,9 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react";
-import { GET_ALL_MATERIALS } from "@graphql/queries/materials";
+import { ME } from "@graphql/mutations/auth";
 import { useCart } from "@hooks/useCart";
+import { useLend } from "@hooks/useLend";
 import { Prestamo } from "@icons";
 import { Drawer, Input, Select, Text } from "@ui";
 import moment from "moment";
@@ -23,7 +24,6 @@ import "react-datetime-picker/dist/DateTimePicker.css";
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
 
 import { CartItem } from "..";
-import { useLend } from "../../hooks/useLend";
 
 const now = moment().minutes(0).seconds(0).add(1, "hours");
 const end = now.clone().add(1, "hours");
@@ -47,6 +47,8 @@ const LendsDrawer = React.memo(
       foundMaterials,
       materials,
     } = useCart();
+
+    const { data: me } = useQuery(ME);
 
     useEffect(() => {
       getMaterials();
