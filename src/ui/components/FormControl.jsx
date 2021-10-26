@@ -18,7 +18,7 @@ export const FormControl = ({
   maxW,
   ...props
 }) => {
-  const [field, meta, { setValue }] = useField(props);
+  const [field, { error }, { setValue }] = useField(props);
 
   const inputTypes = {
     input() {
@@ -44,7 +44,7 @@ export const FormControl = ({
       {...{
         ...(isCentered && { display: "flex", alignItems: "center", flexDirection: "column" }),
       }}
-      isInvalid={meta.touched && meta.error}
+      isInvalid={!!error}
       isRequired={isRequired}
     >
       {label && (
@@ -55,7 +55,7 @@ export const FormControl = ({
         </FormLabel>
       )}
       {selectedType}
-      {meta.error ? <FormErrorMessage fontSize="12px"> {meta.error}</FormErrorMessage> : null}
+      {error ? <FormErrorMessage fontSize="12px"> {error}</FormErrorMessage> : null}
     </ChakraFormControl>
   );
 };
