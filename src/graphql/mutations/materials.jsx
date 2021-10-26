@@ -36,3 +36,33 @@ export const UPDATE_MATERIAL = gql`
     }
   }
 `;
+
+export const GET_POPULAR_MATERIALS = gql`
+  query Query {
+    getPopularMaterials {
+      id_material
+      nombre
+      etiqueta
+      categoria
+      descripcion
+      estado
+      foto
+      cantidad
+    }
+  }
+`;
+
+export const GET_MATERIAL_SEARCH = gql`
+  query Query($nombre: String!) {
+    getMaterialSearch(nombre: $nombre) {
+      id_material
+      etiqueta
+      nombre
+      categoria
+      descripcion
+      cantidad
+      foto
+      estado
+    }
+  }
+`;
