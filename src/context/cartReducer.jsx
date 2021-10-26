@@ -34,7 +34,16 @@ export const cartReducer = (state, action) => {
         ...state,
         cart: [],
       };
-
+    case "OPEN_CART":
+      return {
+        ...state,
+        isOpen: true,
+      };
+    case "CLOSE_CART":
+      return {
+        ...state,
+        isOpen: false,
+      };
     default:
       return state;
   }
