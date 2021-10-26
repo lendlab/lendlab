@@ -1,6 +1,10 @@
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { Progress } from "@chakra-ui/progress";
+import { useQuery } from "@apollo/client";
+import { ME } from "@graphql/mutations/auth";
+
+import { CartProvider } from "../context/CartProvider";
 
 import { LabRouter } from "./LabRouter";
 import { LandingRouter } from "./LandingRouter";
@@ -10,25 +14,37 @@ const PublicRoutes = React.lazy(() => import("./PublicRoutes"));
 const PrivateRoutes = React.lazy(() => import("./PrivateRoutes"));
 
 export const Router = () => {
-  const isLoggedIn = true;
-  const user = "Laboratorista";
+  const { data, loading } = useQuery(ME);
+  let isLoggedIn;
+
+  if (loading) {
+  } else if (!data?.me) {
+    isLoggedIn = false;
+  } else {
+    isLoggedIn = true;
+  }
+
+  const user = "c";
 
   return (
     <BrowserRouter>
       <div>
         <Switch>
           <Suspense fallback={<Progress isIndeterminate size="xs" />}>
-            <PrivateRoutes
-              component={user == "Laboratorista" ? LabRouter : UserRouter}
-              isAuthenticated={isLoggedIn}
-              path="/app"
-            />
-            <PublicRoutes
-              component={LandingRouter}
-              isAuthenticated={isLoggedIn}
-              path="/"
-              user={user}
-            />
+            <CartProvider>
+              <PrivateRoutes
+                component={user == "Laboratorista" ? LabRouter : UserRouter}
+                isAuthenticated={isLoggedIn}
+                path="/app"
+              />
+              <PublicRoutes
+                component={LandingRouter}
+                isAuthenticated={isLoggedIn}
+                path="/"
+                user={user}
+              />
+            </CartProvider>
+
             <Redirect to="/" />
           </Suspense>
         </Switch>
