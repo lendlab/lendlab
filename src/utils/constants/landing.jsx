@@ -46,7 +46,7 @@ export const NAV_DATA = {
 };
 
 export const HERO_DATA = {
-  you: "Tú",
+  you: "Tu",
   gradient: "Institución",
   nowOnline: "ahora en forma online",
   weLet:
