@@ -1,28 +1,28 @@
+import { useMutation } from "@apollo/client";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { Table as ChakraTable } from "@chakra-ui/react";
+import { Trash } from "@icons";
+import { Box, Drawer } from "@ui";
 import React, { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import {
-  useTable,
-  useSortBy,
-  useGlobalFilter,
   useFilters,
+  useGlobalFilter,
   usePagination,
   useRowSelect,
+  useSortBy,
+  useTable,
 } from "react-table";
-import { Table as ChakraTable } from "@chakra-ui/react";
-import { Box, Drawer } from "@ui";
-import { Trash } from "@icons";
-import { useDisclosure } from "@chakra-ui/hooks";
-import { useMutation } from "@apollo/client";
-import { useLocation } from "react-router-dom";
 
-import { Checkbox } from "../Checkbox";
 import { DELETE_MATERIAL } from "../../../graphql/mutations/materials";
 import { DELETE_USER } from "../../../graphql/queries/users";
+import { Checkbox } from "../Checkbox";
 
-import { TableHeader } from "./TableHeader";
 import { TableBody } from "./TableBody";
+import { TableColumnFilter } from "./TableColumnFilter";
+import { TableHeader } from "./TableHeader";
 import { TablePagination } from "./TablePagination";
 import { TableSearch } from "./TableSearch";
-import { TableColumnFilter } from "./TableColumnFilter";
 
 export const Table = ({ data, columns: memoColumns, placeholder }) => {
   const columns = useMemo(() => memoColumns, []);
