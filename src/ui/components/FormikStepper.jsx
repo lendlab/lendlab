@@ -8,7 +8,6 @@ export const FormikStepper = ({ children, ...props }) => {
   const childrenArray = React.Children.toArray(children);
   const [step, setStep] = useState(0);
   const currentChild = childrenArray[step];
-  const [completed, setCompleted] = useState(false);
 
   function isLastStep() {
     return step === childrenArray.length - 1;
@@ -17,22 +16,21 @@ export const FormikStepper = ({ children, ...props }) => {
   return (
     <Formik
       {...props}
-      validationSchema={currentChild.props.validationSchema}
       onSubmit={async (values, helpers) => {
         if (isLastStep()) {
           await props.onSubmit(values, helpers);
-          setCompleted(true);
         } else {
           setStep((s) => s + 1);
         }
       }}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, dirty, isValid }) => (
         <Form autoComplete="off" style={{ width: "50%" }}>
           <Stack spacing="4">
             {currentChild}
 
             <Button
+              disabled={!dirty || !isValid}
               isLoading={isSubmitting}
               loadingText="Iniciando sesión"
               rightIcon={isLastStep() ? <LoginIcon /> : <Arrow fill="white" />}
@@ -45,7 +43,7 @@ export const FormikStepper = ({ children, ...props }) => {
 
             {step > 0 ? (
               <Button
-                isLoading={isSubmitting}
+                disabled={!dirty || !isValid}
                 leftIcon={<Arrow direction="left" fill="#2c3e50" />}
                 loadingText="Iniciando sesión"
                 type="submit"
