@@ -1,29 +1,12 @@
-import {
-  Badge,
-  Container,
-  Stack,
-  Avatar,
-  Divider,
-  Box,
-  Center,
-  Image,
-  Button,
-  InputLeftElement,
-  Icon,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Menu,
-  Circle,
-} from "@chakra-ui/react";
-import React from "react";
-import { Logo, Input, Text, Heading, Drawer, WhiteCircle, CartItem, FormControl } from "@ui";
-import { Cart, Notification, Search, BriefCase, Arrow, Trash } from "@icons";
+import { useQuery } from "@apollo/client";
 import { useDisclosure } from "@chakra-ui/hooks";
-import { materials } from "@utils/constants/materials";
-import { Form, Formik } from "formik";
+import { Box, Button, Center, Divider, Image, Stack, useToast, Badge } from "@chakra-ui/react";
+import { useCart } from "@hooks/useCart";
+import { Arrow, Cart } from "@icons";
+import { Heading, Text, WhiteCircle, Drawer } from "@ui";
+import React from "react";
 
-import { useCart } from "../../hooks/useCart";
+import { GET_POPULAR_MATERIALS } from "../../graphql/mutations/materials";
 
 export const HomePage = () => {
   const colorSchemes = {
@@ -32,7 +15,9 @@ export const HomePage = () => {
     Regular: "yellow",
   };
 
-  const { cart, addMaterialToCart, deleteMaterialFromCart, cartCount } = useCart();
+  const { loading, data: materials, error } = useQuery(GET_POPULAR_MATERIALS);
+
+  const { addMaterialToCart } = useCart();
 
   const [data, setData] = React.useState({});
 
@@ -41,7 +26,6 @@ export const HomePage = () => {
     onOpen: onMaterialOpen,
     onClose: onMaterialClose,
   } = useDisclosure();
-  const { isOpen: isCartOpen, onOpen: onCartOpen, onClose: onCartClose } = useDisclosure();
   const btnRef = React.useRef();
 
   const handleAddMaterialToCart = (material) => {
@@ -49,147 +33,67 @@ export const HomePage = () => {
     onMaterialClose();
   };
 
+  if (loading || !data) return "loading...";
+
+  if (error) return <div>{error.message}</div>;
+
   return (
     <>
-      <Container alignSelf="center" maxW="container.xl" overflow="hidden" position="relative">
-        <Box paddingTop={4}>
-          <Stack>
-            <Stack alignItems="center" direction="row" justifyContent="space-between">
-              <Logo />
-              <Stack flex="1" maxW={800}>
-                <Formik
-                  initialValues={{
-                    material: "",
-                  }}
-                  onSubmit={(values) => {}}
-                >
-                  {(props) => (
-                    <Form>
-                      <FormControl
-                        isLabelLeft
-                        control="input"
-                        name="material"
-                        placeholder="Buscar material..."
-                        type="text"
-                      >
-                        <InputLeftElement children={<Search />} pointerEvents="none" />
-                      </FormControl>
-                    </Form>
-                  )}
-                </Formik>
-              </Stack>
-
-              <Stack alignItems="center" direction="row" spacing={8}>
-                <Notification />
-                <Stack direction="row" position="relative">
-                  <Icon as={Cart} cursor="pointer" h="none" w="none" onClick={onCartOpen} />
-                  {cartCount > 0 && (
-                    <Circle bg="lendlab.blue" h={4} position="absolute" right="-3" top="-1" w={4}>
-                      <Text color="white" fontSize="1">
-                        {cartCount}
-                      </Text>
-                    </Circle>
-                  )}
-                </Stack>
-
-                <Avatar name="Kent Dodds" size="sm" src="https://bit.ly/kent-c-dodds" />
-              </Stack>
-            </Stack>
-            <Stack alignItems="center" direction="row" spacing={8}>
-              <Stack
-                bg="lendlab.gray.100"
-                borderBottomColor="black"
-                borderBottomWidth={1}
-                borderTopRadius="14px"
-                px={8}
-                py={3}
-              >
-                <Text color="black" fontSize="2" fontWeight="bold">
-                  Inicio
-                </Text>
-              </Stack>
-              <Menu>
-                <MenuButton
-                  _focus={{ boxShadow: "none" }}
-                  as={Button}
-                  boxShadow="none"
-                  color="black"
-                  fontSize="2"
-                  fontWeight="regular"
-                  variant="unstyled"
-                >
-                  Categorias
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Download</MenuItem>
-                  <MenuItem>Create a Copy</MenuItem>
-                  <MenuItem>Mark as Draft</MenuItem>
-                  <MenuItem>Delete</MenuItem>
-                  <MenuItem>Attend a Workshop</MenuItem>
-                </MenuList>
-              </Menu>
-
-              <Text color="black" fontSize="2">
-                Salas
-              </Text>
-            </Stack>
+      <Box mt={8}>
+        <Stack alignItems="center" direction="row" justifyContent="space-between">
+          <Stack alignItems="center" direction="row">
+            <Heading fontSize="7" textAlign="left">
+              {" "}
+              Materiales Populares{" "}
+            </Heading>
           </Stack>
+          <Text color="lendlab.blue" fontSize="2">
+            Ver todos
+          </Text>
+        </Stack>
+
+        <Center h={8}>
           <Divider />
-
-          <Box mt={8}>
-            <Stack alignItems="center" direction="row" justifyContent="space-between">
-              <Stack alignItems="center" direction="row">
-                <Heading fontSize="7" textAlign="left">
-                  {" "}
-                  Materiales Populares{" "}
-                </Heading>
+        </Center>
+        <Stack alignItems="center" direction="row" justifyContent="space-between" paddingY={4}>
+          {materials.getPopularMaterials.map(
+            ({ id_material, foto, nombre, descripcion, ...rest }, index) => (
+              <Stack key={index} alignItems="center" spacing={4}>
+                <Image
+                  boxSize="200px"
+                  fallbackSrc="/images/fallback.jpg"
+                  objectFit="cover"
+                  src={foto}
+                />
+                <Text color="black" fontSize="2" fontWeight="bold">
+                  {nombre}
+                </Text>
+                <Text fontSize="2">{descripcion}</Text>
+                <Button
+                  ef={btnRef}
+                  fill="#fff"
+                  rightIcon={<Arrow />}
+                  variant="primary"
+                  onClick={(e) => {
+                    onMaterialOpen();
+                    setData({ id_material, nombre, foto, descripcion, ...rest });
+                    console.log(isMaterialOpen);
+                  }}
+                >
+                  Ver más
+                </Button>
               </Stack>
-              <Text color="lendlab.blue" fontSize="2">
-                Ver todos
-              </Text>
-            </Stack>
-
-            <Center h={8}>
-              <Divider />
-            </Center>
-            <Stack alignItems="center" direction="row" justifyContent="space-between" paddingY={4}>
-              {materials.slice(0, 3).map(({ src, nombre, desc, ...rest }, index) => (
-                <Stack key={index} alignItems="center" spacing={4}>
-                  <Image
-                    boxSize="200px"
-                    fallbackSrc="/images/fallback.jpg"
-                    objectFit="cover"
-                    src={src}
-                  />
-                  <Text color="black" fontSize="2" fontWeight="bold">
-                    {nombre}
-                  </Text>
-                  <Text fontSize="2">{desc}</Text>
-                  <Button
-                    ef={btnRef}
-                    fill="#fff"
-                    rightIcon={<Arrow />}
-                    variant="primary"
-                    onClick={(e) => {
-                      onMaterialOpen();
-                      setData({ nombre, src, desc, ...rest });
-                    }}
-                  >
-                    Ver más
-                  </Button>
-                </Stack>
-              ))}
-            </Stack>
-          </Box>
-        </Box>
-      </Container>
+            )
+          )}
+        </Stack>
+      </Box>
       <Drawer
         body={
           <Stack spacing={4}>
-            <Text fontSize="2">{data.desc}</Text>
+            <Text fontSize="2">{data.descripcion}</Text>
             <Stack alignItems="center" direction="row" justifyContent="space-between">
-              <Badge>{data.category}</Badge>
-              <Badge colorScheme={colorSchemes[data.state]}>{data.state} ESTADO</Badge>
+              <Badge>{data.categoria}</Badge>
+              <Badge colorScheme={colorSchemes[data.estado]}>{data.estado} ESTADO</Badge>
             </Stack>
           </Stack>
         }
@@ -210,7 +114,7 @@ export const HomePage = () => {
               boxSize="200px"
               fallbackSrc="/images/fallback.jpg"
               objectFit="cover"
-              src={data.src}
+              src={data.foto}
             />
           </Stack>
         }
@@ -218,37 +122,6 @@ export const HomePage = () => {
         size="xs"
         title={data.nombre}
         onClose={onMaterialClose}
-      />
-      <Drawer
-        body={
-          <Stack spacing={4}>
-            {cartCount > 0 ? (
-              cart.map(({ nombre, desc, src }, index) => (
-                <CartItem
-                  key={index}
-                  deleteMaterialFromCart={deleteMaterialFromCart}
-                  desc={desc}
-                  nombre={nombre}
-                  src={src}
-                />
-              ))
-            ) : (
-              <Heading fontSize="6">No tienes elementos en tu carrito. Agrega ya</Heading>
-            )}
-          </Stack>
-        }
-        footer={
-          cartCount > 0 && (
-            <Button variant="primary">
-              Pedir {cartCount > 1 ? "prestados" : "prestado"} ({cartCount}){" "}
-              {cartCount > 1 ? "materiales" : "material"}
-            </Button>
-          )
-        }
-        isOpen={isCartOpen}
-        size="md"
-        title={`Tu carrito (${cartCount})`}
-        onClose={onCartClose}
       />
       <WhiteCircle left="-5vw" position="absolute" size="big" />
       <WhiteCircle position="absolute" right="5%" size="little" top="30%" />
