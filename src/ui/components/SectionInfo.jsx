@@ -55,10 +55,10 @@ export const SectionInfo = ({
                   transform="translateY(-50%)"
                 />
                 <Text color="#CFE1FF" textAlign="left">
-                  ESTAS ADMINISTRANDO
+                  ESTÁS ADMINISTRANDO
                 </Text>
                 <Heading color="white" textAlign="left">
-                  UTU MERCEDES
+                  UTU BLANES VIALE
                 </Heading>
               </Stack>
             )}
