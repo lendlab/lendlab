@@ -6,7 +6,7 @@ export const LandingPageLayout = ({ children }) => {
   return (
     <>
       <Helmet>
-        <title>inicio | lendlabç</title>
+        <title>inicio | lendlab</title>
         <meta
           content="Administra, gestiona y realiza los prestamso de tu institución, ahora en forma online con LendLab."
           name="description"
