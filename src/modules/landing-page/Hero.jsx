@@ -27,7 +27,7 @@ export const Hero = () => {
               spacing={4}
               w="full"
             >
-              <Heading fontSize="9" maxW="15em">
+              <Heading as="h1" fontSize="9" maxW="15em">
                 {HERO_DATA.you}
                 <Heading
                   as="span"

@@ -5,9 +5,6 @@ import { Helmet } from "react-helmet";
 export const LoginPageLayout = ({ children }) => {
   return (
     <>
-      <Helmet>
-        <title>login | lendlab</title>
-      </Helmet>
       <Container
         alignSelf="center"
         maxW="container.xl"
