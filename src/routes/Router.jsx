@@ -16,15 +16,15 @@ const PrivateRoutes = React.lazy(() => import("./PrivateRoutes"));
 export const Router = () => {
   const { data, loading } = useQuery(ME);
   let isLoggedIn;
+  let user;
 
   if (loading) {
   } else if (!data?.me) {
     isLoggedIn = false;
   } else {
     isLoggedIn = true;
+    user = data.me.tipo_usuario;
   }
-
-  const user = "c";
 
   return (
     <BrowserRouter>
