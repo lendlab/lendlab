@@ -11,7 +11,7 @@ import "@fontsource/archivo";
 import Fonts from "./theme/fonts";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://lendlab-backend-9nbzz.ondigitalocean.app/api",
   cache: new InMemoryCache(),
   credentials: "include",
 });
