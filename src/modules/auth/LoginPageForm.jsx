@@ -5,9 +5,12 @@ import { InputLeftElement } from "@chakra-ui/input";
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "@graphql/mutations/auth";
 import { toErrorMap } from "@utils/toErrorMap";
+import { useHistory } from "react-router";
 
 export const LoginPageForm = () => {
   const [login] = useMutation(LOGIN);
+
+  const history = useHistory();
 
   return (
     <FormikStepper
@@ -28,6 +31,10 @@ export const LoginPageForm = () => {
 
         if (response.data?.login.errors) {
           setErrors(toErrorMap(response.data.login.errors));
+        } else if (response.data?.me.tipo_usuario == "Laboratorista") {
+          history.push("/dashboard/resumen");
+        } else if (response.data?.me.tipo_usuario == "Alumno") {
+          history.push("/app/home");
         }
       }}
     >
