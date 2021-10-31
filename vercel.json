@@ -1,5 +1,5 @@
 {
   "routes":  [
-    {"source": "@pages/login", "destination": "/login"}
+    {"src": "@pages/login", "dest": "/login"}
   ]
 }
