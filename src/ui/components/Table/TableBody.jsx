@@ -19,10 +19,10 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow, onRowClicked })
               {...row.getRowProps({
                 onClick: (e) => {
                   if (e.target.tagName == "TD") {
-                    if (pathname == "/app/prestamos") {
-                      history.push(`/app/prestamo/${row.original.lendId}`);
-                    } else if (pathname == "/app/materiales") {
-                      history.push(`/app/material/${row.original.id_material}`);
+                    if (pathname == "/dashboard/prestamos") {
+                      history.push(`/dashboard/prestamo/${row.original.lendId}`);
+                    } else if (pathname == "/dashboard/materiales") {
+                      history.push(`/dashboard/material/${row.original.id_material}`);
                     }
                   }
                 },

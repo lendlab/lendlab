@@ -19,7 +19,7 @@ export const SECTIONS = [
         icon() {
           return <DashboardIcon />;
         },
-        path: "/app/resumen",
+        path: "/dashboard/resumen",
       },
     ],
   },
@@ -31,35 +31,35 @@ export const SECTIONS = [
         icon() {
           return <Prestamo />;
         },
-        path: "/app/prestamos",
+        path: "/dashboard/prestamos",
       },
       {
         name: "Reservas",
         icon() {
           return <Reserve />;
         },
-        path: "/app/reservas",
+        path: "/dashboard/reservas",
       },
       {
         name: "Materiales",
         icon() {
           return <BriefCase />;
         },
-        path: "/app/materiales",
+        path: "/dashboard/materiales",
       },
       {
         name: "Usuarios",
         icon() {
           return <ProfileUser2 />;
         },
-        path: "/app/usuarios",
+        path: "/dashboard/usuarios",
       },
       {
         name: "Salas",
         icon() {
           return <Home />;
         },
-        path: "/app/salas",
+        path: "/dashboard/salas",
       },
     ],
   },
@@ -71,14 +71,14 @@ export const SECTIONS = [
         icon() {
           return <Messages />;
         },
-        path: "/app/chat",
+        path: "/dashboard/chat",
       },
       {
         name: "Configuración",
         icon() {
           return <Settings />;
         },
-        path: "/app/configuracion",
+        path: "/dashboard/configuracion",
       },
     ],
   },
