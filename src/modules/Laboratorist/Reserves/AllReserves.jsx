@@ -78,13 +78,7 @@ export const AllReserves = () => {
     };
   }, [loading, data]);
 
-  if (loading)
-    return (
-      <Helmet>
-        <title>cargando... | lendlab</title>
-        <SkeletonTable />
-      </Helmet>
-    );
+  if (loading) return <SkeletonTable />;
 
   if (error)
     return (
