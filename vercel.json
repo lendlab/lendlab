@@ -1,5 +1,5 @@
 {
   "routes":  [
-    {"src": "@pages/login", "dest": "/login"}
+    {"src": "@pages/login", "dest": "https://lend-lab.com/login"}
   ]
 }
