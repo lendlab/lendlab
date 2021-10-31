@@ -1,14 +1,16 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_LEND = gql`
-  mutation CreateLendMutation($data: LendInput!) {
+  mutation Mutation($data: LendInput!) {
     createLend(data: $data) {
       id_lend
+      fecha_hora_presta
       fecha_vencimiento
       fecha_devolucion
-      fecha_hora_presta
+      laboratorist
       reservation {
         id_reserva
+        fecha_hora
       }
     }
   }
