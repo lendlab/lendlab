@@ -25,7 +25,7 @@ import { TablePagination } from "./TablePagination";
 import { TableSearch } from "./TableSearch";
 
 export const Table = ({ data, columns: memoColumns, placeholder }) => {
-  const columns = useMemo(() => memoColumns, []);
+  const columns = useMemo(() => memoColumns, [memoColumns]);
   const { onClose } = useDisclosure();
   const [deleteMaterial] = useMutation(DELETE_MATERIAL);
   const [deleteUser] = useMutation(DELETE_USER);
@@ -100,7 +100,7 @@ export const Table = ({ data, columns: memoColumns, placeholder }) => {
       setMessage("");
       onClose();
     }
-  }, [selectedFlatRows]);
+  }, [selectedFlatRows, onClose, rows.length]);
 
   return (
     <>

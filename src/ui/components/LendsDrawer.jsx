@@ -52,7 +52,7 @@ const LendsDrawer = React.memo(
 
     useEffect(() => {
       getMaterials();
-    }, []);
+    }, [getMaterials]);
 
     const {
       createReservationLoading,
