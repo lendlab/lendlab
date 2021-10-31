@@ -1,21 +1,23 @@
 import React from "react";
 import { Stack } from "@chakra-ui/layout";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Heading } from "@ui";
 
-export const Logo = ({ isNotHome, ...props }) => {
+export const Logo = ({ isNotHome, home, ...props }) => {
   const history = useHistory();
 
   const handleRedirectHome = () => {
-    history.push("/");
+    history.push(home);
   };
+
+  const { pathname } = useLocation();
 
   return (
     <Stack
       alignItems="center"
-      cursor={isNotHome && "pointer"}
+      cursor={pathname != home && "pointer"}
       direction="row"
-      onClick={(e) => isNotHome && handleRedirectHome()}
+      onClick={(e) => pathname != home && handleRedirectHome()}
       {...props}
     >
       <Heading fontFamily="Basement Grotesque" fontSize="4xl" margin="0">
