@@ -152,6 +152,8 @@ const Nav = ({ onOpen, ...rest }) => {
                 logout({
                   update: (cache) => {
                     cache.evict({ fieldName: "me" });
+                    localStorage.removeItem("cart");
+                    localStorage.removeItem("lastPath");
                   },
                 });
               }}
