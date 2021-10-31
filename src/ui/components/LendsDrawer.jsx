@@ -195,6 +195,7 @@ const LendsDrawer = React.memo(
                                   id_reserva: createReservation.id_reserva,
                                   fecha_hora: fecha_hora,
                                 },
+                                laboratorist: parseInt(me.me.cedula),
                               },
                             },
                             update: (cache) => {
