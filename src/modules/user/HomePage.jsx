@@ -39,54 +39,55 @@ export const HomePage = () => {
 
   return (
     <>
-      <Box mt={8}>
-        <Stack alignItems="center" direction="row" justifyContent="space-between">
-          <Stack alignItems="center" direction="row">
-            <Heading fontSize="7" textAlign="left">
-              {" "}
-              Materiales Populares{" "}
-            </Heading>
+      {materials.getPopularMaterials.length > 0 && (
+        <Box mt={8}>
+          <Stack alignItems="center" direction="row" justifyContent="space-between">
+            <Stack alignItems="center" direction="row">
+              <Heading fontSize="7" textAlign="left">
+                {" "}
+                Materiales Populares{" "}
+              </Heading>
+            </Stack>
+            <Text color="lendlab.blue" fontSize="2">
+              Ver todos
+            </Text>
           </Stack>
-          <Text color="lendlab.blue" fontSize="2">
-            Ver todos
-          </Text>
-        </Stack>
 
-        <Center h={8}>
-          <Divider />
-        </Center>
-        <Stack alignItems="center" direction="row" justifyContent="space-between" paddingY={4}>
-          {materials.getPopularMaterials.map(
-            ({ id_material, foto, nombre, descripcion, ...rest }, index) => (
-              <Stack key={index} alignItems="center" spacing={4}>
-                <Image
-                  boxSize="200px"
-                  fallbackSrc="/images/fallback.jpg"
-                  objectFit="cover"
-                  src={foto}
-                />
-                <Text color="black" fontSize="2" fontWeight="bold">
-                  {nombre}
-                </Text>
-                <Text fontSize="2">{descripcion}</Text>
-                <Button
-                  ef={btnRef}
-                  fill="#fff"
-                  rightIcon={<Arrow />}
-                  variant="primary"
-                  onClick={(e) => {
-                    onMaterialOpen();
-                    setData({ id_material, nombre, foto, descripcion, ...rest });
-                    console.log(isMaterialOpen);
-                  }}
-                >
-                  Ver más
-                </Button>
-              </Stack>
-            )
-          )}
-        </Stack>
-      </Box>
+          <Center h={8}>
+            <Divider />
+          </Center>
+          <Stack alignItems="center" direction="row" justifyContent="space-between" paddingY={4}>
+            {materials.getPopularMaterials.map(
+              ({ id_material, foto, nombre, descripcion, ...rest }, index) => (
+                <Stack key={index} alignItems="center" spacing={4}>
+                  <Image
+                    boxSize="200px"
+                    fallbackSrc="/images/fallback.jpg"
+                    objectFit="cover"
+                    src={foto}
+                  />
+                  <Text color="black" fontSize="2" fontWeight="bold">
+                    {nombre}
+                  </Text>
+                  <Text fontSize="2">{descripcion}</Text>
+                  <Button
+                    ef={btnRef}
+                    fill="#fff"
+                    rightIcon={<Arrow />}
+                    variant="primary"
+                    onClick={(e) => {
+                      onMaterialOpen();
+                      setData({ id_material, nombre, foto, descripcion, ...rest });
+                    }}
+                  >
+                    Ver más
+                  </Button>
+                </Stack>
+              )
+            )}
+          </Stack>
+        </Box>
+      )}
       <Drawer
         body={
           <Stack spacing={4}>
