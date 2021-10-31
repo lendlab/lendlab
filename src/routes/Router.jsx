@@ -3,6 +3,7 @@ import React, { Suspense, useState } from "react";
 import { Progress } from "@chakra-ui/progress";
 import { useQuery } from "@apollo/client";
 import { ME } from "@graphql/mutations/auth";
+import { Spinner } from "@chakra-ui/react";
 
 import { CartProvider } from "../context/CartProvider";
 
@@ -15,10 +16,15 @@ const PrivateRoutes = React.lazy(() => import("./PrivateRoutes"));
 
 export const Router = () => {
   const { data, loading } = useQuery(ME);
-  let isLoggedIn;
-  let user;
+  let isLoggedIn = true;
+  let user = "c";
 
   if (loading) {
+    return (
+      <Box h="100vh" w="100vw">
+        <Spinner />
+      </Box>
+    );
   } else if (!data?.me) {
     isLoggedIn = false;
   } else {
@@ -35,7 +41,7 @@ export const Router = () => {
               <PrivateRoutes
                 component={user == "Laboratorista" ? LabRouter : UserRouter}
                 isAuthenticated={isLoggedIn}
-                path="/app"
+                path={user == "Laboratorista" ? "/dashboard" : "/app"}
               />
               <PublicRoutes
                 component={LandingRouter}
