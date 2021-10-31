@@ -11,14 +11,13 @@ import { CartProvider } from "../context/CartProvider";
 import { LabRouter } from "./LabRouter";
 import { LandingRouter } from "./LandingRouter";
 import { UserRouter } from "./UserRouter";
-
-const PublicRoutes = React.lazy(() => import("./PublicRoutes"));
-const PrivateRoutes = React.lazy(() => import("./PrivateRoutes"));
+import PrivateRoutes from "./PrivateRoutes";
+import PublicRoutes from "./PublicRoutes";
 
 export const Router = () => {
   const { data, loading } = useQuery(ME);
-  let isLoggedIn = true;
-  let user = "c";
+  let isLoggedIn;
+  let user;
 
   if (loading) {
     return (
@@ -37,23 +36,21 @@ export const Router = () => {
     <BrowserRouter>
       <div>
         <Switch>
-          <Suspense fallback={<Progress isIndeterminate size="xs" />}>
-            <CartProvider>
-              <PrivateRoutes
-                component={user == "Laboratorista" ? LabRouter : UserRouter}
-                isAuthenticated={isLoggedIn}
-                path={user == "Laboratorista" ? "/dashboard" : "/app"}
-              />
-              <PublicRoutes
-                component={LandingRouter}
-                isAuthenticated={isLoggedIn}
-                path="/"
-                user={user}
-              />
-            </CartProvider>
+          <CartProvider>
+            <PrivateRoutes
+              component={user == "Laboratorista" ? LabRouter : UserRouter}
+              isAuthenticated={isLoggedIn}
+              path={user == "Laboratorista" ? "/dashboard" : "/app"}
+            />
+            <PublicRoutes
+              component={LandingRouter}
+              isAuthenticated={isLoggedIn}
+              path="/"
+              user={user}
+            />
+          </CartProvider>
 
-            <Redirect to="/" />
-          </Suspense>
+          <Redirect to="/" />
         </Switch>
       </div>
     </BrowserRouter>
