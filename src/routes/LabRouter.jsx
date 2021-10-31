@@ -20,14 +20,14 @@ export const LabRouter = (props) => {
       <UserProvider>
         <Sidebar />
         <Switch>
-          <Route component={Summary} path="/app/resumen" />
-          <Route component={LabLendsPage} path="/app/prestamos" />
-          <Route component={Lend} path="/app/prestamo/:id" />
-          <Route component={LabReservesPage} path="/app/reservas" />
-          <Route component={LabMaterialsPage} path="/app/materiales" />
-          <Route component={Material} path="/app/material/:id" />
-          <Route component={LabUsersPage} path="/app/usuarios" />
-          <Redirect to="/app/resumen" />
+          <Route component={Summary} path="/dashboard/resumen" />
+          <Route component={LabLendsPage} path="/dashboard/prestamos" />
+          <Route component={Lend} path="/dashboard/prestamo/:id" />
+          <Route component={LabReservesPage} path="/dashboard/reservas" />
+          <Route component={LabMaterialsPage} path="/dashboard/materiales" />
+          <Route component={Material} path="/dashboard/material/:id" />
+          <Route component={LabUsersPage} path="/dashboard/usuarios" />
+          <Redirect to="/dashboard/resumen" />
         </Switch>
       </UserProvider>
     </CartProvider>
