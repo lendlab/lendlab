@@ -3,11 +3,29 @@ import { Redirect, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const PublicRoutes = ({ isAuthenticated, user, component: Component, ...rest }) => {
+  const lastPath = localStorage.getItem("lastPath");
+
+  const redirectPath = () => {
+    if (user == "Laboratorista") {
+      if (lastPath == "/app/home") {
+        return "/dashboard/resumen";
+      }
+
+      return lastPath;
+    } else {
+      if (lastPath == "/dashboard/resumen") {
+        return "/app/home";
+      }
+
+      return lastPath;
+    }
+  };
+
   return (
     <Route
       {...rest}
       component={(props) =>
-        isAuthenticated ? <Redirect to="/app/home" /> : <Component {...props} />
+        isAuthenticated ? <Redirect to={redirectPath()} /> : <Component {...props} />
       }
     />
   );
