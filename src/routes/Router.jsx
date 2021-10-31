@@ -3,8 +3,7 @@ import React, { Suspense, useState } from "react";
 import { Progress } from "@chakra-ui/progress";
 import { useQuery } from "@apollo/client";
 import { ME } from "@graphql/mutations/auth";
-import { Spinner } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
+import { Spinner, Flex } from "@chakra-ui/react";
 
 import { CartProvider } from "../context/CartProvider";
 
@@ -21,9 +20,9 @@ export const Router = () => {
 
   if (loading) {
     return (
-      <Box h="100vh" w="100vw">
+      <Flex alignItems="center" display="flex" h="100vh" justifyContent="center" w="100vw">
         <Spinner />
-      </Box>
+      </Flex>
     );
   } else if (!data?.me) {
     isLoggedIn = false;

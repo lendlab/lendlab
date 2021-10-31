@@ -142,7 +142,7 @@ export const Table = ({ data, columns: memoColumns, placeholder }) => {
           <Trash
             cursor="pointer"
             onClick={(e) => {
-              if (pathname == "/app/materiales") {
+              if (pathname == "/dashboard/materiales") {
                 const id_material = Number(
                   selectedFlatRows.map((row) => {
                     return row.original.id_material;
