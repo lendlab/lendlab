@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Avatar,
   Box,
@@ -14,30 +15,26 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react";
-import { Cart, Notification, Search } from "@icons";
+import { Cart, Notification, Search, LogoutIcon } from "@icons";
 import { SearchPage } from "@modules/user/Search";
 import HomePage from "@pages/user/home";
 import { FormControl, Logo, Text } from "@ui";
 import { Form, Formik } from "formik";
 import React from "react";
-import { Route, Switch, useHistory } from "react-router";
-
-import { useCart } from "../hooks/useCart";
-import { CartDrawer } from "../modules/user/CartDrawer";
+import { Route, Switch, useHistory, useLocation } from "react-router";
+import { LOGOUT } from "@graphql/mutations/auth";
+import { useCart } from "@hooks/useCart";
+import { CartDrawer } from "@modules/user/CartDrawer";
+import { ME } from "@graphql/mutations/auth";
 
 export const UserRouter = (props) => {
-  const {
-    cart,
-    addMaterialToCart,
-    deleteMaterialFromCart,
-    openCart,
-    cartCount,
-    clearCart,
-    isOpen,
-  } = useCart();
+  const { openCart, cartCount, clearCart } = useCart();
+
+  const [logout] = useMutation(LOGOUT);
+  const { data } = useQuery(ME);
 
   const history = useHistory();
-  const toast = useToast();
+  const path = useLocation;
 
   localStorage.setItem("lastPath", props.location.pathname);
 
@@ -46,7 +43,7 @@ export const UserRouter = (props) => {
       <Box alignSelf="center" maxW="container.xl" paddingTop={4} position="relative">
         <Stack>
           <Stack alignItems="center" direction="row" justifyContent="space-between">
-            <Logo />
+            <Logo home="/app/home" />
             <Stack flex="1" maxW={800}>
               <Formik
                 initialValues={{
@@ -85,7 +82,23 @@ export const UserRouter = (props) => {
                 )}
               </Stack>
 
-              <Avatar name="Kent Dodds" size="sm" src="https://bit.ly/kent-c-dodds" />
+              <Menu isLazy>
+                <MenuButton as={Avatar} cursor="pointer" name={data?.me?.nombre} size="sm" />
+                <MenuList>
+                  <MenuItem
+                    icon={<LogoutIcon fill="#000" />}
+                    onClick={() => {
+                      logout({
+                        update: (cache) => {
+                          cache.evict({ fieldName: "me" });
+                        },
+                      });
+                    }}
+                  >
+                    Cerrar Sesión
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </Stack>
           </Stack>
           <Stack alignItems="center" direction="row" spacing={8}>
