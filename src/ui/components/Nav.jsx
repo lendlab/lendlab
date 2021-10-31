@@ -8,7 +8,6 @@ import { Logo, Box } from "@ui";
 import Headroom from "react-headroom";
 
 export const Nav = () => {
-  const { pathname } = useLocation();
   const [shadow, setShadow] = useState(false);
 
   const handleScroll = () => {
@@ -39,7 +38,7 @@ export const Nav = () => {
           paddingX={6}
           w="100%"
         >
-          <Logo isNotHome={pathname === "/" ? false : true} />
+          <Logo home="/" />
           {pathname === "/" && (
             <>
               <Stack alignItems="center" as="ul" direction="row" spacing={8}>
