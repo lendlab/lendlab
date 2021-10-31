@@ -31,6 +31,8 @@ export const Router = () => {
     user = data.me.tipo_usuario;
   }
 
+  console.log(isLoggedIn, user);
+
   return (
     <BrowserRouter>
       <div>

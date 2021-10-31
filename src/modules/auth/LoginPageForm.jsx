@@ -10,8 +10,6 @@ import { useHistory } from "react-router";
 export const LoginPageForm = () => {
   const [login] = useMutation(LOGIN);
 
-  const history = useHistory();
-
   return (
     <FormikStepper
       initialValues={{
@@ -31,10 +29,6 @@ export const LoginPageForm = () => {
 
         if (response.data?.login.errors) {
           setErrors(toErrorMap(response.data.login.errors));
-        } else if (response.data?.login.user.tipo_usuario == "Laboratorista") {
-          history.push("/dashboard/resumen");
-        } else if (response.data?.login.user.tipo_usuario == "Alumno") {
-          history.push("/app/home");
         }
       }}
     >
