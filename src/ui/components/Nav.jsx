@@ -16,6 +16,8 @@ export const Nav = () => {
 
   window.addEventListener("scroll", handleScroll);
 
+  const { pathname } = useLocation();
+
   return (
     <Headroom>
       <Box
