@@ -4,6 +4,7 @@ import { Progress } from "@chakra-ui/progress";
 import { useQuery } from "@apollo/client";
 import { ME } from "@graphql/mutations/auth";
 import { Spinner } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 import { CartProvider } from "../context/CartProvider";
 
