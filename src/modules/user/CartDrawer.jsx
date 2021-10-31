@@ -5,11 +5,15 @@ import { CartItem, Drawer, Heading, Text } from "@ui";
 import moment from "moment";
 import React from "react";
 import { useCart } from "@hooks/useCart";
+import { ME } from "@graphql/mutations/auth";
+import { useQuery } from "@apollo/client";
 
 export const CartDrawer = () => {
   const { cart, isOpen, closeCart, deleteMaterialFromCart, cartCount, clearCart } = useCart();
 
   const { createReservationLoading, maxReserveId, createReservation } = useLend();
+
+  const { data } = useQuery(ME);
 
   return (
     <>
@@ -48,7 +52,7 @@ export const CartDrawer = () => {
                         finalizada: true,
                         fecha_hora,
                         user: {
-                          cedula: parseInt(3500),
+                          cedula: parseInt(data.me.cedula),
                         },
                         material: {
                           id_material,
