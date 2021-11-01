@@ -49,9 +49,11 @@ const theme = extendTheme({
         MozOsxFontSmoothing: "grayscale",
         WebkitFontSmoothing: "antialiased",
         textRendering: "optimizeLegibility",
+        height: "100%",
       },
       html: {
         scrollBehavior: "smooth",
+        height: "100%",
       },
     },
   },
