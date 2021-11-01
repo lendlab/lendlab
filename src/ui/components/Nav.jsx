@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { Stack, Text, Button, Icon } from "@chakra-ui/react";
+import {
+  Stack,
+  Text,
+  Button,
+  Icon,
+  Flex,
+  CloseButton,
+  DrawerContent,
+  Drawer,
+  useDisclosure,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { NAV_DATA } from "@utils/constants/landing";
@@ -15,6 +26,8 @@ export const Nav = () => {
   };
 
   window.addEventListener("scroll", handleScroll);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { pathname } = useLocation();
 
@@ -36,10 +49,29 @@ export const Nav = () => {
           as="nav"
           direction="row"
           h="nav"
-          justifyContent="space-between"
+          justifyContent={{ md: "space-between", base: "start" }}
           paddingX={6}
           w="100%"
         >
+          <Button
+            aria-label="open menu"
+            display={{ base: "block", md: "none" }}
+            variant="outline"
+            onClick={onOpen}
+          />
+          <Drawer
+            autoFocus={false}
+            isOpen={isOpen}
+            placement="left"
+            returnFocusOnClose={false}
+            size="full"
+            onClose={onClose}
+            onOverlayClick={onClose}
+          >
+            <DrawerContent>
+              <ResponsiveNavContent isOpen={isOpen} onClose={onClose} />
+            </DrawerContent>
+          </Drawer>
           <Logo home="/" />
           {pathname === "/" && (
             <>
@@ -47,14 +79,14 @@ export const Nav = () => {
                 alignItems="center"
                 as="ul"
                 direction="row"
-                display={{ md: "flex", base: "none" }}
+                display={{ base: "none", md: "flex" }}
                 spacing={8}
               >
                 {NAV_DATA.options.map((option, index) => (
                   <HashLink key={index} to={option.link}>
                     <Stack alignItems="center" direction="row">
                       <Icon as={option.icon} />
-                      <Text color="lendlab.gray.300" fontSize={14} fontWeight="700">
+                      <Text color="lendlab.gray.300" fontWeight="700">
                         {option.name}
                       </Text>
                     </Stack>
@@ -62,7 +94,11 @@ export const Nav = () => {
                 ))}
               </Stack>
               <Link to="/login">
-                <Button leftIcon={NAV_DATA.button.icon()} variant="primary">
+                <Button
+                  display={{ base: "none", md: "inline-flex" }}
+                  leftIcon={NAV_DATA.button.icon()}
+                  variant="primary"
+                >
                   {NAV_DATA.button.text}
                 </Button>
               </Link>
@@ -71,5 +107,65 @@ export const Nav = () => {
         </Stack>
       </Box>
     </Headroom>
+  );
+};
+
+const ResponsiveNavContent = ({ isOpen, onClose, ...rest }) => {
+  return (
+    <Stack bg="white" h="full" justifyContent="space-between" overflowY="auto" w="full" {...rest}>
+      <Stack>
+        <Flex alignItems="center" h="20" justifyContent="space-between" mx="8">
+          <Logo />
+          <CloseButton onClick={onClose} />
+        </Flex>
+        {NAV_DATA.options.map((option, index) => (
+          <NavItem
+            key={index}
+            icon={option.icon}
+            index={index}
+            link={option.link}
+            name={option.name}
+            onClose={onClose}
+          />
+        ))}
+      </Stack>
+
+      <Box bottom="0" display={isOpen ? "block" : "none"} w="full">
+        <Button isFullWidth borderRadius={0} leftIcon={NAV_DATA.button.icon()} variant="primary">
+          {NAV_DATA.button.text}
+        </Button>
+      </Box>
+    </Stack>
+  );
+};
+
+const NavItem = ({ onClose, icon, index, name, link, ...rest }) => {
+  return (
+    <>
+      <ChakraLink
+        key={index}
+        as={HashLink}
+        style={{ textDecoration: "none", boxShadow: "none" }}
+        to={link}
+        onClick={onClose}
+      >
+        <Stack
+          align="center"
+          borderRadius="14px"
+          direction="row"
+          mx="4"
+          p="4"
+          role="group"
+          spacing={4}
+          {...rest}
+        >
+          <Icon as={icon} />
+
+          <Text color="lendlab.gray.300" fontWeight="700">
+            {name}
+          </Text>
+        </Stack>
+      </ChakraLink>
+    </>
   );
 };
