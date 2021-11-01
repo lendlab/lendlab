@@ -4,6 +4,7 @@ import { HERO_DATA } from "@utils/constants/landing";
 import { Heading, Text, Bold, WhiteCircle, Box } from "@ui";
 import { motion } from "framer-motion";
 import InView from "react-intersection-observer";
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
@@ -44,10 +45,11 @@ export const Hero = () => {
                 {HERO_DATA.weLet}
                 <Bold>{HERO_DATA.bold}</Bold>
               </Text>
-
-              <Button rightIcon={HERO_DATA.button.icon()} variant="primary">
-                {HERO_DATA.button.text}
-              </Button>
+              <Link to="/login">
+                <Button rightIcon={HERO_DATA.button.icon()} variant="primary">
+                  {HERO_DATA.button.text}
+                </Button>
+              </Link>
             </Stack>
             <Stack ali direction="row" spacing={28} w="full">
               <WhiteCircle size="medium" />
