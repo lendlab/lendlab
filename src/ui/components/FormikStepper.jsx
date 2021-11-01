@@ -25,7 +25,7 @@ export const FormikStepper = ({ children, ...props }) => {
       }}
     >
       {({ isSubmitting, dirty, isValid }) => (
-        <Form autoComplete="off" style={{ width: "50%" }}>
+        <Stack as={Form} autoComplete="off" w={{ md: "75%", lg: "50%", sm: "85%", base: "85%" }}>
           <Stack spacing="4">
             {currentChild}
 
@@ -55,7 +55,7 @@ export const FormikStepper = ({ children, ...props }) => {
               </Button>
             ) : null}
           </Stack>
-        </Form>
+        </Stack>
       )}
     </Formik>
   );
