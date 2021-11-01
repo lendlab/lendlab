@@ -43,7 +43,13 @@ export const Nav = () => {
           <Logo home="/" />
           {pathname === "/" && (
             <>
-              <Stack alignItems="center" as="ul" direction="row" spacing={8}>
+              <Stack
+                alignItems="center"
+                as="ul"
+                direction="row"
+                display={{ md: "flex", base: "none" }}
+                spacing={8}
+              >
                 {NAV_DATA.options.map((option, index) => (
                   <HashLink key={index} to={option.link}>
                     <Stack alignItems="center" direction="row">

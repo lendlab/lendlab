@@ -25,14 +25,14 @@ export const Benefits = () => {
             )}
           </InView>
 
-          <SimpleGrid columns={3} justifyItems="center" spacing={14} w="full">
+          <SimpleGrid columns={{ base: 1, md: 3 }} justifyItems="center" spacing={14} w="full">
             {BENEFITS_DATA.benefits.map((benefit, index) => (
               <Stack key={index} alignItems="center">
                 <Circle bg="lendlab.gray.300" h="2em" w="2em">
                   <Icon as={benefit.icon} />
                 </Circle>
-                <Bold fontSize="18px">{benefit.name}</Bold>
-                <Text fontSize="16px">{benefit.description}</Text>
+                <Bold fontSize={{ md: "6", base: "5" }}>{benefit.name}</Bold>
+                <Text>{benefit.description}</Text>
               </Stack>
             ))}
           </SimpleGrid>

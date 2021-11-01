@@ -27,7 +27,7 @@ export const Hero = () => {
               spacing={4}
               w="full"
             >
-              <Heading as="h1" fontSize="9" maxW="15em">
+              <Heading as="h1" fontSize="9" maxW="15em" w="full">
                 {HERO_DATA.you}
                 <Heading
                   as="span"
@@ -40,7 +40,7 @@ export const Hero = () => {
                 </Heading>
                 {HERO_DATA.nowOnline}
               </Heading>
-              <Text fontSize="6" w="70%">
+              <Text fontSize={{ md: "6", base: "4" }} w={{ md: "70%", base: "90%" }}>
                 {HERO_DATA.weLet}
                 <Bold>{HERO_DATA.bold}</Bold>
               </Text>

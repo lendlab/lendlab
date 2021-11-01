@@ -15,7 +15,6 @@ export const LoginPageForm = () => {
       initialValues={{
         cedula: "",
         password: "",
-        institution: "",
       }}
       onSubmit={async (values, { setErrors }) => {
         const response = await login({
@@ -35,7 +34,7 @@ export const LoginPageForm = () => {
       <FormikStep>
         <FormControl
           control="input"
-          label="Continua con tu cedula"
+          label="Tu cedula"
           labelAlign="center"
           name="cedula"
           placeholder="ej. 54548246"
@@ -46,23 +45,15 @@ export const LoginPageForm = () => {
         </FormControl>
         <FormControl
           control="input"
-          label="Continua con tu contraseña"
+          label="Tu contraseña"
           labelAlign="center"
           name="password"
-          placeholder="ej. 54548246"
+          placeholder="ej. ***********"
           type="password"
           w="100%"
         >
           <InputLeftElement children={<Card />} pointerEvents="none" />
         </FormControl>
-        <FormControl
-          control="select"
-          label="Selecciona tu institución"
-          labelAlign="center"
-          name="institution"
-          placeholder="Selecciona una institución"
-          w="100%"
-        />
       </FormikStep>
     </FormikStepper>
   );

@@ -4,14 +4,7 @@ import React from "react";
 
 const MotionText = motion(ChakraText);
 
-export const Text = ({
-  children,
-  innerRef,
-  fontSize = "xl",
-  textAlign = "center",
-  color,
-  ...props
-}) => {
+export const Text = ({ children, fontSize, innerRef, textAlign = "center", color, ...props }) => {
   return (
     <MotionText
       {...props}
@@ -23,7 +16,7 @@ export const Text = ({
             }),
       }}
       ref={innerRef}
-      fontSize={fontSize}
+      fontSize={!fontSize ? { lg: "5", md: "4" } : fontSize}
       textAlign={textAlign}
     >
       {children}

@@ -22,26 +22,31 @@ export const Features = () => {
                   innerRef={ref}
                   transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
                 >
-                  <Stack direction={feature.direction} spacing={8}>
-                    <Stack justifyContent="center" w="50%">
+                  <Stack direction={{ md: feature.direction, base: "column" }} spacing={8}>
+                    <Stack justifyContent="center" w={{ md: "50%", base: "100%" }}>
                       <Image src={feature.illustration} />
                     </Stack>
-                    <Stack justifyContent="center" spacing={8} w="50%">
-                      <Heading fontSize="4xl" textAlign="left">
-                        {feature.title}
-                      </Heading>
-                      <Text fontSize="16px" textAlign="left">
-                        {feature.description}
-                      </Text>
+                    <Stack
+                      alignItems={{ base: "center", md: "start" }}
+                      justifyContent="center"
+                      spacing={8}
+                      w={{ md: "50%", base: "100%" }}
+                    >
+                      <Heading textAlign={{ base: "center", md: "left" }}>{feature.title}</Heading>
+                      <Text textAlign={{ base: "center", md: "left" }}>{feature.description}</Text>
                       <SimpleGrid key={index} columns={2} spacing={4}>
                         {actions.map((action, index) => (
                           <Stack key={index} direction="row" spacing={4}>
                             <Icon as={action.icon} />
-                            <Text fontSize="16px">{action.name}</Text>
+                            <Text>{action.name}</Text>
                           </Stack>
                         ))}
                       </SimpleGrid>
-                      <Button rightIcon={feature.button.icon()} variant="primary" w="15em">
+                      <Button
+                        rightIcon={feature.button.icon()}
+                        variant="primary"
+                        w={{ md: "15em", base: "full" }}
+                      >
                         {feature.button.text}
                       </Button>
                     </Stack>

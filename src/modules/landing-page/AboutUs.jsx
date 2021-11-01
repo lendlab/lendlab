@@ -29,14 +29,18 @@ export const AboutUs = () => {
             </InView>
             <Text>{ABOUT_US_DATA.subtitle}</Text>
           </Stack>
-          <Stack direction="row" spacing={12}>
+          <Stack
+            _after={{ content: "''", flex: "0 0 32px" }}
+            _before={{ content: "''", flex: "0 0 32px" }}
+            direction="row"
+            justifyContent="space-between"
+            overflowX="auto"
+          >
             {aspects.map((aspect, index) => (
-              <Stack key={index} spacing={4}>
+              <Stack key={index} flex="0 0 320px" spacing={4}>
                 <Icon as={aspect.icon} />
                 <Bold>{aspect.name}</Bold>
-                <Text fontSize="16px" textAlign="left">
-                  {aspect.description}
-                </Text>
+                <Text textAlign="left">{aspect.description}</Text>
               </Stack>
             ))}
           </Stack>

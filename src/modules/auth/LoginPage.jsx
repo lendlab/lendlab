@@ -27,11 +27,6 @@ export const LoginPage = () => {
             Crear una cuenta ahora
           </Link>
         </Stack>
-        <Stack bottom="5" position="absolute" w="full">
-          <Text fontSize="10px">
-            Continuando, accedes y aceptas las politicas de servicio de LendLab
-          </Text>
-        </Stack>
       </Stack>
     </LoginPageLayout>
   );

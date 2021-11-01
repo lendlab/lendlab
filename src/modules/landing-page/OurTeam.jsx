@@ -10,13 +10,13 @@ export const OurTeam = () => {
       <Container alignSelf="center" maxW="container.xl">
         <Stack spacing={8}>
           <Heading>{OUR_TEAM_DATA.title}</Heading>
-          <SimpleGrid columns={3} justifyItems="center" rowGap={12}>
+          <SimpleGrid columns={{ md: 3, base: 1 }} justifyItems="center" rowGap={12}>
             {OUR_TEAM_DATA.team.map((team, index) => (
               <Stack key={index} alignItems="center">
                 <Avatar name={team.name} size="2xl" src={team.img} />
                 <Bold>{team.name}</Bold>
                 <Badge>
-                  <Text fontSize="12px">{team.badge}</Text>
+                  <Text>{team.badge}</Text>
                 </Badge>
               </Stack>
             ))}
