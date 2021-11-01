@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
-    <Container H="calc(100vh - 4.25rem)" alignSelf="center" maxW="container.xl">
+    <Container alignSelf="center" maxW="container.xl" minH="calc(100vh - 4.25rem)">
       <InView>
         {({ ref, inView }) => (
           <Box
@@ -22,9 +22,8 @@ export const Hero = () => {
               alignItems="center"
               as="main"
               direction="column"
-              h="inherit"
               justifyContent="center"
-              paddingTop={8}
+              minH="calc(100vh - 4.25rem)"
               spacing={4}
               w="full"
             >
@@ -51,10 +50,8 @@ export const Hero = () => {
                 </Button>
               </Link>
             </Stack>
-            <Stack ali direction="row" spacing={28} w="full">
-              <WhiteCircle size="medium" />
-              <WhiteCircle size="little" />
-            </Stack>
+            <WhiteCircle bottom="-5vh" left="0" position="absolute" size="medium" />
+            <WhiteCircle bottom="0" left="60" position="absolute" size="little" />
           </Box>
         )}
       </InView>

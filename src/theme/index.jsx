@@ -49,7 +49,6 @@ const theme = extendTheme({
         MozOsxFontSmoothing: "grayscale",
         WebkitFontSmoothing: "antialiased",
         textRendering: "optimizeLegibility",
-        minHeight: "-webkit-fill-available",
       },
       html: {
         scrollBehavior: "smooth",

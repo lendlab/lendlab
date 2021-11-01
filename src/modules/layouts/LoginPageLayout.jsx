@@ -6,10 +6,10 @@ export const LoginPageLayout = ({ children }) => {
   return (
     <>
       <Container
-        H="calc(100vh - 4.25rem)"
-        W="container.xl"
         alignSelf="center"
         display="flex"
+        minH="calc(100vh - 4.25rem)"
+        minW="container.xl"
         overflow="hidden"
       >
         {children}
