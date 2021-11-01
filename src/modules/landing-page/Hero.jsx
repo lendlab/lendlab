@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export const Hero = () => {
   return (
-    <Container alignSelf="center" maxW="container.xl" minH="calc(100vh - 4.25rem)">
+    <Container H="calc(100vh - 4.25rem)" alignSelf="center" maxW="container.xl">
       <InView>
         {({ ref, inView }) => (
           <Box
@@ -22,8 +22,8 @@ export const Hero = () => {
               alignItems="center"
               as="main"
               direction="column"
+              h="inherit"
               justifyContent="center"
-              minH="85vh"
               paddingTop={8}
               spacing={4}
               w="full"
