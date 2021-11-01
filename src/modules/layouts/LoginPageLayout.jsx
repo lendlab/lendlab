@@ -9,7 +9,7 @@ export const LoginPageLayout = ({ children }) => {
         alignSelf="center"
         display="flex"
         maxW="container.xl"
-        minH="calc(--app-height - 4.25rem, 100vh - 4.25rem)"
+        minH="calc(var(--app-height, 100vh) - 4.25rem)"
         overflow="hidden"
       >
         {children}

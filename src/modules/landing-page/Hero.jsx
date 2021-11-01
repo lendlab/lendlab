@@ -11,7 +11,7 @@ export const Hero = () => {
     <Container
       alignSelf="center"
       maxW="container.xl"
-      minH="calc(--app-height - 4.25rem, 100vh - 4.25rem)"
+      minH="calc(var(--app-height, 100vh) - 4.25rem)"
     >
       <InView>
         {({ ref, inView }) => (
@@ -27,7 +27,7 @@ export const Hero = () => {
               as="main"
               direction="column"
               justifyContent="center"
-              minH="calc(--app-height - 4.25rem, 100vh - 4.25rem)"
+              minH="calc(var(--app-height, 100vh) - 4.25rem)"
               spacing={4}
               w="full"
             >
