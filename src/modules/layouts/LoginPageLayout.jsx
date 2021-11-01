@@ -8,8 +8,8 @@ export const LoginPageLayout = ({ children }) => {
       <Container
         alignSelf="center"
         display="flex"
+        maxW="container.xl"
         minH="calc(100vh - 4.25rem)"
-        minW="container.xl"
         overflow="hidden"
       >
         {children}
