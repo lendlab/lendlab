@@ -11,6 +11,7 @@ export const Heading = ({
   fontSize = "6xl",
   textAlign = "center",
   color,
+  isLogo,
   ...props
 }) => {
   return (
@@ -26,7 +27,7 @@ export const Heading = ({
             }),
       }}
       ref={innerRef}
-      fontSize={fontSize}
+      fontSize={!isLogo ? { md: fontSize, base: "5xl" } : fontSize}
       fontWeight="900"
       letterSpacing="tighter"
       textAlign={textAlign}

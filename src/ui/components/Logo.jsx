@@ -20,10 +20,15 @@ export const Logo = ({ isNotHome, home, ...props }) => {
       onClick={(e) => pathname != home && handleRedirectHome()}
       {...props}
     >
-      <Heading fontFamily="Basement Grotesque" fontSize="4xl" margin="0">
+      <Heading
+        isLogo
+        fontFamily="Basement Grotesque"
+        fontSize={{ md: "4xl", base: "2xl" }}
+        margin="0"
+      >
         ll
       </Heading>
-      <Heading fontFamily="Basement Grotesque" fontSize="2xl">
+      <Heading isLogo fontFamily="Basement Grotesque" fontSize={{ md: "2xl", base: "xl" }}>
         lendlab
       </Heading>
     </Stack>
