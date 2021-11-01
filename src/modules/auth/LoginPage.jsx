@@ -9,7 +9,7 @@ import { LoginPageForm } from "./LoginPageForm";
 export const LoginPage = () => {
   return (
     <LoginPageLayout>
-      <Stack justifyContent="center" minH="80vh" spacing={12}>
+      <Stack h="inherit" justifyContent="center" spacing={12} w="full">
         <Stack>
           <Heading isLogo fontSize={{ md: "4xl", base: "3xl" }}>
             Inicia sesión en tu cuenta

@@ -7,11 +7,10 @@ export const LoginPageLayout = ({ children }) => {
     <>
       <Container
         alignSelf="center"
+        display="flex"
         maxW="container.xl"
-        minH="80vh"
+        minH="calc(100vh - 4.25rem)"
         overflow="hidden"
-        paddingTop="10vh"
-        position="relative"
       >
         {children}
       </Container>
