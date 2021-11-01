@@ -1,22 +1,11 @@
-import React, { useState } from "react";
-import {
-  Stack,
-  Text,
-  Button,
-  Icon,
-  Flex,
-  CloseButton,
-  DrawerContent,
-  Drawer,
-  useDisclosure,
-  Link as ChakraLink,
-} from "@chakra-ui/react";
-import { Link, useLocation } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
+import { Button, Icon, Link as ChakraLink, Stack, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Logo } from "@ui";
 import { NAV_DATA } from "@utils/constants/landing";
 import { motion } from "framer-motion";
-import { Logo, Box } from "@ui";
+import React, { useState } from "react";
 import Headroom from "react-headroom";
+import { useLocation } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 export const Nav = () => {
   const [shadow, setShadow] = useState(false);
@@ -56,25 +45,6 @@ export const Nav = () => {
           <Logo home="/" />
           {pathname === "/" && (
             <>
-              <Button
-                aria-label="open menu"
-                display={{ base: "inline-flex", md: "none" }}
-                variant="outline"
-                onClick={onOpen}
-              />
-              <Drawer
-                autoFocus={false}
-                isOpen={isOpen}
-                placement="left"
-                returnFocusOnClose={false}
-                size="full"
-                onClose={onClose}
-                onOverlayClick={onClose}
-              >
-                <DrawerContent>
-                  <ResponsiveNavContent isOpen={isOpen} onClose={onClose} />
-                </DrawerContent>
-              </Drawer>
               <Stack
                 alignItems="center"
                 as="ul"
@@ -108,73 +78,5 @@ export const Nav = () => {
         </Stack>
       </Box>
     </Headroom>
-  );
-};
-
-const ResponsiveNavContent = ({ isOpen, onClose, ...rest }) => {
-  return (
-    <Stack bg="white" h="full" justifyContent="space-between" overflowY="auto" w="full" {...rest}>
-      <Stack>
-        <Flex alignItems="center" h="20" justifyContent="space-between" mx="8">
-          <Logo />
-          <CloseButton onClick={onClose} />
-        </Flex>
-        {NAV_DATA.options.map((option, index) => (
-          <NavItem
-            key={index}
-            icon={option.icon}
-            index={index}
-            link={option.link}
-            name={option.name}
-            onClose={onClose}
-          />
-        ))}
-      </Stack>
-
-      <Box bottom="0" display={isOpen ? "block" : "none"} w="full">
-        <Link to="/login">
-          <Button
-            isFullWidth
-            borderRadius={0}
-            leftIcon={NAV_DATA.button.icon()}
-            variant="primary"
-            onClick={onClose}
-          >
-            {NAV_DATA.button.text}
-          </Button>
-        </Link>
-      </Box>
-    </Stack>
-  );
-};
-
-const NavItem = ({ onClose, icon, index, name, link, ...rest }) => {
-  return (
-    <>
-      <ChakraLink
-        key={index}
-        as={HashLink}
-        style={{ textDecoration: "none", boxShadow: "none" }}
-        to={link}
-        onClick={onClose}
-      >
-        <Stack
-          align="center"
-          borderRadius="14px"
-          direction="row"
-          mx="4"
-          p="4"
-          role="group"
-          spacing={4}
-          {...rest}
-        >
-          <Icon as={icon} />
-
-          <Text color="lendlab.gray.300" fontWeight="700">
-            {name}
-          </Text>
-        </Stack>
-      </ChakraLink>
-    </>
   );
 };
