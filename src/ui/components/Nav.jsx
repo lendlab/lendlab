@@ -49,32 +49,32 @@ export const Nav = () => {
           as="nav"
           direction="row"
           h="nav"
-          justifyContent={{ md: "space-between", base: "start" }}
+          justifyContent="space-between"
           paddingX={6}
           w="100%"
         >
-          <Button
-            aria-label="open menu"
-            display={{ base: "block", md: "none" }}
-            variant="outline"
-            onClick={onOpen}
-          />
-          <Drawer
-            autoFocus={false}
-            isOpen={isOpen}
-            placement="left"
-            returnFocusOnClose={false}
-            size="full"
-            onClose={onClose}
-            onOverlayClick={onClose}
-          >
-            <DrawerContent>
-              <ResponsiveNavContent isOpen={isOpen} onClose={onClose} />
-            </DrawerContent>
-          </Drawer>
           <Logo home="/" />
           {pathname === "/" && (
             <>
+              <Button
+                aria-label="open menu"
+                display={{ base: "inline-flex", md: "none" }}
+                variant="outline"
+                onClick={onOpen}
+              />
+              <Drawer
+                autoFocus={false}
+                isOpen={isOpen}
+                placement="left"
+                returnFocusOnClose={false}
+                size="full"
+                onClose={onClose}
+                onOverlayClick={onClose}
+              >
+                <DrawerContent>
+                  <ResponsiveNavContent isOpen={isOpen} onClose={onClose} />
+                </DrawerContent>
+              </Drawer>
               <Stack
                 alignItems="center"
                 as="ul"
@@ -93,15 +93,16 @@ export const Nav = () => {
                   </HashLink>
                 ))}
               </Stack>
-              <Link to="/login">
-                <Button
-                  display={{ base: "none", md: "inline-flex" }}
-                  leftIcon={NAV_DATA.button.icon()}
-                  variant="primary"
-                >
+              <ChakraLink
+                as={HashLink}
+                display={{ base: "none", md: "inline-flex" }}
+                style={{ textDecoration: "none", boxShadow: "none" }}
+                to="/login"
+              >
+                <Button leftIcon={NAV_DATA.button.icon()} variant="primary">
                   {NAV_DATA.button.text}
                 </Button>
-              </Link>
+              </ChakraLink>
             </>
           )}
         </Stack>
@@ -131,9 +132,17 @@ const ResponsiveNavContent = ({ isOpen, onClose, ...rest }) => {
       </Stack>
 
       <Box bottom="0" display={isOpen ? "block" : "none"} w="full">
-        <Button isFullWidth borderRadius={0} leftIcon={NAV_DATA.button.icon()} variant="primary">
-          {NAV_DATA.button.text}
-        </Button>
+        <Link to="/login">
+          <Button
+            isFullWidth
+            borderRadius={0}
+            leftIcon={NAV_DATA.button.icon()}
+            variant="primary"
+            onClick={onClose}
+          >
+            {NAV_DATA.button.text}
+          </Button>
+        </Link>
       </Box>
     </Stack>
   );
