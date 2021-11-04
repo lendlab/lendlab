@@ -52,36 +52,30 @@ export const Table = ({ data, columns, placeholder }) => {
     <>
       <TableGlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       {rows.length > 0 && <Text mt={4}>{rows.length} resultados</Text>}
-      <div className="wrapper">
-        <div className="scroller">
-          <ChakraTable className="nashe" variant="simple" {...getTableProps()} maxW="full" w="full">
-            <TableHeader headerGroups={headerGroups} />
-            {rows.length > 0 && (
-              <TableBody
-                getTableBodyProps={getTableBodyProps}
-                page={page}
-                prepareRow={prepareRow}
-              />
-            )}
-          </ChakraTable>
-        </div>
-      </div>
+      <Box maxW="100%" mt={4} overflowX="auto">
+        <ChakraTable variant="simple" {...getTableProps()} maxW="full" w="full">
+          <TableHeader headerGroups={headerGroups} />
+          {rows.length > 0 && (
+            <TableBody getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow} />
+          )}
+        </ChakraTable>
 
-      {rows.length < 1 && (
-        <Stack
-          alignItems="center"
-          bg="white"
-          border="1px solid"
-          borderColor="lendlab.light.black.300"
-          borderTop="none"
-          direction="row"
-          justifyContent="center"
-          py={8}
-        >
-          <Icon as={FiFrown} color="lendlab.light.black.800" />
-          <Text>No se encontraron resultados</Text>
-        </Stack>
-      )}
+        {rows.length < 1 && (
+          <Stack
+            alignItems="center"
+            bg="white"
+            border="1px solid"
+            borderColor="lendlab.light.black.300"
+            borderTop="none"
+            direction="row"
+            justifyContent="center"
+            py={8}
+          >
+            <Icon as={FiFrown} color="lendlab.light.black.800" />
+            <Text>No se encontraron resultados</Text>
+          </Stack>
+        )}
+      </Box>
       {rows.length > 0 && (
         <TablePagination
           canNextPage={canNextPage}

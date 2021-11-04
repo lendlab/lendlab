@@ -11,7 +11,6 @@ import "@fontsource/archivo";
 import theme from "./styles/theme";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles/date-time-picker.css";
-import { Global } from "./styles/global";
 
 const client = new ApolloClient({
   uri: "https://lendlab-backend-9nbzz.ondigitalocean.app/api",
@@ -24,7 +23,6 @@ ReactDOM.render(
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <Global />
       <App />
     </ChakraProvider>
   </ApolloProvider>,
