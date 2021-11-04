@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const CREATE_MATERIAL = gql`
   mutation NewMaterialMutation($data: MaterialInput!) {
-    newMaterial(data: $data) {
+    subMaterial(data: $data) {
       id_material
       nombre
       etiqueta

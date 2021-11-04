@@ -14,10 +14,10 @@ export const useCreateMaterial = () => {
   const toast = useToast();
 
   const [createMaterial, result] = useMutation(CREATE_MATERIAL, {
-    onCompleted: ({ newMaterial }) =>
+    onCompleted: ({ subMaterial }) =>
       toast({
         title: "Material creado con exito",
-        description: "Se ha creado el material " + newMaterial.nombre,
+        description: "Se ha creado el material " + subMaterial.nombre,
         status: "success",
         duration: 5000,
         isClosable: true,
