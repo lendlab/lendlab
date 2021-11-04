@@ -22,7 +22,7 @@ export default defineConfig({
       "@icons": path.resolve(__dirname, "src/icons"),
       "@graphql": path.resolve(__dirname, "src/graphql"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
-      "@animations": path.resolve(__dirname, "src/animations"),
+      "@components": path.resolve(__dirname, "src/components"),
     },
   },
 });

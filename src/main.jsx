@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, ColorModeScript } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 import "@babel/polyfill";
+
 import App from "./App";
-import theme from "./theme/index";
 import "@fontsource/manrope";
 import "@fontsource/archivo";
-import Fonts from "./theme/fonts";
+import theme from "./styles/theme";
+import "react-datepicker/dist/react-datepicker.css";
+import "./styles/date-time-picker.css";
+import { Global } from "./styles/global";
 
 const client = new ApolloClient({
   uri: "https://lendlab-backend-9nbzz.ondigitalocean.app/api",
@@ -18,8 +21,10 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
-      <Fonts />
+      <CSSReset />
+      <Global />
       <App />
     </ChakraProvider>
   </ApolloProvider>,
