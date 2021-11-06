@@ -1,13 +1,21 @@
+import Footer from "@components/Footer";
+import TabsNav from "@components/Tabs/TabsNav";
+import Home from "@pages/Student/Home";
+import { STUDENT_ROUTES } from "@utils/constants/routes";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 const StudentRouter = () => {
   return (
-    <Switch>
-      {/* <Route component={HomePage} path="/app/inicio" />
-      <Route component={SearchPage} path="/app/busqueda/:material" />
-      <Redirect to="/app/inicio" */}
-    </Switch>
+    <>
+      <TabsNav routes={STUDENT_ROUTES} />
+      <Switch>
+        <Route exact component={Home} path="/app/inicio" />
+        <Redirect to="/app/inicio" />
+      </Switch>
+
+      <Footer />
+    </>
   );
 };
 
