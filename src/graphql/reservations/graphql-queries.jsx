@@ -36,3 +36,9 @@ export const GET_ALL_RESERVATIONS_WITH_MAXID = gql`
     getMaxId
   }
 `;
+
+export const GET_RESERVATION_MAX_ID = gql`
+  query Query {
+    getMaxId
+  }
+`;
