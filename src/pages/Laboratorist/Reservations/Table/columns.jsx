@@ -1,13 +1,13 @@
 import { Avatar } from "@chakra-ui/avatar";
-import { IconButton } from "@chakra-ui/button";
+import { Button } from "@chakra-ui/button";
 import Icon from "@chakra-ui/icon";
 import { Badge, Stack } from "@chakra-ui/layout";
 import { chakra } from "@chakra-ui/system";
 import { Tooltip } from "@chakra-ui/tooltip";
-import { useDeleteReservation } from "@graphql/reservations/custom-hooks";
+import { useRejectOrAcceptReservation } from "@graphql/reservations/custom-hooks";
 import { momentizeDate } from "@utils/momentizeDate";
 import React from "react";
-import { FiEdit2, FiTrash } from "react-icons/fi";
+import { FiCheckCircle, FiTrash } from "react-icons/fi";
 
 export const COLUMNS = [
   {
@@ -83,35 +83,61 @@ export const COLUMNS = [
     header: "",
     id: "click-me-button",
     Cell({ row }) {
-      const [deleteReservation, { loading, data }] = useDeleteReservation();
+      const [deleteReservation, { loading: loadingDelete }, updateReservation, { loadingUpdate }] =
+        useRejectOrAcceptReservation();
 
       return (
-        <Stack direction="row">
-          <IconButton
-            aria-label="Borrar Material"
-            icon={<Icon as={FiTrash} color="lendlab.light.red.400" />}
-            isLoading={loading}
-            variant="ghost"
-            onClick={() => {
-              deleteReservation({
-                variables: {
-                  idReserva: parseInt(row.original.id_reserva),
-                },
-                update: (cache) => {
-                  cache.evict({
-                    id_reserva: "Reservation:" + row.original.id_reserva,
+        <>
+          {!row.original.finalizada ? (
+            <Stack direction="row">
+              <Button
+                aria-label="Rechazar Reserva"
+                color="lendlab.light.red.400"
+                isLoading={loadingDelete}
+                leftIcon={<Icon as={FiTrash} color="lendlab.light.red.400" />}
+                variant="ghost"
+                onClick={() => {
+                  deleteReservation({
+                    variables: {
+                      idReserva: parseInt(row.original.id_reserva),
+                    },
+                    update: (cache) => {
+                      cache.evict({
+                        id_reserva: "Reservation:" + row.original.id_reserva,
+                      });
+                    },
                   });
-                },
-              });
-            }}
-          />
-          <IconButton
-            aria-label="Editar Material"
-            color="lendlab.light.red.400"
-            icon={<Icon as={FiEdit2} color="lendlab.yellow" />}
-            variant="ghost"
-          />
-        </Stack>
+                }}
+              >
+                Rechazar
+              </Button>
+              <Button
+                aria-label="Aceptar Reserva"
+                color="lendlab.blue.300"
+                isLoading={loadingUpdate}
+                leftIcon={<Icon as={FiCheckCircle} color="lendlab.blue.300" />}
+                variant="ghost"
+                onClick={() => {
+                  updateReservation({
+                    variables: {
+                      data: {
+                        finalizada: true,
+                      },
+                      idReserva: row.original.id_reserva,
+                    },
+                    update: (cache) => {
+                      cache.evict({
+                        id_reserva: "Reservation:" + row.original.id_reserva,
+                      });
+                    },
+                  });
+                }}
+              >
+                Aceptar
+              </Button>
+            </Stack>
+          ) : null}
+        </>
       );
     },
   },
