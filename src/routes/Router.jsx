@@ -1,57 +1,43 @@
-import { BrowserRouter, Switch, Redirect } from "react-router-dom";
-import React, { Suspense, useState } from "react";
-import { Progress } from "@chakra-ui/progress";
-import { useQuery } from "@apollo/client";
-import { ME } from "@graphql/mutations/auth";
-import { Spinner, Flex } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { BrowserRouter, Redirect, Switch } from "react-router-dom";
+import { useMe } from "@graphql/auth/custom-hook";
+import { usersTypes } from "@utils/constants/usersTypes";
+import { types_router } from "@utils/constants/types_routers";
 
-import { CartProvider } from "../context/CartProvider";
-
-import { LabRouter } from "./LabRouter";
-import { LandingRouter } from "./LandingRouter";
-import { UserRouter } from "./UserRouter";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
+import UnloggedRouter from "./UnloggedRouter";
 
 export const Router = () => {
-  const { data, loading } = useQuery(ME);
-  let isLoggedIn;
-  let user;
+  let isLoggedIn = null;
+  let path = "/aasdasd";
+  let component = null;
+
+  const { loading, data } = useMe();
 
   if (loading) {
-    return (
-      <Flex alignItems="center" display="flex" h="100vh" justifyContent="center" w="100vw">
-        <Spinner />
-      </Flex>
-    );
-  } else if (!data?.me) {
-    isLoggedIn = false;
-  } else {
+    return null;
+  } else if (data?.me) {
     isLoggedIn = true;
-    user = data.me.tipo_usuario;
+    path = usersTypes[data?.me.tipo_usuario];
+    component = types_router[data?.me.tipo_usuario];
+  } else {
+    isLoggedIn = false;
   }
 
   return (
     <BrowserRouter>
-      <div>
+      <>
         <Switch>
-          <CartProvider>
-            <PrivateRoutes
-              component={user == "Laboratorista" ? LabRouter : UserRouter}
-              isAuthenticated={isLoggedIn}
-              path={user == "Laboratorista" ? "/dashboard" : "/app"}
-            />
-            <PublicRoutes
-              component={LandingRouter}
-              isAuthenticated={isLoggedIn}
-              path="/"
-              user={user}
-            />
-          </CartProvider>
-
-          <Redirect to="/" />
+          <PrivateRoutes component={component} isAuthenticated={isLoggedIn} path={path} />
+          <PublicRoutes
+            component={UnloggedRouter}
+            isAuthenticated={isLoggedIn}
+            path="/"
+            to={path}
+          />
         </Switch>
-      </div>
+      </>
     </BrowserRouter>
   );
 };
