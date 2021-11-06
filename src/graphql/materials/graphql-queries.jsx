@@ -25,6 +25,9 @@ export const GET_MATERIAL = gql`
       descripcion
       cantidad
       foto
+      institution {
+        id_institution
+      }
       estado
     }
   }
