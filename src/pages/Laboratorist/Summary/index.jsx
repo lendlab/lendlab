@@ -7,11 +7,9 @@ import Stadistics from "./Stadistics";
 const Summary = () => {
   return (
     <Dashboard hasNoActions title="Resumen">
-      <Box minH="44">
-        <Wrap align="center" justify="space-between" spacing={6}>
-          <Stadistics />
-        </Wrap>
-      </Box>
+      <Wrap align="center" justify="space-between" spacing={6}>
+        <Stadistics />
+      </Wrap>
     </Dashboard>
   );
 };
