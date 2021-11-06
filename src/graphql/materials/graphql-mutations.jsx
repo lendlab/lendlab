@@ -25,18 +25,16 @@ export const DELETE_MATERIAL = gql`
 `;
 
 export const UPDATE_MATERIAL = gql`
-  mutation UpdateMaterialMutation(
-    $updateMaterialData: MaterialUpdateInput!
-    $updateMaterialIdMaterial: Int!
-  ) {
-    updateMaterial(data: $updateMaterialData, id_material: $updateMaterialIdMaterial) {
+  mutation UpdateMaterialMutation($data: MaterialUpdateInput!, $idMaterial: Int!) {
+    updateMaterial(data: $data, id_material: $idMaterial) {
+      id_material
       nombre
       etiqueta
       categoria
       descripcion
       cantidad
-      estado
       foto
+      estado
     }
   }
 `;
