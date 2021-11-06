@@ -14,7 +14,9 @@ const Administration = () => {
       <Container variant="landing">
         <Stack spacing="8" w="full">
           <Stack alignItems="start" direction="row" justifyContent="center">
-            <Badge variant="solid">Administración</Badge>
+            <Badge fontSize="body" variant="solid">
+              Administración
+            </Badge>
           </Stack>
 
           <Heading fontSize={{ md: "8", base: "7" }} textAlign="center">
