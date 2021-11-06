@@ -1,4 +1,11 @@
-import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache, split } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+  split,
+  makeVar,
+} from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import "@babel/polyfill";
@@ -10,6 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ReactDOM from "react-dom";
 
 import App from "./App";
+import { cache } from "./cache";
 import { GET_INSTITUTIONS } from "./graphql/institutions/graphql-queries";
 import "./styles/date-time-picker.css";
 import theme from "./styles/theme";
@@ -38,7 +46,7 @@ const splitLink = split(
 
 const client = new ApolloClient({
   link: splitLink,
-  cache: new InMemoryCache(),
+  cache: cache,
   credentials: "include",
 });
 
