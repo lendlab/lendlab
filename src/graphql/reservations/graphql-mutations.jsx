@@ -24,9 +24,11 @@ export const UPDATE_RESERVATION = gql`
       finalizada
       user {
         cedula
+        nombre
       }
       material {
         id_material
+        nombre
       }
     }
   }
