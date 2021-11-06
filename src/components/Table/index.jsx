@@ -1,7 +1,7 @@
-import { Table as ChakraTable, Box, Text, Stack, Icon } from "@chakra-ui/react";
-import React, { useMemo } from "react";
-import { useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
+import { Box, Icon, Stack, Table as ChakraTable, Text } from "@chakra-ui/react";
+import React, { useEffect, useMemo } from "react";
 import { FiFrown } from "react-icons/fi";
+import { useFilters, useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
 
 import { TableBody } from "./TableBody";
 import { TableColumnFilter } from "./TableColumnFilter";
@@ -9,9 +9,15 @@ import { TableGlobalFilter } from "./TableGlobalFilter";
 import { TableHeader } from "./TableHeader";
 import { TablePagination } from "./TablePagination";
 
-export const Table = ({ data, columns, placeholder }) => {
+export const Table = ({ data, columns, id, subscribeToNew }) => {
   const memoColumns = useMemo(() => columns, [columns]);
   const memoData = useMemo(() => data, [data]);
+
+  useEffect(() => {
+    {
+      subscribeToNew && subscribeToNew();
+    }
+  }, [subscribeToNew]);
 
   const defaultColumn = useMemo(() => {
     return { Filter: TableColumnFilter };
@@ -53,7 +59,7 @@ export const Table = ({ data, columns, placeholder }) => {
       <TableGlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       {rows.length > 0 && <Text mt={4}>{rows.length} resultados</Text>}
       <Box maxW="100%" mt={4} overflowX="auto">
-        <ChakraTable variant="simple" {...getTableProps()} maxW="full" w="full">
+        <ChakraTable variant="simple" {...getTableProps()} id={id} maxW="full" w="full">
           <TableHeader headerGroups={headerGroups} />
           {rows.length > 0 && (
             <TableBody getTableBodyProps={getTableBodyProps} page={page} prepareRow={prepareRow} />
