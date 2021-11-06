@@ -58,3 +58,11 @@ export const ADMIN_ROUTES = [
     path: "/admin/instituciones",
   },
 ];
+
+export const STUDENT_ROUTES = [
+  {
+    title: "Inicio",
+    icon: FiGrid,
+    path: "/app/inicio",
+  },
+];
