@@ -16,7 +16,7 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 import { Field } from "./Field";
 
-const ExportButton = ({ tabla }) => {
+const ExportButton = ({ tabla, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef();
@@ -24,7 +24,7 @@ const ExportButton = ({ tabla }) => {
 
   return (
     <>
-      <Button variant="secondary" onClick={onOpen}>
+      <Button {...props} variant="secondary" onClick={onOpen}>
         Exportar
       </Button>
       <Formik initialValues={{ name: "", sheet: "" }} validateOnChange={false}>
