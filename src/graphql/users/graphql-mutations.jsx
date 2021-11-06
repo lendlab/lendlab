@@ -21,9 +21,7 @@ export const CREATE_USER = gql`
 `;
 
 export const DELETE_USER = gql`
-  mutation DeleteUserMutation($deleteUserCedula: Int!) {
-    deleteUser(cedula: $deleteUserCedula) {
-      cedula
-    }
+  mutation DeleteUserMutation($cedula: Int!) {
+    deleteUser(cedula: $cedula)
   }
 `;
