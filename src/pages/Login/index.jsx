@@ -6,6 +6,8 @@ import { Field } from "@components/Field";
 import { Button } from "@chakra-ui/button";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { AiOutlineLock } from "react-icons/ai";
+import { useLogin } from "@graphql/auth/custom-hook";
+import { toErrorMap } from "@utils/toErrorMap";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -13,6 +15,8 @@ const Login = () => {
   const handleShow = useCallback(() => {
     setShow(!show);
   }, [show]);
+
+  const [login, { loading }] = useLogin();
 
   return (
     <Container centerContent maxW="container.md" minH="100vh">
@@ -26,27 +30,47 @@ const Login = () => {
             password: "",
           }}
           validateOnChange={false}
+          onSubmit={async (values, { setErrors }) => {
+            const response = await login({
+              variables: {
+                options: values,
+              },
+              update: (cache) => {
+                cache.evict({ fieldName: "me" });
+              },
+            });
+
+            if (response.data?.login.errors) {
+              setErrors(toErrorMap(response.data.login.errors));
+            }
+          }}
         >
-          {({ isSubmitting, dirty }) => (
+          {({ dirty }) => (
             <Stack as={Form} spacing="6">
               <Field
                 icon={BsCreditCard2Front}
                 label="Tu cedula"
                 name="cedula"
                 placeholder="ej. 54548246"
-                type="text"
+                type="number"
               />
               <Field
                 isPassword
                 handleShow={handleShow}
                 icon={AiOutlineLock}
                 label="Tu contraseña"
-                name="contraseña"
+                name="password"
                 placeholder="ej. ******"
                 show={show}
                 type={show ? "text" : "password"}
               />
-              <Button disabled={!dirty} type="submit" variant="primary">
+              <Button
+                disabled={!dirty}
+                isLoading={loading}
+                loadingText="Iniciando sesión..."
+                type="submit"
+                variant="primary"
+              >
                 Iniciar sesión
               </Button>
             </Stack>
