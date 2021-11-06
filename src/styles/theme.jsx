@@ -200,7 +200,6 @@ const theme = extendTheme({
           border: "1px solid",
           borderColor: mode("lendlab.light.black.300", "lendlab.dark.black.600")(props),
           px: "2",
-          fontSize: "body",
         }),
       },
     },
@@ -269,6 +268,49 @@ const theme = extendTheme({
           },
         },
       },
+    },
+    Modal: {
+      baseStyle: (props) => ({
+        overlay: {
+          bg: mode("blackAlpha.300", "blackAlpha.600")(props),
+        },
+        header: {
+          textAlign: "center",
+          fontSize: "6",
+        },
+        footer: {
+          bg: mode("lendlab.light.black.100", "lendlab.dark.black.100")(props),
+          borderTopWidth: "1px",
+          borderColor: mode("lendlab.light.black.300", "lendlab.dark.black.600"),
+          borderBottomRadius: "md",
+        },
+
+        dialog: {
+          boxShadow: "none",
+          borderBottomRadius: "md",
+        },
+        closeButton: {
+          color: "lendlab.light.black.600",
+          _focus: {
+            boxShadow: "none",
+            outline: "1px solid #999",
+          },
+        },
+      }),
+    },
+    Menu: {
+      baseStyle: (props) => ({
+        list: {
+          borderWidth: "1px",
+          borderColor: mode("lendlab.light.black.300", "lendlab.dark.black.600"),
+          boxShadow: "none",
+        },
+        item: {
+          _hover: {
+            bg: mode("lendlab.light.black.300", "lendlab.dark.black.300")(props),
+          },
+        },
+      }),
     },
   },
 });
