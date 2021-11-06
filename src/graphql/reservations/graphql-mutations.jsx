@@ -17,11 +17,11 @@ export const CREATE_RESERVATION = gql`
 `;
 
 export const UPDATE_RESERVATION = gql`
-  mutation UpdateReservationMutation($data: ReservationEditInput!, $idReserva: Int!) {
+  mutation Mutation($data: ReservationEditInput!, $idReserva: Int!) {
     updateReservation(data: $data, id_reserva: $idReserva) {
       id_reserva
-      finalizada
       fecha_hora
+      finalizada
       user {
         cedula
       }
