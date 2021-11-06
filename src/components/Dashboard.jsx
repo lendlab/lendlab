@@ -3,6 +3,8 @@ import { Button } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import ExportButton from "./ExportButton";
+
 const Dashboard = ({ children, hasNoActions, title, link }) => {
   return (
     <>
@@ -21,7 +23,7 @@ const Dashboard = ({ children, hasNoActions, title, link }) => {
                 <Button as={Link} to={link} variant="primary">
                   Nuevo {title}
                 </Button>
-                <Button variant="secondary">Exportar</Button>
+                <ExportButton tabla={title} />
               </Stack>
             )}
           </Stack>
