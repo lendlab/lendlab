@@ -25,9 +25,9 @@ export const GET_ALL_USERS = gql`
   }
 `;
 
-export const GET_ALL_USERS_AND_MATERIALS = gql`
-  query Query {
-    getUsers {
+export const GET_USER = gql`
+  query Query($cedula: Int!) {
+    getUser(cedula: $cedula) {
       cedula
       nombre
       direccion
@@ -35,16 +35,6 @@ export const GET_ALL_USERS_AND_MATERIALS = gql`
       telefono
       tipo_usuario
       fecha_nacimiento
-    }
-    getMaterials {
-      id_material
-      nombre
-      etiqueta
-      categoria
-      descripcion
-      cantidad
-      foto
-      estado
     }
   }
 `;
