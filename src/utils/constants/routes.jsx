@@ -1,6 +1,6 @@
 import { FiAlertTriangle, FiArchive, FiClock, FiGrid, FiTool, FiUsers } from "react-icons/fi";
 
-export const ROUTES = [
+export const DASHBOARD_ROUTES = [
   {
     title: "Resumen",
     icon: FiGrid,
@@ -30,5 +30,31 @@ export const ROUTES = [
     title: "Usuarios",
     icon: FiUsers,
     path: "/dashboard/usuarios",
+  },
+];
+
+export const DIRECTOR_ROUTES = [
+  {
+    title: "Resumen",
+    icon: FiGrid,
+    path: "/director/resumen",
+  },
+  {
+    title: "Laboratoristas",
+    icon: FiArchive,
+    path: "/director/laboratoristas",
+  },
+];
+
+export const ADMIN_ROUTES = [
+  {
+    title: "Resumen",
+    icon: FiGrid,
+    path: "/admin/resumen",
+  },
+  {
+    title: "Instituciones",
+    icon: FiArchive,
+    path: "/admin/instituciones",
   },
 ];
