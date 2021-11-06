@@ -4,7 +4,7 @@ import React from "react";
 
 const Stadistic = ({ title, number, icon }) => {
   return (
-    <WrapItem flex="1" h="full" maxW="72" minH="44">
+    <WrapItem flex="1" h="full" maxW={{ md: "72", base: "full" }} minH="44">
       <Box
         bg="white"
         borderColor="lendlab.light.black.300"
