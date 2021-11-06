@@ -43,7 +43,7 @@ export const COLUMNS = [
       return (
         <>
           {moment(sqlDate) < moment(new Date()) ? (
-            <Badge colorScheme="red">
+            <Badge colorScheme="red" variant="solid">
               <Tooltip aria-label={toNow} label={toNow}>
                 <Box>hasta el {completeFormattedDate}</Box>
               </Tooltip>
@@ -80,12 +80,20 @@ export const COLUMNS = [
         row.original.fecha_devolucion == null &&
         moment(parseInt(row.original.fecha_vencimiento)) > moment(new Date())
       )
-        return <Badge colorScheme="yellow">NO DEVUELTO</Badge>;
+        return (
+          <Badge colorScheme="yellow" variant="solid">
+            NO DEVUELTO
+          </Badge>
+        );
       else if (row.original.fecha_devolucion == null) {
         return (
           <Stack direction="row">
-            <Badge colorScheme="yellow">NO DEVUELTO</Badge>
-            <Badge colorScheme="red">ATRASADO</Badge>
+            <Badge colorScheme="yellow" variant="solid">
+              NO DEVUELTO
+            </Badge>
+            <Badge colorScheme="red" variant="solid">
+              ATRASADO
+            </Badge>
           </Stack>
         );
       }
