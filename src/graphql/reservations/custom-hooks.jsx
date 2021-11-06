@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
 
-import { GET_ALL_RESERVATIONS_WITH_MAXID } from "./graphql-queries";
-import { DELETE_RESERVATION, UPDATE_RESERVATION } from "./graphql-mutations";
+import { GET_ALL_RESERVATIONS_WITH_MAXID, GET_RESERVATION_MAX_ID } from "./graphql-queries";
+import { CREATE_RESERVATION, DELETE_RESERVATION, UPDATE_RESERVATION } from "./graphql-mutations";
 import { RESERVATIONS_SUSCRIPTION } from "./graphql-suscriptions";
 
 export const useReservationsAndMaxId = () => {
@@ -11,14 +11,25 @@ export const useReservationsAndMaxId = () => {
   return [result, RESERVATIONS_SUSCRIPTION];
 };
 
-export const useReservation = (id) => {
-  const result = useQuery(GET_MATERIAL, { variables: { idMaterial: parseInt(id) } });
+export const useRejectOrAcceptReservation = () => {
+  const toast = useToast();
 
-  const [updateReservation] = useMutation(UPDATE_RESERVATION, {
+  const [deleteReservation, resultDelete] = useMutation(DELETE_RESERVATION, {
+    onCompleted: () =>
+      toast({
+        title: "Reserva rechazada con éxito",
+        description: "La reserva se ha rechazado con éxito",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      }),
+  });
+
+  const [updateReservation, resultUpdate] = useMutation(UPDATE_RESERVATION, {
     onCompleted: ({ updateReservation }) => {
       toast({
-        title: "Reserva modificada con éxito",
-        description: "Se ha modificado correctamente la reserva #" + updateReservation.id_reserva,
+        title: "Reserva aceptada con éxito",
+        description: "Se ha aceptado correctamente la reserva #" + updateReservation.id_reserva,
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -26,22 +37,24 @@ export const useReservation = (id) => {
     },
   });
 
-  return [updateReservation, result];
+  return [deleteReservation, resultDelete, updateReservation, resultUpdate];
 };
 
-export const useDeleteReservation = () => {
+export const useCreateReservation = () => {
   const toast = useToast();
+  const resultId = useQuery(GET_RESERVATION_MAX_ID);
 
-  const [deleteReservation, result] = useMutation(DELETE_RESERVATION, {
-    onCompleted: () =>
+  const [createReservation, resultCreate] = useMutation(CREATE_RESERVATION, {
+    onCompleted: ({ createReservation }) => {
       toast({
-        title: "Reserva eliminada con éxito",
-        description: "La reserva se ha eliminado con éxito",
+        title: "Reserva creada con éxito",
+        description: "Se ha creado correctamente la reserva #" + createReservation.id_reserva,
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
-      }),
+      });
+    },
   });
 
-  return [deleteReservation, result];
+  return [createReservation, resultCreate, resultId];
 };
