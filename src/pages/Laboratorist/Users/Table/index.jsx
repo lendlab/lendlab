@@ -28,7 +28,7 @@ const UsersTable = () => {
     return error.message;
   }
 
-  return <Table columns={COLUMNS} data={data.getUsers} />;
+  return <Table columns={COLUMNS} data={data.getUsers} id="Usuarios" />;
 };
 
 export default UsersTable;

@@ -29,7 +29,7 @@ const MaterialsTable = () => {
     return error.message;
   }
 
-  return <Table columns={COLUMNS} data={data.getMaterials} />;
+  return <Table columns={COLUMNS} data={data.getMaterials} id="Materiales" />;
 };
 
 export default MaterialsTable;

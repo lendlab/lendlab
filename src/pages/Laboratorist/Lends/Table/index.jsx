@@ -16,7 +16,7 @@ const LendsTable = () => {
     return error.message;
   }
 
-  return <Table columns={COLUMNS} data={data.lend} />;
+  return <Table columns={COLUMNS} data={data.lend} id="Prestamos" />;
 };
 
 export default LendsTable;
