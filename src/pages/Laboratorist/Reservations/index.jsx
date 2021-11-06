@@ -5,7 +5,7 @@ import ReservationsTable from "./Table";
 
 const Reservations = () => {
   return (
-    <Dashboard title="Materiales">
+    <Dashboard hasNoActions title="Reservas">
       <ReservationsTable />
     </Dashboard>
   );
