@@ -1,8 +1,35 @@
 import { Button } from "@chakra-ui/button";
 import { Container, Heading, Stack, Text } from "@chakra-ui/layout";
 import React from "react";
+import { useMe } from "@graphql/auth/custom-hook";
+import { Avatar } from "@chakra-ui/avatar";
+import { Link } from "react-router-dom";
+
+import UserMenu from "./UserMenu";
 
 const Nav = ({ children }) => {
+  const { loading, data, error } = useMe();
+
+  let options = null;
+
+  {
+    /* <Avatar alt={data?.me.nombre} name={data?.me.nombre} size="md" /> */
+  }
+  if (loading) {
+  } else if (data?.me) {
+    options = <UserMenu name={data?.me.nombre} />;
+  } else {
+    options = (
+      <>
+        <Text display={{ md: "inline-block", base: "none" }}>Características</Text>
+        <Text display={{ md: "inline-block", base: "none" }}>Sobre nosotros</Text>
+        <Link to="/login">
+          <Button variant="primary"> Iniciar sesión </Button>
+        </Link>
+      </>
+    );
+  }
+
   return (
     <>
       <Container variant="normal">
@@ -17,9 +44,7 @@ const Nav = ({ children }) => {
         >
           <Heading>LendLab</Heading>
           <Stack alignItems="center" direction="row" spacing="8">
-            <Text display={{ md: "inline-block", base: "none" }}>Características</Text>
-            <Text display={{ md: "inline-block", base: "none" }}>Sobre nosotros</Text>
-            <Button variant="primary"> Iniciar sesión </Button>
+            {options}
           </Stack>
         </Stack>
       </Container>
