@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import { useMe } from "@graphql/auth/custom-hook";
-import { usersTypes } from "@utils/constants/usersTypes";
 import { types_router } from "@utils/constants/types_routers";
+import { usersTypes } from "@utils/constants/usersTypes";
+import React from "react";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
@@ -30,6 +30,7 @@ export const Router = () => {
       <>
         <Switch>
           <PrivateRoutes component={component} isAuthenticated={isLoggedIn} path={path} />
+
           <PublicRoutes
             component={UnloggedRouter}
             isAuthenticated={isLoggedIn}
