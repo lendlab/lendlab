@@ -46,13 +46,6 @@ const UserFields = () => {
         placeholder="ej. 45325140"
         type="number"
       />
-      <Field
-        control="input"
-        label="Tipo de Usuario"
-        name="tipo_usuario"
-        placeholder="ej. Alumno"
-        type="text"
-      />
       <Field control="input" label="Fecha de nacimiento" name="fecha_nacimiento" type="date" />
       <Field
         control="input"
@@ -60,7 +53,7 @@ const UserFields = () => {
         name="institution.id_institution"
         type="number"
       />
-      <Field control="input" label="ID Curso" name="course.course_id" type="number" />
+      <Field control="input" label="Codigo del curso" name="course.course_token" type="text" />
     </>
   );
 };
