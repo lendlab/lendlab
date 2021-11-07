@@ -10,6 +10,14 @@ export const ME = gql`
       telefono
       tipo_usuario
       fecha_nacimiento
+      institution {
+        id_institution
+        institution_name
+      }
+      course {
+        course_token
+        course_name
+      }
     }
   }
 `;
