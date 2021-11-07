@@ -38,10 +38,6 @@ export const COLUMNS = [
     accessor: "cantidad",
   },
   {
-    Header: "Foto",
-    accessor: "foto",
-  },
-  {
     Header: "Estado",
     accessor: "estado",
     Cell({ row }) {
