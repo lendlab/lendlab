@@ -1,21 +1,14 @@
 import { Button } from "@chakra-ui/button";
 import { Container, Heading, Stack, Text } from "@chakra-ui/layout";
-import React from "react";
 import { useMe } from "@graphql/auth/custom-hook";
-import { Avatar } from "@chakra-ui/avatar";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Input } from "@chakra-ui/input";
-import { Form, Formik } from "formik";
-import { FiSearch } from "react-icons/fi";
-import { useHistory } from "react-router-dom";
 
+import SearchInput from "./SearchInput";
 import UserMenu from "./UserMenu";
-import { Field } from "./Field";
 
 const Nav = ({ children, studentNav }) => {
   const { loading, data, error } = useMe();
-
-  const history = useHistory();
 
   let options = null;
   let isStudent = false;
@@ -70,26 +63,7 @@ const Nav = ({ children, studentNav }) => {
               </Stack>
             )}
           </Stack>
-          {isStudent && (
-            <Formik
-              initialValues={{ material: "" }}
-              validateOnChange={false}
-              onSubmit={() => {
-                history.push(`/app/busqueda/${material}`);
-              }}
-            >
-              {() => (
-                <Stack as={Form} spacing="0" w="full">
-                  <Field
-                    isFullWidth
-                    icon={FiSearch}
-                    name="material"
-                    placeholder="Buscar material..."
-                  />
-                </Stack>
-              )}
-            </Formik>
-          )}
+          {isStudent && <SearchInput />}
           <Stack
             alignItems="center"
             direction="row"
