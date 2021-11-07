@@ -9,7 +9,6 @@ export const GET_ALL_MATERIALS = gql`
       categoria
       descripcion
       cantidad
-      foto
       estado
     }
   }
@@ -24,7 +23,6 @@ export const GET_MATERIAL = gql`
       categoria
       descripcion
       cantidad
-      foto
       institution {
         id_institution
       }
@@ -42,7 +40,6 @@ export const GET_POPULAR_MATERIALS = gql`
       categoria
       descripcion
       estado
-      foto
       cantidad
     }
   }
@@ -57,7 +54,6 @@ export const GET_MATERIAL_SEARCH = gql`
       categoria
       descripcion
       cantidad
-      foto
       estado
     }
   }
