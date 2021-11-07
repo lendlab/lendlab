@@ -9,7 +9,6 @@ export const CREATE_MATERIAL = gql`
       descripcion
       categoria
       cantidad
-      foto
       estado
       institution {
         id_institution
@@ -33,7 +32,6 @@ export const UPDATE_MATERIAL = gql`
       categoria
       descripcion
       cantidad
-      foto
       estado
     }
   }
