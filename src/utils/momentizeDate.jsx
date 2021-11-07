@@ -1,5 +1,6 @@
 import moment from "moment/min/moment-with-locales";
 import "moment/locale/es";
+moment.locale("es");
 
 export const momentizeDate = (unformattedDate) => {
   const sqlDate = parseInt(unformattedDate);
