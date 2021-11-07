@@ -1,16 +1,22 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_RESERVATION = gql`
-  mutation Mutation($data: ReservationInput!) {
+  mutation CreateReservation($data: ReservationInput!) {
     createReservation(data: $data) {
-      id_reserva
-      fecha_hora
-      finalizada
-      user {
-        cedula
+      errors {
+        field
+        message
       }
-      material {
-        id_material
+      reservation {
+        id_reserva
+        fecha_hora
+        finalizada
+        material {
+          id_material
+        }
+        user {
+          cedula
+        }
       }
     }
   }
