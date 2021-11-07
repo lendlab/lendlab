@@ -12,6 +12,8 @@ import { Avatar } from "@chakra-ui/avatar";
 import { Input } from "@chakra-ui/input";
 import DatePicker from "react-datepicker";
 
+import { Field } from "../../../../components/Field";
+
 const LendFields = ({ setFieldValue, users, materials, startDate, setStartDate }) => {
   return (
     <>
@@ -74,17 +76,7 @@ const LendFields = ({ setFieldValue, users, materials, startDate, setStartDate }
           </AutoCompleteList>
         </AutoComplete>
       </FormControl>
-
-      <FormControl>
-        <FormLabel>Fecha y hora</FormLabel>
-        <DatePicker
-          showTimeSelect
-          customInput={<Input />}
-          dateFormat="MMMM d, yyyy h:mm aa"
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-        />
-      </FormControl>
+      <Field label="Fecha vencimiento" name="fecha_vencimiento" type="datetime-local" />
     </>
   );
 };
