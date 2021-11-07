@@ -18,7 +18,6 @@ export const GET_ALL_USERS_AND_MATERIALS = gql`
       categoria
       descripcion
       cantidad
-      foto
       estado
     }
   }
