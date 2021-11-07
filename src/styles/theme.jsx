@@ -66,8 +66,9 @@ const theme = extendTheme({
   styles: {
     global: (props) => ({
       "html, body, #root": {
-        height: "100%",
         lineHeight: "base",
+        minHeight: "100vh",
+        height: "100%",
         MozOsxFontSmoothing: "grayscale",
         WebkitFontSmoothing: "antialiased",
         textRendering: "optimizeLegibility",
