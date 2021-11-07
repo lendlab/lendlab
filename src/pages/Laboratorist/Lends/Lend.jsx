@@ -4,6 +4,7 @@ import Dashboard from "@components/Dashboard";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { useParams } from "react-router";
+import { useUsersAndMaterials } from "@graphql/shared/custom-hooks";
 
 import LendFields from "./Fields";
 
@@ -12,12 +13,16 @@ const Lend = () => {
 
   const [startDate, setStartDate] = useState(new Date());
 
-  if (loading) return "loading";
+  const { loading, data } = useUsersAndMaterials();
+
+  if (loading || !data) return "loading";
+
+  console.log(data);
 
   return (
     <Dashboard hasNoActions title="Prestamo">
       <Formik
-        initialValues={{ user: "", materials: [] }}
+        initialValues={{ user: "", materials: [], fecha_vencimiento: moment(new Date()) }}
         validateOnChange={false}
         onSubmit={async (values, { setErrors }) => {}}
       >
