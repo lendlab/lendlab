@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/toast";
 
-import { CREATE_USER, DELETE_USER } from "./graphql-mutations";
+import { CREATE_USER, DELETE_USER, UPDATE_USER } from "./graphql-mutations";
 import { GET_ALL_USERS, GET_USER } from "./graphql-queries";
 
 export const useUsers = () => {
@@ -45,13 +45,13 @@ export const useDeleteUser = () => {
 };
 
 export const useUser = (cedula) => {
-  const result = useQuery(GET_USER, { variables: { cedula: parseInt(id) } });
+  const result = useQuery(GET_USER, { variables: { cedula: parseInt(cedula) } });
 
-  const [updateUser] = useMutation(UPDATE_US, {
-    onCompleted: ({ updateReservation }) => {
+  const [updateUser, resultUpdate] = useMutation(UPDATE_USER, {
+    onCompleted: ({ updateUser }) => {
       toast({
-        title: "Reserva modificada con éxito",
-        description: "Se ha modificado correctamente la reserva #" + updateReservation.id_reserva,
+        title: "Usuario modificado con éxito",
+        description: "Se ha modificado correctamente el usuario " + updateUser.nombre,
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -59,5 +59,5 @@ export const useUser = (cedula) => {
     },
   });
 
-  return [updateReservation, result];
+  return [updateUser, result, resultUpdate];
 };
