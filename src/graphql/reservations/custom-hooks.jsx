@@ -3,7 +3,7 @@ import { useToast } from "@chakra-ui/react";
 
 import { GET_ALL_RESERVATIONS_WITH_MAXID, GET_RESERVATION_MAX_ID } from "./graphql-queries";
 import { CREATE_RESERVATION, DELETE_RESERVATION, UPDATE_RESERVATION } from "./graphql-mutations";
-import { RESERVATIONS_SUSCRIPTION } from "./graphql-suscriptions";
+import { RESERVATIONS_SUSCRIPTION } from "./graphql-subscriptions";
 
 export const useReservationsAndMaxId = () => {
   const result = useQuery(GET_ALL_RESERVATIONS_WITH_MAXID, {});
@@ -45,10 +45,11 @@ export const useCreateReservation = () => {
   const resultId = useQuery(GET_RESERVATION_MAX_ID);
 
   const [createReservation, resultCreate] = useMutation(CREATE_RESERVATION, {
-    onCompleted: ({ createReservation }) => {
+    onCompleted: (data) => {
       toast({
         title: "Reserva creada con éxito",
-        description: "Se ha creado correctamente la reserva #" + createReservation.id_reserva,
+        description:
+          "Se ha creado correctamente la reserva #" + data.createReservation.reservation.id_reserva,
         status: "success",
         duration: 2000,
         isClosable: true,
