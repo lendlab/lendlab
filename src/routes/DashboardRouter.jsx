@@ -11,13 +11,16 @@ import Reservations from "@pages/Laboratorist/Reservations";
 import Summary from "@pages/Laboratorist/Summary";
 import Users from "@pages/Laboratorist/Users";
 import NewUser from "@pages/Laboratorist/Users/New";
+import User from "@pages/Laboratorist/Users/User";
 import { DASHBOARD_ROUTES } from "@utils/constants/routes";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router";
+import Config from "@pages/Config";
+import { Stack } from "@chakra-ui/layout";
 
 const DashboardRoutes = () => {
   return (
-    <>
+    <Stack h="100%" minH="100vh" spacing="0">
       <TabsNav routes={DASHBOARD_ROUTES} />
       <Switch>
         <Route exact component={Summary} path="/dashboard/resumen" />
@@ -37,12 +40,14 @@ const DashboardRoutes = () => {
 
         <Route exact component={Users} path="/dashboard/usuarios" />
         <Route exact component={NewUser} path="/dashboard/usuarios/nuevo" />
-        {/* <Route component={LabUsersPage} path="/dashboard/usuario/:id" /> */}
+        <Route exact component={User} path="/dashboard/usuarios/:cedula" />
 
-        <Redirect to="/dashboard/prestamos" />
+        <Route exact component={Config} path="/dashboard/configuracion" />
+
+        <Redirect to="/dashboard/resumen" />
       </Switch>
       <Footer />
-    </>
+    </Stack>
   );
 };
 
