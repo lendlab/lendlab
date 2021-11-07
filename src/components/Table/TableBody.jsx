@@ -1,6 +1,6 @@
 import { Tbody, Td, Tr } from "@chakra-ui/table";
 import React from "react";
-
+import { motion } from "framer-motion";
 export const TableBody = ({ getTableBodyProps, page, prepareRow }) => {
   return (
     <>
@@ -9,7 +9,16 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow }) => {
           prepareRow(row);
 
           return (
-            <tr key={index} className="tr" {...row.getRowProps()}>
+            <Tr
+              key={index}
+              animate={{ opacity: 1 }}
+              as={motion.tr}
+              className="tr"
+              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              layoutId={index}
+              {...row.getRowProps()}
+            >
               {row.cells.map((cell, index) => {
                 return (
                   <Td key={index} className="td" {...cell.getCellProps} fontSize="2">
@@ -17,7 +26,7 @@ export const TableBody = ({ getTableBodyProps, page, prepareRow }) => {
                   </Td>
                 );
               })}
-            </tr>
+            </Tr>
           );
         })}
       </Tbody>
