@@ -27,7 +27,7 @@ const NewUser = () => {
             id_institution: "",
           },
           course: {
-            course_id: "",
+            course_token: "",
           },
         }}
         validateOnChange={false}
