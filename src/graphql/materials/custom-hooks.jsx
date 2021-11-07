@@ -2,7 +2,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
 
 import { CREATE_MATERIAL, DELETE_MATERIAL, UPDATE_MATERIAL } from "./graphql-mutations";
-import { GET_ALL_MATERIALS, GET_MATERIAL, GET_POPULAR_MATERIALS } from "./graphql-queries";
+import {
+  GET_ALL_MATERIALS,
+  GET_MATERIAL,
+  GET_MATERIAL_SEARCH,
+  GET_POPULAR_MATERIALS,
+} from "./graphql-queries";
 
 export const useMaterials = () => {
   const result = useQuery(GET_ALL_MATERIALS);
@@ -70,6 +75,16 @@ export const useUpdateMaterial = () => {
 
 export const usePopularMaterials = () => {
   const result = useQuery(GET_POPULAR_MATERIALS);
+
+  return result;
+};
+
+export const useMaterialSearch = (material) => {
+  const result = useQuery(GET_MATERIAL_SEARCH, {
+    variables: {
+      nombre: material,
+    },
+  });
 
   return result;
 };
