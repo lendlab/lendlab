@@ -26,7 +26,6 @@ const Material = () => {
           categoria: data?.getMaterial.categoria,
           descripcion: data?.getMaterial.descripcion,
           cantidad: data?.getMaterial.cantidad,
-          foto: data?.getMaterial.foto,
           estado: data?.getMaterial.estado,
         }}
         validateOnChange={false}
