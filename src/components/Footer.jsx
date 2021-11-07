@@ -25,6 +25,7 @@ export default function Footer() {
       bg={useColorModeValue("lendlab.light.black.200", "lendlab.dark.black.200")}
       borderColor={useColorModeValue("lendlab.light.black.300", "lendlab.dark.black.300")}
       borderWidth="1px 0 1px 0"
+      h="100%"
     >
       <Container as={Stack} justifyContent="center" maxW={"5xl"} py={10}>
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} justifyItems={{ md: "center" }} spacing={8}>
