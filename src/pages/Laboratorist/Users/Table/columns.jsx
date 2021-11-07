@@ -5,6 +5,7 @@ import { useDeleteUser } from "@graphql/users/custom-hooks";
 import { momentizeDate } from "@utils/momentizeDate";
 import React from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
+import { useHistory } from "react-router";
 
 export const COLUMNS = [
   {
@@ -49,6 +50,8 @@ export const COLUMNS = [
     Cell({ row }) {
       const [deleteUser, { loading, data }] = useDeleteUser();
 
+      const history = useHistory();
+
       return (
         <Stack direction="row">
           <IconButton
@@ -74,6 +77,7 @@ export const COLUMNS = [
             color="lendlab.light.red.400"
             icon={<Icon as={FiEdit2} color="lendlab.yellow" />}
             variant="ghost"
+            onClick={() => history.push("/dashboard/usuarios/" + row.original.cedula)}
           />
         </Stack>
       );
