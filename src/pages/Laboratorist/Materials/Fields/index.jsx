@@ -9,7 +9,6 @@ const MaterialFields = ({ noInstitution }) => {
       <Field label="Categoría" name="categoria" placeholder="ej. Laptops" type="text" />
       <Field label="Descripcion" name="descripcion" placeholder="descripcion" type="text" />
       <Field label="Cantidad" name="cantidad" placeholder="ej.10" type="number" />
-      <Field label="Foto del Material" name="foto" placeholder="Foto" type="text" />
       <Field label="Estado del material" name="estado" placeholder="ej. Roto" type="text" />
       {!noInstitution && (
         <Field
