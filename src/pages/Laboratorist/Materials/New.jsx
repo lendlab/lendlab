@@ -19,7 +19,6 @@ const NewMaterial = () => {
           categoria: "",
           descripcion: "",
           cantidad: "",
-          foto: "",
           estado: "",
           institution: {
             id_institution: "",
