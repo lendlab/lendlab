@@ -12,14 +12,9 @@ export const GET_ALL_USERS = gql`
       fecha_nacimiento
       institution {
         id_institution
-        institution_name
-        city
-        phone
-        type
       }
       course {
-        course_id
-        course_name
+        course_token
       }
     }
   }
@@ -32,9 +27,15 @@ export const GET_USER = gql`
       nombre
       direccion
       foto_usuario
-      telefono
-      tipo_usuario
+      course {
+        course_token
+      }
+      institution {
+        id_institution
+      }
       fecha_nacimiento
+      tipo_usuario
+      telefono
     }
   }
 `;
