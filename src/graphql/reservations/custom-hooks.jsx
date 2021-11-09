@@ -1,14 +1,18 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
 
-import { GET_ALL_RESERVATIONS_WITH_MAXID, GET_RESERVATION_MAX_ID } from "./graphql-queries";
+import {
+  GET_ALL_RESERVATIONS_WITH_MAXID,
+  GET_RESERVATIONS_BY_INSTITUTION,
+  GET_RESERVATION_MAX_ID,
+  GET_USER_RESERVATIONS,
+} from "./graphql-queries";
 import { CREATE_RESERVATION, DELETE_RESERVATION, UPDATE_RESERVATION } from "./graphql-mutations";
-import { RESERVATIONS_SUSCRIPTION } from "./graphql-subscriptions";
 
 export const useReservationsAndMaxId = () => {
   const result = useQuery(GET_ALL_RESERVATIONS_WITH_MAXID, {});
 
-  return [result, RESERVATIONS_SUSCRIPTION];
+  return [result];
 };
 
 export const useRejectOrAcceptReservation = () => {
@@ -58,4 +62,24 @@ export const useCreateReservation = () => {
   });
 
   return [createReservation, resultCreate, resultId];
+};
+
+export const useReservationsByInstitution = (id_institution) => {
+  const result = useQuery(GET_RESERVATIONS_BY_INSTITUTION, {
+    variables: {
+      idInstitution: id_institution,
+    },
+  });
+
+  return [result];
+};
+
+export const useUserReservations = (cedula) => {
+  const result = useQuery(GET_USER_RESERVATIONS, {
+    variables: {
+      cedula,
+    },
+  });
+
+  return result;
 };
