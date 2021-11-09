@@ -21,10 +21,6 @@ export const COLUMNS = [
     accessor: "direccion",
   },
   {
-    Header: "Avatar",
-    accessor: "foto_usuario",
-  },
-  {
     Header: "Telefono",
     accessor: "telefono",
   },
