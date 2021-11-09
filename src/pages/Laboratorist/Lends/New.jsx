@@ -40,7 +40,7 @@ const NewLend = () => {
                 data: {
                   id_reserva: dataId.getMaxId + 1,
                   user: {
-                    cedula: parseInt(dataMe.me.cedula),
+                    cedula: parseInt(values.user),
                   },
                   material: {
                     id_material: parseInt(material),
