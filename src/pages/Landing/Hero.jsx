@@ -3,6 +3,7 @@ import Icon from "@chakra-ui/icon";
 import { Container, Flex, Heading, Stack, Text } from "@chakra-ui/layout";
 import React from "react";
 import { FiArrowRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 import HeroIllustration from "./Illustrations/HeroIllustration";
 
@@ -21,9 +22,11 @@ const Hero = () => {
             Totalmente gratuito
           </Text>
         </Text>
+        <Link to="/registro">
         <Button rightIcon={<Icon as={FiArrowRight} />} size="lg" variant="primary">
           Empezar ahora
         </Button>
+        </Link>
         <Flex w={"full"}>
           <HeroIllustration height={{ sm: "24rem", lg: "28rem" }} mt={{ base: 12, sm: 16 }} />
         </Flex>
