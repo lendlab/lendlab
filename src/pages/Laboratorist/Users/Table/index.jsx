@@ -1,13 +1,18 @@
 import { Table } from "@components/Table";
 import TableSkeleton from "@components/Table/TableSkeleton";
-import { useUsers } from "@graphql/users/custom-hooks";
-import React from "react";
+import { useMe } from "@graphql/auth/custom-hook";
+import { useStudentsByInstitution } from "@graphql/users/custom-hooks";
 import { SUBSCRIBE_TO_USERS } from "@graphql/users/graphql-subscriptions";
+import React from "react";
 
 import { COLUMNS } from "./columns";
 
 const UsersTable = () => {
-  const { loading, error, data, subscribeToMore } = useUsers();
+  const { data: dataMe } = useMe();
+
+  const { loading, error, data, subscribeToMore } = useStudentsByInstitution(
+    dataMe?.me.course.institution.id_institution
+  );
 
   if (loading || !data) {
     return (
@@ -32,7 +37,7 @@ const UsersTable = () => {
   return (
     <Table
       columns={COLUMNS}
-      data={data.getUsers}
+      data={data.getStudentsByInstitution}
       id="Usuarios"
       subscribeToNew={() => {
         subscribeToMore({
@@ -44,7 +49,7 @@ const UsersTable = () => {
             const newSuscription = subscriptionData.data.newUserSubscription;
 
             return Object.assign({}, prev, {
-              getUsers: [newSuscription, ...prev.getUsers],
+              getStudentsByInstitution: [newSuscription, ...prev.getStudentsByInstitution],
             });
           },
         });
