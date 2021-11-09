@@ -9,7 +9,7 @@ const PopularMaterials = () => {
   if (loading || !data) return "loading..";
 
   return (
-    <Stack direction="row" justify="space-between" spacing={6}>
+    <Stack direction={{ md: "row", base: "column" }} justify="space-between" spacing={6} w="full">
       {data.getPopularMaterials.map((material, i) => (
         <MaterialItem key={i} material={material} />
       ))}
