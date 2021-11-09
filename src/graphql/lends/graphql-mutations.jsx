@@ -51,3 +51,9 @@ export const UPDATE_LEND = gql`
     }
   }
 `;
+
+export const DELETE_LEND = gql`
+  mutation DeleteLend($fechaHoraPresta: String!, $idLend: Int!) {
+    deleteLend(fecha_hora_presta: $fechaHoraPresta, id_lend: $idLend)
+  }
+`;

@@ -21,7 +21,6 @@ const User = () => {
         initialValues={{
           cedula: data?.getUser.cedula,
           nombre: data?.getUser.nombre,
-          password: "",
           direccion: data?.getUser.direccion,
           foto_usuario: data?.getUser.foto_usuario,
           telefono: data?.getUser.telefono,
@@ -35,13 +34,25 @@ const User = () => {
         onSubmit={async (values, { resetForm }) => {
           return updateUser({
             variables: {
-              data: values,
+              data: {
+                nombre: values.nombre,
+                direccion: values.direccion,
+                tipo_usuario: values.tipo_usuario,
+                telefono: values.telefono,
+                tipo_usuario: values.tipo_usuario,
+                fecha_nacimiento: values.fecha_nacimiento,
+                course: {
+                  course_token: values.course.course_token,
+                },
+              },
               cedula: parseInt(cedula),
             },
             update: (cache, data) => {
               cache.evict({ cedula: parseInt(cedula), fieldName: "getUser" });
               cache.evict({ cedula: parseInt(cedula), fieldName: "getUsers" });
-              cache.evict({ fieldName: "getReservations" });
+              cache.evict({ cedula: parseInt(cedula), fieldName: "getStudentsByInstitution" });
+              cache.evict({ fieldName: "getReservationsByInstitution" });
+              cache.evict({ fieldName: "getLendsByInstitution" });
 
               resetForm({ values: data });
             },
@@ -50,7 +61,7 @@ const User = () => {
       >
         {({ dirty, isSubmitting }) => (
           <Stack as={Form} spacing={6}>
-            <UserFields />
+            <UserFields isUpdate />
             <Button
               isFullWidth
               disabled={!dirty}
@@ -59,7 +70,7 @@ const User = () => {
               type="submit"
               variant="primary"
             >
-              Actualizar User
+              Actualizar Usuario
             </Button>
           </Stack>
         )}

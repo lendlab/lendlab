@@ -7,7 +7,7 @@ const UserFields = ({ isUpdate }) => {
       <Field
         control="input"
         disabled={isUpdate ? true : false}
-        label="Cedula de Usuario"
+        label="Cedula de Laboratorista"
         name="cedula"
         placeholder="ej. 54548246"
         type="number"

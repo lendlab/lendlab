@@ -1,38 +1,33 @@
 import { Button } from "@chakra-ui/button";
 import { Stack } from "@chakra-ui/layout";
 import Dashboard from "@components/Dashboard";
-import { useCreateMaterial } from "@graphql/materials/custom-hooks";
+import { Field } from "@components/Field";
+import { useMe } from "@graphql/auth/custom-hook";
+import { useCreateCourse } from "@graphql/courses/custom-hooks";
 import { Form, Formik } from "formik";
 import React from "react";
-import { useMe } from "@graphql/auth/custom-hook";
 
-import MaterialsFields from "./Fields";
-
-const NewMaterial = () => {
+const NewCourse = () => {
   const { data: dataMe } = useMe();
 
-  const [createMaterial, { loading, data, error }] = useCreateMaterial();
+  const [createCourse, { loading, data, error }] = useCreateCourse();
 
   return (
-    <Dashboard hasNoActions title="Nuevo Material">
+    <Dashboard hasNoActions title="Nuevo Curso">
       <Formik
         initialValues={{
-          nombre: "",
-          etiqueta: "",
-          categoria: "",
-          descripcion: "",
-          cantidad: "",
-          estado: "",
+          course_token: "",
+          course_name: "",
           institution: {
             id_institution: dataMe?.me.course.institution.id_institution,
           },
         }}
-        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={(values, { resetForm }) => {
-          return createMaterial({
+          return createCourse({
             variables: { data: { ...values } },
             update: (cache) => {
-              cache.evict({ fieldName: "getMaterialsByInstitution" });
+              cache.evict({ fieldName: "getCoursessByInstitution" });
               resetForm();
             },
           });
@@ -40,16 +35,16 @@ const NewMaterial = () => {
       >
         {({ dirty }) => (
           <Stack as={Form} spacing={6}>
-            <MaterialsFields />
+            <Field label="Nombre del curso" name="course_name" placeholder="ej. 3GB" />
             <Button
               isFullWidth
               disabled={!dirty}
               isLoading={loading}
-              loadingText="Creando Material..."
+              loadingText="Creando Curso..."
               type="submit"
               variant="primary"
             >
-              Crear nuevo material
+              Crear nuevo curso
             </Button>
           </Stack>
         )}
@@ -58,4 +53,4 @@ const NewMaterial = () => {
   );
 };
 
-export default NewMaterial;
+export default NewCourse;

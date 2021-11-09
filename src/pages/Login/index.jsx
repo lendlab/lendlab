@@ -1,17 +1,22 @@
-import { FormControl } from "@chakra-ui/form-control";
-import { Container, Heading, Link as ChakraLink, Stack, Text } from "@chakra-ui/layout";
-import { Form, Formik } from "formik";
-import React, { useCallback, useState } from "react";
-import { Link } from "react-router-dom";
-import { Field } from "@components/Field";
 import { Button } from "@chakra-ui/button";
-import { BsCreditCard2Front } from "react-icons/bs";
-import { AiOutlineLock } from "react-icons/ai";
+import { Container, Heading, Link as ChakraLink, Stack, Text } from "@chakra-ui/layout";
+import { Field } from "@components/Field";
 import { useLogin } from "@graphql/auth/custom-hook";
 import { toErrorMap } from "@utils/toErrorMap";
+import { Form, Formik } from "formik";
+import React, { useCallback, useState } from "react";
+import { AiOutlineLock } from "react-icons/ai";
+import { BsCreditCard2Front } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import * as yup from "yup";
 
 const Login = () => {
   const [show, setShow] = useState(false);
+
+  const validationSchema = yup.object().shape({
+    cedula: yup.string().required("Campo requerido"),
+    password: yup.string().required("Campo requerido"),
+  });
 
   const handleShow = useCallback(() => {
     setShow(!show);
@@ -31,6 +36,7 @@ const Login = () => {
             password: "",
           }}
           validateOnChange={false}
+          validationSchema={validationSchema}
           onSubmit={async (values, { setErrors }) => {
             const response = await login({
               variables: {

@@ -3,6 +3,10 @@ import { gql } from "@apollo/client";
 export const LOGIN = gql`
   mutation LoginMutation($options: CedulaPasswordInput!) {
     login(options: $options) {
+      errors {
+        path
+        message
+      }
       user {
         course {
           course_token

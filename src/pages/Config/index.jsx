@@ -4,40 +4,52 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { useMe } from "@graphql/auth/custom-hook";
 import Dashboard from "@components/Dashboard";
+import { useUser } from "@graphql/users/custom-hooks";
 
 import ConfigFields from "./Fields";
 
 const Config = () => {
-  const { loading, data } = useMe();
+  const { loading, data: dataMe } = useMe();
+  const [updateUser, { loading: loadingUser, data }, { loading: loadingUpdate }] = useUser(
+    dataMe?.me.cedula
+  );
 
-  if (loading || !data) return "loading...";
+  if (loading || !dataMe) return "loading...";
 
   return (
-    <Dashboard hasNoActions isUserConfig title="Configuración">
+    <Dashboard hasNoActions title="Configuración">
       <Formik
         initialValues={{
-          cedula: data?.me.cedula,
-          nombre: data?.me.nombre,
-          password: "",
-          direccion: data?.me.direccion,
-          foto_usuario: data?.me.foto_usuario,
-          telefono: data?.me.telefono,
-          tipo_usuario: data?.me.tipo_usuario,
-          fecha_nacimiento: data?.me.fecha_nacimiento,
+          cedula: dataMe?.me.cedula,
+          nombre: dataMe?.me.nombre,
+          direccion: dataMe?.me.direccion,
+          foto_usuario: dataMe?.me.foto_usuario,
+          telefono: dataMe?.me.telefono,
+          tipo_usuario: dataMe?.me.tipo_usuario,
+          fecha_nacimiento: dataMe?.me.fecha_nacimiento,
+          course: {
+            course_token: dataMe?.me.course.course_token,
+          },
         }}
         validateOnChange={false}
         onSubmit={async (values, { resetForm }) => {
           return updateUser({
             variables: {
-              data: values,
-              cedula: parseInt(cedula),
+              data: {
+                nombre: values.nombre,
+                direccion: values.direccion,
+                tipo_usuario: values.tipo_usuario,
+                telefono: values.telefono,
+                tipo_usuario: values.tipo_usuario,
+                fecha_nacimiento: values.fecha_nacimiento,
+                course: {
+                  course_token: values.course.course_token,
+                },
+              },
+              cedula: parseInt(values.cedula),
             },
             update: (cache, data) => {
-              cache.evict({ cedula: parseInt(data?.me.cedula), fieldName: "getUser" });
-              cache.evict({ cedula: parseInt(data?.me.cedula), fieldName: "getUsers" });
-              cache.evict({ cedula: parseInt(data?.me.cedula), fieldName: "me" });
-              cache.evict({ fieldName: "getReservations" });
-
+              cache.evict({ cedula: parseInt(cedula), fieldName: "me" });
               resetForm({ values: data });
             },
           });

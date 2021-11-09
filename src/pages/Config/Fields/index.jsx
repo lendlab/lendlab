@@ -5,6 +5,7 @@ const ConfigFields = () => {
   return (
     <>
       <Field
+        disabled
         control="input"
         label="Tu cedula"
         name="cedula"
@@ -20,23 +21,9 @@ const ConfigFields = () => {
       />
       <Field
         control="input"
-        label="Tu contraseña"
-        name="password"
-        placeholder="ej. ******"
-        type="password"
-      />
-      <Field
-        control="input"
         label="Tu dirección"
         name="direccion"
         placeholder="ej. Sanchez 294"
-        type="text"
-      />
-      <Field
-        control="input"
-        label="Foto del Usuario"
-        name="foto_usuario"
-        placeholder="pone la fotito"
         type="text"
       />
       <Field

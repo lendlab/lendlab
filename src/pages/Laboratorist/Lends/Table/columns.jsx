@@ -9,6 +9,8 @@ import { momentizeDate } from "@utils/momentizeDate";
 import moment from "moment/min/moment-with-locales";
 import React from "react";
 import { FiCheckCircle, FiTrash } from "react-icons/fi";
+import { useDeleteLend } from "@graphql/lends/custom-hooks";
+import { Spinner } from "@chakra-ui/spinner";
 
 export const COLUMNS = [
   {
@@ -161,62 +163,70 @@ export const COLUMNS = [
     id: "click-me-button",
     Cell({ row }) {
       const [updateLend, { loading }] = useUpdateLend();
+      const [daleteLend, { loading: loadingDelete }] = useDeleteLend();
 
       return (
-        <>
+        <Stack direction="row">
           {!row.original.fecha_devolucion ? (
-            <Stack direction="row">
-              <Button
-                aria-label="Aceptar Reserva"
-                color="lendlab.blue.300"
-                isLoading={loading}
-                leftIcon={<Icon as={FiCheckCircle} color="lendlab.blue.300" />}
-                variant="ghost"
-                onClick={async () => {
-                  return updateLend({
-                    variables: {
-                      data: {
-                        fecha_devolucion: moment(new Date(), "YYYY-MM-DD HH:mm:ss").format(
-                          "YYYY-MM-DD HH:mm:ss"
-                        ),
-                      },
-                      idLend: parseInt(row.original.id_lend),
-                      fechaHoraPresta: moment(
-                        row.original.fecha_hora_presta,
+            <Button
+              aria-label="Aceptar Reserva"
+              color="lendlab.blue.300"
+              isLoading={loading}
+              leftIcon={
+                loading ? <Spinner /> : <Icon as={FiCheckCircle} color="lendlab.blue.300" />
+              }
+              variant="ghost"
+              onClick={async () => {
+                return updateLend({
+                  variables: {
+                    data: {
+                      fecha_devolucion: moment(new Date(), "YYYY-MM-DD HH:mm:ss").format(
                         "YYYY-MM-DD HH:mm:ss"
-                      ).format("YYYY-MM-DD HH:mm:ss"),
+                      ),
                     },
-                    update: (cache) => {
-                      cache.evict({
-                        id_lend: "Lend:" + row.original.id_lend,
-                      });
-                    },
-                  });
-                }}
-              >
-                Devolver
-              </Button>
-              <Button
-                aria-label="Rechazar Reserva"
-                color="lendlab.light.red.400"
-                leftIcon={<Icon as={FiTrash} color="lendlab.light.red.400" />}
-                variant="ghost"
-                // onClick={() => {
-                //   deleteReservation({
-                //     variables: {
-                //       idReserva: parseInt(row.original.id_reserva),
-                //     },
-                //     update: (cache) => {
-                //       cache.evict({
-                //         id_reserva: "Reservation:" + row.original.id_reserva,
-                //       });
-                //     },
-                //   });
-                // }}
-              />
-            </Stack>
+                    idLend: parseInt(row.original.id_lend),
+                    fechaHoraPresta: moment(
+                      row.original.fecha_hora_presta,
+                      "YYYY-MM-DD HH:mm:ss"
+                    ).format("YYYY-MM-DD HH:mm:ss"),
+                  },
+                  update: (cache) => {
+                    cache.evict({
+                      id_lend: "Lend:" + row.original.id_lend,
+                    });
+                  },
+                });
+              }}
+            >
+              Devolver
+            </Button>
           ) : null}
-        </>
+          <Button
+            aria-label="Rechazar Reserva"
+            color="lendlab.light.red.400"
+            leftIcon={
+              loadingDelete ? <Spinner /> : <Icon as={FiTrash} color="lendlab.light.red.400" />
+            }
+            loading={loadingDelete}
+            variant="ghost"
+            onClick={() => {
+              daleteLend({
+                variables: {
+                  idLend: parseInt(row.original.id_lend),
+                  fechaHoraPresta: moment(
+                    row.original.fecha_hora_presta,
+                    "YYYY-MM-DD HH:mm:ss"
+                  ).format("YYYY-MM-DD HH:mm:ss"),
+                },
+                update: (cache) => {
+                  cache.evict({
+                    id_reserva: "Reservation:" + row.original.id_reserva,
+                  });
+                },
+              });
+            }}
+          />
+        </Stack>
       );
     },
   },

@@ -27,7 +27,7 @@ const NewMaterial = () => {
             id_institution: dataMe?.me.course.institution.id_institution,
           },
         }}
-        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={(values, { resetForm }) => {
           return createMaterial({
             variables: { data: { ...values } },

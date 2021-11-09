@@ -1,4 +1,6 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { useToast } from "@chakra-ui/toast";
+
 import { CREATE_COURSE } from "./graphql-mutations";
 import { GET_COURSES_BY_INSTITUTION } from "./graphql-queries";
 
@@ -10,23 +12,13 @@ export const useCoursesByInstitution = (id_institution) => {
   });
 
   return result;
-}
-
-export const useCoursesByInstitution = (id_institution) => {
-  const result = useQuery(GET_COURSES_BY_INSTITUTION, {
-    variables: {
-      idInstitution: id_institution,
-    },
-  });
-
-  return result;
-}
+};
 
 export const useCreateCourse = () => {
-    const toast = useToast();
+  const toast = useToast();
 
   const [createCourse, result] = useMutation(CREATE_COURSE, {
-    onCompleted: ({ ucreateNewCourse }) => {
+    onCompleted: ({ createNewCourse }) => {
       toast({
         title: "Curso creado con éxito",
         description: "Token del curso: " + createNewCourse.course_token,
@@ -38,5 +30,4 @@ export const useCreateCourse = () => {
   });
 
   return [createCourse, result];
-}
-
+};

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import ExportButton from "./ExportButton";
 
-const Dashboard = ({ children, hasNoActions, isUserConfig, title, link }) => {
+const Dashboard = ({ children, hasNoActions, title, link }) => {
   const isFullWidth = useBreakpointValue({ base: true, md: false });
 
   return (
@@ -36,7 +36,6 @@ const Dashboard = ({ children, hasNoActions, isUserConfig, title, link }) => {
                 <ExportButton isFullWidth={isFullWidth} tabla={title} />
               </Stack>
             )}
-            {isUserConfig && <Button colorScheme="red">Borrar mi cuenta</Button>}
           </Stack>
         </Container>
       </Box>

@@ -23,9 +23,9 @@ const Hero = () => {
           </Text>
         </Text>
         <Link to="/registro">
-        <Button rightIcon={<Icon as={FiArrowRight} />} size="lg" variant="primary">
-          Empezar ahora
-        </Button>
+          <Button rightIcon={<Icon as={FiArrowRight} />} size="lg" variant="primary">
+            Empezar ahora
+          </Button>
         </Link>
         <Flex w={"full"}>
           <HeroIllustration height={{ sm: "24rem", lg: "28rem" }} mt={{ base: 12, sm: 16 }} />

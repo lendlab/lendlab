@@ -1,7 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { Stack } from "@chakra-ui/layout";
 import Dashboard from "@components/Dashboard";
-import { Field } from "@components/Field";
 import { useRegister } from "@graphql/users/custom-hooks";
 import { Form, Formik } from "formik";
 import React from "react";
@@ -9,7 +8,7 @@ import * as yup from "yup";
 
 import UserFields from "./Fields";
 
-const NewUser = () => {
+const NewLaboratorist = () => {
   const [register, { loading, error }] = useRegister();
 
   const validationSchema = yup.object().shape({
@@ -17,12 +16,12 @@ const NewUser = () => {
       .string()
       .required("Campo requerido")
       .matches(/^(?<=\s|^)\d+(?=\s|$)/, "Solo números!")
-      .min(5, "Minimo de 5 caracteres")
+      .min(8, "Minimo de 8 caracteres")
       .max(8, "Superaste el máximo de 8 caracteres"),
     password: yup
       .string()
       .required("Campo requerido")
-      .min(8, "Minimo de 8 caracteres")
+      .min(5, "Minimo de 5 caracteres")
       .max(30, "Superaste el máximo de 30 caracteres")
       .test(
         "isValidPass",
@@ -75,7 +74,7 @@ const NewUser = () => {
           direccion: "",
           foto_usuario: "No escribir aqui (test)",
           telefono: "",
-          tipo_usuario: "Alumno",
+          tipo_usuario: "Laboratorista",
           fecha_nacimiento: "",
           course: {
             course_token: "",
@@ -87,7 +86,7 @@ const NewUser = () => {
           return register({
             variables: { data: values },
             update: (cache) => {
-              cache.evict({ fieldName: "getStudentsByInstitution" });
+              cache.evict({ fieldName: "getLaboratoristsByInstitution" });
               resetForm();
             },
           });
@@ -100,11 +99,11 @@ const NewUser = () => {
               isFullWidth
               disabled={!dirty}
               isLoading={loading}
-              loadingText="Registrando Usuario..."
+              loadingText="Registrando Laboratorista..."
               type="submit"
               variant="primary"
             >
-              Registrar Usuario
+              Registrar Laboratorista
             </Button>
           </Stack>
         )}
@@ -113,4 +112,4 @@ const NewUser = () => {
   );
 };
 
-export default NewUser;
+export default NewLaboratorist;

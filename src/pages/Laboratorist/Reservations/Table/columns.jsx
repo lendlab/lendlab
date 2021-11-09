@@ -101,6 +101,7 @@ export const COLUMNS = [
                 color="lendlab.light.red.400"
                 isLoading={loadingDelete}
                 leftIcon={<Icon as={FiTrash} color="lendlab.light.red.400" />}
+                loadingText="Rechazando reserva..."
                 variant="ghost"
                 onClick={() => {
                   deleteReservation({

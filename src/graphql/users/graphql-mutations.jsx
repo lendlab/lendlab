@@ -49,6 +49,9 @@ export const UPDATE_USER = gql`
       fecha_nacimiento
       course {
         course_token
+        institution {
+          id_institution
+        }
       }
     }
   }

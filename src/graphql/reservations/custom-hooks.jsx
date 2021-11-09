@@ -48,7 +48,7 @@ export const useCreateReservation = () => {
   const toast = useToast();
   const resultId = useQuery(GET_RESERVATION_MAX_ID);
 
-  const [createReservation, resultCreate] = useMutation(CREATE_RESERVATION, {
+  const [createReservation, result] = useMutation(CREATE_RESERVATION, {
     onCompleted: (data) => {
       toast({
         title: "Reserva creada con éxito",
@@ -61,7 +61,7 @@ export const useCreateReservation = () => {
     },
   });
 
-  return [createReservation, resultCreate, resultId];
+  return [createReservation, result, resultId];
 };
 
 export const useReservationsByInstitution = (id_institution) => {

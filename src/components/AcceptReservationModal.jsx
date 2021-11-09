@@ -20,6 +20,7 @@ import { Form, Formik } from "formik";
 import moment from "moment";
 import React from "react";
 import { FiCheckCircle } from "react-icons/fi";
+import * as yup from "yup";
 
 import { Field } from "./Field";
 
@@ -30,6 +31,10 @@ const AcceptReservationModal = ({ reservation }) => {
   const { data: dataMe } = useMe();
 
   const [createLend, { loading: loadingCreateLend }] = useCreateLend();
+
+  const validationSchema = yup.object().shape({
+    fecha_vencimiento: yup.date().required("Campo requerido"),
+  });
 
   return (
     <>
@@ -49,6 +54,7 @@ const AcceptReservationModal = ({ reservation }) => {
           <ModalBody>
             <Formik
               initialValues={{ fecha_vencimiento: "" }}
+              validationSchema={validationSchema}
               onSubmit={(values, { resetForm }) => {
                 return updateReservation({
                   variables: {
@@ -109,6 +115,7 @@ const AcceptReservationModal = ({ reservation }) => {
               aria-label="Aceptar Reserva"
               form="create-reservation-form"
               isLoading={loadingUpdate || loadingCreateLend}
+              loadingText="Aceptando reserva..."
               type="submit"
               variant="primary"
             >

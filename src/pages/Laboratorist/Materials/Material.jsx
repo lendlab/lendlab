@@ -38,7 +38,9 @@ const Material = () => {
             update: (cache, data) => {
               cache.evict({ id_material: parseInt(id), fieldName: "getMaterial" });
               cache.evict({ id_material: parseInt(id), fieldName: "getMaterials" });
-              cache.evict({ fieldName: "getReservations" });
+              cache.evict({ id_material: parseInt(id), fieldName: "getMaterialsByInstitution" });
+              cache.evict({ fieldName: "getReservationsByInstitution" });
+              cache.evict({ fieldName: "getLendsByInstitution" });
 
               resetForm({ values: data });
             },

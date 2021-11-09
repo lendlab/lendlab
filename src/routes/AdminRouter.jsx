@@ -6,7 +6,7 @@ import NewInstitution from "@pages/Admin/Institutions/New";
 import Config from "@pages/Config";
 import { ADMIN_ROUTES } from "@utils/constants/routes";
 import React from "react";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 
 const AdminRouter = () => {
   return (
@@ -16,6 +16,7 @@ const AdminRouter = () => {
         <Route exact component={Institutions} path="/admin/instituciones" />
         <Route exact component={NewInstitution} path="/admin/instituciones/nueva" />
         <Route exact component={Config} path="/admin/configuracion" />
+        <Redirect to="/admin/instituciones" />
       </Switch>
       <Footer />
     </Stack>

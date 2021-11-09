@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
 
-import { CREATE_LEND, UPDATE_LEND } from "./graphql-mutations";
+import { CREATE_LEND, DELETE_LEND, UPDATE_LEND } from "./graphql-mutations";
 import { GET_ALL_LENDS, GET_LENDS_BY_INSTITUTION, GET_USER_LENDS } from "./graphql-queries";
 
 export const useLends = () => {
@@ -64,4 +64,10 @@ export const useUserLends = (cedula) => {
   });
 
   return result;
+};
+
+export const useDeleteLend = () => {
+  const [deleteLend, result] = useMutation(DELETE_LEND);
+
+  return [deleteLend, result];
 };

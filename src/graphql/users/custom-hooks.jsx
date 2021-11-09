@@ -41,7 +41,7 @@ export const useDeleteUser = () => {
         title: "Usuario eliminado con éxito",
         description: "Se ha eliminado el usuario con éxito",
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       }),
   });
@@ -50,6 +50,8 @@ export const useDeleteUser = () => {
 };
 
 export const useUser = (cedula) => {
+  const toast = useToast();
+
   const result = useQuery(GET_USER, {
     variables: { cedula: parseInt(cedula) },
   });

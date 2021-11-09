@@ -1,4 +1,12 @@
-import { FiAlertTriangle, FiArchive, FiClock, FiGrid, FiTool, FiUsers, FiPenTool } from "react-icons/fi";
+import {
+  FiAlertTriangle,
+  FiArchive,
+  FiClock,
+  FiGrid,
+  FiTool,
+  FiUsers,
+  FiPenTool,
+} from "react-icons/fi";
 
 export const DASHBOARD_ROUTES = [
   {

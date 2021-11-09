@@ -28,7 +28,7 @@ const NewLend = () => {
     <Dashboard hasNoActions title="Nuevo Prestamo">
       <Formik
         initialValues={{ user: "", materials: [], fecha_vencimiento: "" }}
-        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={async (values, { setErrors }) => {
           values.materials.map((material, i, { length }) => {
             const fecha_hora = moment().add(i, "seconds").format("YYYY-MM-DD HH:mm:ss");

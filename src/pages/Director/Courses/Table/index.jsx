@@ -3,38 +3,26 @@ import TableSkeleton from "@components/Table/TableSkeleton";
 import { useMe } from "@graphql/auth/custom-hook";
 import { SUBSCRIBE_TO_USERS } from "@graphql/users/graphql-subscriptions";
 import React from "react";
+import { useCoursesByInstitution } from "@graphql/courses/custom-hooks";
 
 import { COLUMNS } from "./columns";
-import { useCoursesByInstitution } from "@graphql/courses/custom-hooks";
 
 const CoursesTable = () => {
   const { data: dataMe } = useMe();
 
-  const { loading, error, data, subscribeToMore } = useCoursesByInstitution(dataMe?.me.course.institution.id_institution);
+  const { loading, error, data, subscribeToMore } = useCoursesByInstitution(
+    dataMe?.me.course.institution.id_institution
+  );
 
   if (loading || !data) {
-    return (
-      <TableSkeleton
-        theads={[
-          "Token",
-          "Nombre",
-          "Institución",
-        ]}
-      />
-    );
+    return <TableSkeleton theads={["Token", "Nombre", "Institución"]} />;
   }
 
   if (error) {
     return error.message;
   }
 
-  return (
-    <Table
-      columns={COLUMNS}
-      data={data.getCoursessByInstitution}
-      id="Cursos"
-    />
-  );
+  return <Table columns={COLUMNS} data={data.getCoursessByInstitution} id="Cursos" />;
 };
 
 export default CoursesTable;
