@@ -65,4 +65,14 @@ export const STUDENT_ROUTES = [
     icon: FiGrid,
     path: "/app/inicio",
   },
+  {
+    title: "Mis reservas",
+    icon: FiGrid,
+    path: "/app/mis-reservas",
+  },
+  {
+    title: "Mis prestamos",
+    icon: FiGrid,
+    path: "/app/mis-prestamos",
+  },
 ];
