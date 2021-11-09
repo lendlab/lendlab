@@ -17,6 +17,9 @@ export const CREATE_RESERVATION = gql`
         user {
           cedula
         }
+        institution {
+          id_institution
+        }
       }
     }
   }
