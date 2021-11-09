@@ -1,13 +1,18 @@
 import { Table } from "@components/Table";
-import React from "react";
-import { useMaterials } from "@graphql/materials/custom-hooks";
 import TableSkeleton from "@components/Table/TableSkeleton";
+import { useMe } from "@graphql/auth/custom-hook";
+import { useMaterialsByInstitution } from "@graphql/materials/custom-hooks";
 import { SUBSCRIBE_TO_MATERIALS } from "@graphql/materials/graphql-subscriptions";
+import React from "react";
 
 import { COLUMNS } from "./columns";
 
 const MaterialsTable = () => {
-  const { loading, error, data, subscribeToMore } = useMaterials();
+  const { data: dataMe } = useMe();
+
+  const { loading, error, data, subscribeToMore } = useMaterialsByInstitution(
+    dataMe?.me.course.institution.id_institution
+  );
 
   if (loading || !data) {
     return (
@@ -33,7 +38,7 @@ const MaterialsTable = () => {
   return (
     <Table
       columns={COLUMNS}
-      data={data.getMaterials}
+      data={data.getMaterialsByInstitution}
       id="Materiales"
       subscribeToNew={() => {
         subscribeToMore({
@@ -45,7 +50,7 @@ const MaterialsTable = () => {
             const newSuscription = subscriptionData.data.newMaterialSubscription;
 
             return Object.assign({}, prev, {
-              getMaterials: [newSuscription, ...prev.getMaterials],
+              getMaterialsByInstitution: [newSuscription, ...prev.getMaterialsByInstitution],
             });
           },
         });
