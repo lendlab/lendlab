@@ -1,9 +1,10 @@
 export const toErrorMap = (errors) => {
   const errorMap = {};
 
-  errors.forEach(({ field, message }) => {
-    errorMap[field] = message;
+  errors.forEach(({ path, message }) => {
+    errorMap[path] = message;
   });
 
+  console.log(errorMap)
   return errorMap;
 };
