@@ -58,3 +58,24 @@ export const GET_MATERIAL_SEARCH = gql`
     }
   }
 `;
+
+export const GET_MATERIALS_BY_INSTITUTION = gql`
+  query GetMaterialsByInstitution($idInstitution: Int!) {
+    getMaterialsByInstitution(id_institution: $idInstitution) {
+      id_material
+      nombre
+      etiqueta
+      categoria
+      descripcion
+      cantidad
+      estado
+      institution {
+        id_institution
+        institution_name
+        type
+        city
+        phone
+      }
+    }
+  }
+`;
