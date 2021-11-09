@@ -47,12 +47,6 @@ const UserFields = () => {
         type="number"
       />
       <Field control="input" label="Fecha de nacimiento" name="fecha_nacimiento" type="date" />
-      <Field
-        control="input"
-        label="ID Institucion"
-        name="institution.id_institution"
-        type="number"
-      />
       <Field control="input" label="Codigo del curso" name="course.course_token" type="text" />
     </>
   );
