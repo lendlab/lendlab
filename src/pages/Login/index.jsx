@@ -1,7 +1,8 @@
 import { FormControl } from "@chakra-ui/form-control";
-import { Container, Heading, Stack } from "@chakra-ui/layout";
+import { Container, Heading, Link as ChakraLink, Stack, Text } from "@chakra-ui/layout";
 import { Form, Formik } from "formik";
 import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 import { Field } from "@components/Field";
 import { Button } from "@chakra-ui/button";
 import { BsCreditCard2Front } from "react-icons/bs";
@@ -76,6 +77,12 @@ const Login = () => {
             </Stack>
           )}
         </Formik>
+        <Stack>
+          <Text textAlign="center">¿No tienes cuenta?</Text>
+          <ChakraLink as={Link} margin="0" spacing="0" textAlign="center" to="/registro">
+            ¡Crear una ahora!
+          </ChakraLink>
+        </Stack>
       </Stack>
     </Container>
   );
