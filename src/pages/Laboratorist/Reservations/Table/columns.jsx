@@ -7,7 +7,9 @@ import { Tooltip } from "@chakra-ui/tooltip";
 import { useRejectOrAcceptReservation } from "@graphql/reservations/custom-hooks";
 import { momentizeDate } from "@utils/momentizeDate";
 import React from "react";
-import { FiCheckCircle, FiTrash } from "react-icons/fi";
+import { FiTrash } from "react-icons/fi";
+
+import AcceptReservationModal from "../../../../components/AcceptReservationModal";
 
 export const COLUMNS = [
   {
@@ -53,7 +55,12 @@ export const COLUMNS = [
       return (
         <Stack alignItems="center" direction="row" spacing={4}>
           <Avatar alt={row.original.user.nombre} name={row.original.user.nombre} />
-          <chakra.span>{row.original.user.nombre}</chakra.span>
+          <Tooltip
+            aria-label={`Cedula: ${row.original.user.cedula}`}
+            label={`Cedula: ${row.original.user.cedula}`}
+          >
+            <chakra.span>{row.original.user.nombre}</chakra.span>
+          </Tooltip>
         </Stack>
       );
     },
@@ -83,8 +90,7 @@ export const COLUMNS = [
     header: "",
     id: "click-me-button",
     Cell({ row }) {
-      const [deleteReservation, { loading: loadingDelete }, updateReservation, { loadingUpdate }] =
-        useRejectOrAcceptReservation();
+      const [deleteReservation, { loading: loadingDelete }] = useRejectOrAcceptReservation();
 
       return (
         <>
@@ -111,30 +117,7 @@ export const COLUMNS = [
               >
                 Rechazar
               </Button>
-              <Button
-                aria-label="Aceptar Reserva"
-                color="lendlab.blue.300"
-                isLoading={loadingUpdate}
-                leftIcon={<Icon as={FiCheckCircle} color="lendlab.blue.300" />}
-                variant="ghost"
-                onClick={() => {
-                  updateReservation({
-                    variables: {
-                      data: {
-                        finalizada: true,
-                      },
-                      idReserva: row.original.id_reserva,
-                    },
-                    update: (cache) => {
-                      cache.evict({
-                        id_reserva: "Reservation:" + row.original.id_reserva,
-                      });
-                    },
-                  });
-                }}
-              >
-                Aceptar
-              </Button>
+              <AcceptReservationModal reservation={row.original} />
             </Stack>
           ) : null}
         </>
