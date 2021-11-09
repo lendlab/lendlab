@@ -4,7 +4,7 @@ import Dashboard from "@components/Dashboard";
 import { useUsersAndMaterials } from "@graphql/shared/custom-hooks";
 import { Form, Formik } from "formik";
 import moment from "moment";
-import React, { useState } from "react";
+import React from "react";
 
 import { useMe } from "../../../graphql/auth/custom-hook";
 import { useCreateLend } from "../../../graphql/lends/custom-hooks";
@@ -45,6 +45,9 @@ const NewLend = () => {
                   },
                   fecha_hora,
                   finalizada: false,
+                  institution: {
+                    id_institution: parseInt(dataMe.me.course.institution.id_institution),
+                  },
                 },
               },
               update: (cache, { data }) => {
@@ -63,9 +66,18 @@ const NewLend = () => {
                           fecha_hora: fecha_hora,
                         },
                         user: {
+                          cedula: data.createReservation.reservation.user.cedula,
+                        },
+                        laboratorist: {
                           cedula: dataMe.me.cedula,
                         },
+                        institution: {
+                          id_institution: parseInt(dataMe.me.course.institution.id_institution),
+                        },
                       },
+                    },
+                    update: (cache, { data }) => {
+                      cache.evict({ fieldName: "getLendsByInstitution" });
                     },
                   });
                 }
