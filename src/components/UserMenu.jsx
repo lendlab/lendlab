@@ -3,17 +3,18 @@ import {
   Icon,
   Menu,
   MenuButton,
+  MenuGroup,
   MenuItem,
   MenuList,
-  MenuGroup,
-  Button,
-  useBreakpointValue,
   Spinner,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useLogout } from "@graphql/auth/custom-hook";
 import React from "react";
 import { FiLogOut, FiSettings } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
+
+import { cartItemsVar } from "@/cache";
 
 const UserMenu = ({ name }) => {
   const [logout, { loading }, apolloClient] = useLogout();
@@ -46,6 +47,7 @@ const UserMenu = ({ name }) => {
               await logout();
               await apolloClient.resetStore();
               await apolloClient.cache.reset();
+              cartItemsVar([]);
             }}
           >
             {loading ? "Cerrando sesión..." : "Cerrar sesión"}
