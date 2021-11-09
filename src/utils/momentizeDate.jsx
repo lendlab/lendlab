@@ -3,15 +3,17 @@ import "moment/locale/es";
 moment.locale("es");
 
 export const momentizeDate = (unformattedDate) => {
-  const sqlDate = parseInt(unformattedDate);
+  const sqlDate = unformattedDate;
 
-  const completeFormattedDate = moment(sqlDate).format("D [de] MMMM [del] YYYY [a las] H:mm");
+  const completeFormattedDate = moment(sqlDate, "YYYY-MM-DD HH:mm:ss").format(
+    "D [de] MMMM [del] YYYY [a las] H:mm"
+  );
 
-  const slashedFormattedDate = moment(parseInt(unformattedDate)).format("D[/]M[/]YY");
+  const slashedFormattedDate = moment(unformattedDate, "YYYY-MM-DD HH:mm:ss").format("D[/]M[/]YY");
 
-  const toNow = moment(new Date()).to(sqlDate);
+  const toNow = moment(new Date(), "YYYY-MM-DD HH:mm:ss").to(sqlDate);
 
-  const fromNow = moment(sqlDate).fromNow();
+  const fromNow = moment(sqlDate, "YYYY-MM-DD HH:mm:ss").fromNow();
 
   return {
     sqlDate,
