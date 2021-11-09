@@ -13,7 +13,7 @@ const MaterialItem = ({ material }) => {
       bg="white"
       borderColor="lendlab.light.black.300"
       borderWidth="1px "
-      maxW="72"
+      maxW={{ md: "72", base: "full" }}
       minH="80"
       rounded="md"
       w="full"
