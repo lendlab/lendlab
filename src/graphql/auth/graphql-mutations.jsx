@@ -4,17 +4,24 @@ export const LOGIN = gql`
   mutation LoginMutation($options: CedulaPasswordInput!) {
     login(options: $options) {
       user {
-        cedula
-        nombre
-        direccion
+        course {
+          course_token
+          course_name
+          institution {
+            id_institution
+            institution_name
+            city
+            type
+            phone
+          }
+        }
+        fecha_nacimiento
+        tipo_usuario
         foto_usuario
         telefono
-        tipo_usuario
-        fecha_nacimiento
-      }
-      errors {
-        field
-        message
+        direccion
+        nombre
+        cedula
       }
     }
   }
