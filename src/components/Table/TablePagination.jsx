@@ -8,8 +8,12 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Text,
+  ButtonGroup,
+  Icon,
+  IconButton,
 } from "@chakra-ui/react";
 import React from "react";
+import { FiArrowLeft, FiArrowRight, FiFastForward } from "react-icons/fi";
 
 export const TablePagination = React.memo(
   ({
@@ -32,14 +36,26 @@ export const TablePagination = React.memo(
     );
 
     return (
-      <Stack alignItems="center" direction="row" justifyContent="space-between" paddingY={4}>
+      <Stack
+        alignItems="center"
+        direction={{ md: "row", base: "column" }}
+        justifyContent="space-between"
+        paddingY={4}
+      >
         <Stack direction="row">
-          <Button disabled={!canPreviousPage} variant="secondary" onClick={() => gotoPage(0)}>
-            {"<<"}
-          </Button>
-          <Button disabled={!canPreviousPage} variant="secondary" onClick={() => previousPage()}>
-            Volver
-          </Button>
+          <IconButton
+            disabled={!canPreviousPage}
+            icon={<Icon as={FiFastForward} />}
+            transform="rotate(-180deg)"
+            variant="secondary"
+            onClick={() => gotoPage(0)}
+          />
+          <IconButton
+            disabled={!canPreviousPage}
+            icon={<Icon as={FiArrowLeft} />}
+            variant="secondary"
+            onClick={() => previousPage()}
+          />
         </Stack>
         <Stack alignItems="center" direction="row">
           <Text>Página</Text>
@@ -64,18 +80,20 @@ export const TablePagination = React.memo(
           </NumberInput>
         </Stack>
 
-        <Stack direction="row">
-          <Button disabled={!canNextPage} variant="primary" onClick={() => nextPage()}>
-            Siguiente
-          </Button>
-          <Button
+        <ButtonGroup>
+          <IconButton
             disabled={!canNextPage}
+            icon={<Icon as={FiArrowRight} />}
+            variant="primary"
+            onClick={() => nextPage()}
+          />
+          <IconButton
+            disabled={!canNextPage}
+            icon={<Icon as={FiFastForward} />}
             variant="secondary"
             onClick={() => gotoPage(pageCount - 1)}
-          >
-            {">>"}
-          </Button>
-        </Stack>
+          />
+        </ButtonGroup>
       </Stack>
     );
   }
