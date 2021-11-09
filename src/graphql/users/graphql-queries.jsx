@@ -10,11 +10,11 @@ export const GET_ALL_USERS = gql`
       telefono
       tipo_usuario
       fecha_nacimiento
-      institution {
-        id_institution
-      }
       course {
         course_token
+        institution {
+          id_institution
+        }
       }
     }
   }
@@ -29,13 +29,38 @@ export const GET_USER = gql`
       foto_usuario
       course {
         course_token
-      }
-      institution {
-        id_institution
+        institution {
+          id_institution
+        }
       }
       fecha_nacimiento
       tipo_usuario
       telefono
+    }
+  }
+`;
+
+export const GET_STUDENTS_BY_INSTITUTION = gql`
+  query GetStudentsByInstitution($idInstitution: Int!) {
+    getStudentsByInstitution(id_institution: $idInstitution) {
+      cedula
+      nombre
+      direccion
+      foto_usuario
+      telefono
+      tipo_usuario
+      fecha_nacimiento
+      course {
+        course_token
+        course_name
+        institution {
+          id_institution
+          institution_name
+          city
+          type
+          phone
+        }
+      }
     }
   }
 `;
