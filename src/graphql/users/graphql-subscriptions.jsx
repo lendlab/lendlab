@@ -10,9 +10,6 @@ export const SUBSCRIBE_TO_USERS = gql`
       telefono
       tipo_usuario
       fecha_nacimiento
-      institution {
-        id_institution
-      }
       course {
         course_token
       }
