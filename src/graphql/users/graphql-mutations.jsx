@@ -15,11 +15,9 @@ export const CREATE_USER = gql`
         telefono
         tipo_usuario
         fecha_nacimiento
-        institution {
-          id_institution
-        }
         course {
           course_token
+          course_name
         }
       }
     }
@@ -42,11 +40,8 @@ export const UPDATE_USER = gql`
       telefono
       tipo_usuario
       fecha_nacimiento
-      institution {
-        id_institution
-      }
       course {
-        course_id
+        course_token
       }
     }
   }
