@@ -73,6 +73,9 @@ const CartModal = () => {
                             },
                             fecha_hora,
                             finalizada: false,
+                            institution: {
+                              id_institution: parseInt(dataMe.me.course.institution.id_institution),
+                            },
                           },
                         },
                         update: (cache) => {
