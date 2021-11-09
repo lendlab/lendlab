@@ -5,35 +5,30 @@ import { useUser } from "@graphql/users/custom-hooks";
 import { Form, Formik } from "formik";
 import React from "react";
 import { useParams } from "react-router";
-import UserFields from "./Fields";
 
+import UserFields from "./Fields";
 
 const User = () => {
   const { cedula } = useParams();
 
-  const [updateUser, {loading: loadingUser, data}, {loading: loadingUpdate}] = useUser(cedula);
+  const [updateUser, { loading: loadingUser, data }, { loading: loadingUpdate }] = useUser(cedula);
 
   if (loadingUser || !data) return "loading..";
 
-  console.log( data?.getUser[0])
-
   return (
-    <Dashboard hasNoActions title={"Usuario #" + data?.getUser[0].cedula}>
+    <Dashboard hasNoActions title={"Usuario #" + data?.getUser.cedula}>
       <Formik
         initialValues={{
-          cedula: data?.getUser[0].cedula,
-          nombre: data?.getUser[0].nombre,
+          cedula: data?.getUser.cedula,
+          nombre: data?.getUser.nombre,
           password: "",
-          direccion: data?.getUser[0].direccion,
-          foto_usuario: data?.getUser[0].foto_usuario,
-          telefono: data?.getUser[0].telefono,
-          tipo_usuario: data?.getUser[0].tipo_usuario,
-          fecha_nacimiento: data?.getUser[0].fecha_nacimiento,
-          institution: {
-            id_institution: data?.getUser[0]
-          },
+          direccion: data?.getUser.direccion,
+          foto_usuario: data?.getUser.foto_usuario,
+          telefono: data?.getUser.telefono,
+          tipo_usuario: data?.getUser.tipo_usuario,
+          fecha_nacimiento: data?.getUser.fecha_nacimiento,
           course: {
-            course_token: data?.getUser[0].course.course_token,
+            course_token: data?.getUser.course.course_token,
           },
         }}
         validateOnChange={false}
