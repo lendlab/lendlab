@@ -4,7 +4,7 @@ export const CREATE_USER = gql`
   mutation Mutation($data: UserInput!) {
     register(data: $data) {
       errors {
-        field
+        path
         message
       }
       user {
@@ -18,6 +18,13 @@ export const CREATE_USER = gql`
         course {
           course_token
           course_name
+          institution {
+            id_institution
+            institution_name
+            city
+            type
+            phone
+          }
         }
       }
     }
