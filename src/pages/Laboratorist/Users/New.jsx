@@ -23,9 +23,6 @@ const NewUser = () => {
           telefono: "",
           tipo_usuario: "Alumno",
           fecha_nacimiento: "",
-          institution: {
-            id_institution: "",
-          },
           course: {
             course_token: "",
           },
@@ -35,7 +32,7 @@ const NewUser = () => {
           return register({
             variables: { data: values },
             update: (cache) => {
-              cache.evict({ fieldName: "getUsers" });
+              cache.evict({ fieldName: "getStudentsByInstitution" });
               resetForm();
             },
           });
