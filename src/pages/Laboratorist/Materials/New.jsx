@@ -4,10 +4,13 @@ import Dashboard from "@components/Dashboard";
 import { useCreateMaterial } from "@graphql/materials/custom-hooks";
 import { Form, Formik } from "formik";
 import React from "react";
+import { useMe } from "@graphql/auth/custom-hook";
 
 import MaterialsFields from "./Fields";
 
 const NewMaterial = () => {
+  const { data: dataMe } = useMe();
+
   const [createMaterial, { loading, data, error }] = useCreateMaterial();
 
   return (
@@ -21,7 +24,7 @@ const NewMaterial = () => {
           cantidad: "",
           estado: "",
           institution: {
-            id_institution: "",
+            id_institution: dataMe?.me.course.institution.id_institution,
           },
         }}
         validateOnChange={false}
@@ -29,7 +32,7 @@ const NewMaterial = () => {
           return createMaterial({
             variables: { data: { ...values } },
             update: (cache) => {
-              cache.evict({ fieldName: "getMaterials" });
+              cache.evict({ fieldName: "getMaterialsByInstitution" });
               resetForm();
             },
           });
