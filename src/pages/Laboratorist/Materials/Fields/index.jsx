@@ -1,7 +1,7 @@
 import { Field } from "@components/Field";
 import React from "react";
 
-const MaterialFields = ({ noInstitution }) => {
+const MaterialFields = () => {
   return (
     <>
       <Field label="Nombre del Material" name="nombre" placeholder="ej. Ceibalita" type="text" />
@@ -10,14 +10,6 @@ const MaterialFields = ({ noInstitution }) => {
       <Field label="Descripcion" name="descripcion" placeholder="descripcion" type="text" />
       <Field label="Cantidad" name="cantidad" placeholder="ej.10" type="number" />
       <Field label="Estado del material" name="estado" placeholder="ej. Roto" type="text" />
-      {!noInstitution && (
-        <Field
-          label="Id Institucion"
-          name="institution.id_institution"
-          placeholder="ej. 1"
-          type="number"
-        />
-      )}
     </>
   );
 };
