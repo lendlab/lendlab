@@ -7,6 +7,7 @@ import React from "react";
 import { AiOutlineLock } from "react-icons/ai";
 import { BsCreditCard2Front } from "react-icons/bs";
 import { ME } from "@graphql/auth/graphql-queries";
+import { toErrorMap } from "@utils/toErrorMap";
 const Register = () => {
   const [register, { loading: loadingRegister }] = useRegister();
 
@@ -29,9 +30,6 @@ const Register = () => {
             course: {
               course_token: "",
             },
-            institution: {
-              id_institution: 1,
-            },
           }}
           validateOnChange={false}
           onSubmit={async (values, { setErrors }) => {
@@ -50,8 +48,8 @@ const Register = () => {
               },
             });
 
-            if (response.data?.login.errors) {
-              setErrors(toErrorMap(response.data.login.errors));
+            if (response.data?.register.errors) {
+              setErrors(toErrorMap(response.data.register.errors));
             }
           }}
         >
