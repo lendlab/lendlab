@@ -1,4 +1,4 @@
-import { FiAlertTriangle, FiArchive, FiClock, FiGrid, FiTool, FiUsers } from "react-icons/fi";
+import { FiAlertTriangle, FiArchive, FiClock, FiGrid, FiTool, FiUsers, FiPenTool } from "react-icons/fi";
 
 export const DASHBOARD_ROUTES = [
   {
@@ -43,6 +43,11 @@ export const DIRECTOR_ROUTES = [
     title: "Laboratoristas",
     icon: FiArchive,
     path: "/director/laboratoristas",
+  },
+  {
+    title: "Cursos",
+    icon: FiPenTool,
+    path: "/director/cursos",
   },
 ];
 
