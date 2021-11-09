@@ -5,7 +5,7 @@ import LendsTable from "./Table";
 
 const Lends = () => {
   return (
-    <Dashboard link="/dashboard/prestamos/nuevo" title="Prestamos">
+    <Dashboard link="/dashboard/prestamos/nuevo" title="Préstamos">
       <LendsTable />
     </Dashboard>
   );
