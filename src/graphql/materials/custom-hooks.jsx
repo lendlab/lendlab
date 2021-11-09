@@ -5,6 +5,7 @@ import { CREATE_MATERIAL, DELETE_MATERIAL, UPDATE_MATERIAL } from "./graphql-mut
 import {
   GET_ALL_MATERIALS,
   GET_MATERIAL,
+  GET_MATERIALS_BY_INSTITUTION,
   GET_MATERIAL_SEARCH,
   GET_POPULAR_MATERIALS,
 } from "./graphql-queries";
@@ -83,6 +84,16 @@ export const useMaterialSearch = (material) => {
   const result = useQuery(GET_MATERIAL_SEARCH, {
     variables: {
       nombre: material,
+    },
+  });
+
+  return result;
+};
+
+export const useMaterialsByInstitution = (id_institution) => {
+  const result = useQuery(GET_MATERIALS_BY_INSTITUTION, {
+    variables: {
+      idInstitution: id_institution,
     },
   });
 
