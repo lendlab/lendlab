@@ -6,6 +6,7 @@ import Laboratorists from "@pages/Director/Laboratorists";
 import { DIRECTOR_ROUTES } from "@utils/constants/routes";
 import React from "react";
 import { Route, Switch } from "react-router";
+import Courses from "../pages/Director/Courses";
 
 const DirectorRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const DirectorRoutes = () => {
       <TabsNav routes={DIRECTOR_ROUTES} />
       <Switch>
         <Route exact component={Laboratorists} path="/director/laboratoristas" />
+           <Route exact component={Courses} path="/director/cursos" />
         <Route exact component={Config} path="/director/configuracion" />
       </Switch>
       <Footer />
