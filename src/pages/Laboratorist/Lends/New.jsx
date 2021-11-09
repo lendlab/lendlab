@@ -13,8 +13,10 @@ import { useCreateReservation } from "../../../graphql/reservations/custom-hooks
 import LendFields from "./Fields";
 
 const NewLend = () => {
-  const { loading, data, error } = useUsersAndMaterials();
   const { loading: loadingMe, data: dataMe } = useMe();
+  const { loading, data, error } = useUsersAndMaterials(
+    dataMe?.me.course.institution.id_institution
+  );
   const [
     createReservation,
     { loading: loadingCreateReservation },
@@ -89,9 +91,9 @@ const NewLend = () => {
         {({ setFieldValue, dirty }) => (
           <Stack as={Form} spacing={6}>
             <LendFields
-              materials={data?.getMaterials}
+              materials={data?.getMaterialsByInstitution}
               setFieldValue={setFieldValue}
-              users={data?.getUsers}
+              users={data?.getStudentsByInstitution}
             />
 
             <Button
