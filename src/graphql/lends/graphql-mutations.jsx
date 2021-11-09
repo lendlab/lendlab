@@ -14,24 +14,40 @@ export const CREATE_LEND = gql`
       laboratorist {
         cedula
       }
+      institution {
+        id_institution
+      }
     }
   }
 `;
 
 export const UPDATE_LEND = gql`
-  mutation Mutation($data: LendUpdateInput!, $idLend: Int!) {
-    updateLend(data: $data, id_lend: $idLend) {
+  mutation UpdateLend($data: LendUpdateInput!, $fechaHoraPresta: String!, $idLend: Int!) {
+    updateLend(data: $data, fecha_hora_presta: $fechaHoraPresta, id_lend: $idLend) {
       id_lend
+      fecha_hora_presta
+      fecha_vencimiento
       fecha_devolucion
       reservation {
         id_reserva
         fecha_hora
+        user {
+          cedula
+          nombre
+        }
+        material {
+          id_material
+          nombre
+        }
       }
       laboratorist {
         cedula
+        nombre
       }
-      fecha_vencimiento
-      fecha_hora_presta
+      institution {
+        id_institution
+        institution_name
+      }
     }
   }
 `;
