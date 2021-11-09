@@ -2,7 +2,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/toast";
 
 import { CREATE_USER, DELETE_USER, UPDATE_USER } from "./graphql-mutations";
-import { GET_ALL_USERS, GET_STUDENTS_BY_INSTITUTION, GET_USER } from "./graphql-queries";
+import {
+  GET_ALL_USERS,
+  GET_LABORATORISTS_BY_INSTITUTION,
+  GET_STUDENTS_BY_INSTITUTION,
+  GET_USER,
+} from "./graphql-queries";
 
 export const useUsers = () => {
   const result = useQuery(GET_ALL_USERS);
@@ -17,7 +22,7 @@ export const useRegister = () => {
     onCompleted: ({ register }) =>
       toast({
         title: "Usuario registrado con exito",
-        description: "Se ha registrado el usuario " + register.user.nombre,
+        description: "Se ha registrado el usuario ",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -45,7 +50,9 @@ export const useDeleteUser = () => {
 };
 
 export const useUser = (cedula) => {
-  const result = useQuery(GET_USER, { variables: { cedula: parseInt(cedula) } });
+  const result = useQuery(GET_USER, {
+    variables: { cedula: parseInt(cedula) },
+  });
 
   const [updateUser, resultUpdate] = useMutation(UPDATE_USER, {
     onCompleted: ({ updateUser }) => {
@@ -64,6 +71,16 @@ export const useUser = (cedula) => {
 
 export const useStudentsByInstitution = (id_institution) => {
   const result = useQuery(GET_STUDENTS_BY_INSTITUTION, {
+    variables: {
+      idInstitution: id_institution,
+    },
+  });
+
+  return result;
+};
+
+export const useLaboratoristsByInstitution = (id_institution) => {
+  const result = useQuery(GET_LABORATORISTS_BY_INSTITUTION, {
     variables: {
       idInstitution: id_institution,
     },
