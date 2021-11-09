@@ -12,6 +12,9 @@ export const RESERVATIONS_SUSCRIPTION = gql`
       material {
         id_material
       }
+      institution {
+        id_institution
+      }
     }
   }
 `;
