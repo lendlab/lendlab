@@ -17,8 +17,6 @@ const Lend = () => {
 
   if (loading || !data) return "loading";
 
-  console.log(data);
-
   return (
     <Dashboard hasNoActions title="Prestamo">
       <Formik
