@@ -313,6 +313,11 @@ const theme = extendTheme({
         },
       }),
     },
+    Link: {
+      baseStyle: {
+        color: "lendlab.blue.300",
+      },
+    },
   },
 });
 
