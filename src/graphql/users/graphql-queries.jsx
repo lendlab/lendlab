@@ -64,3 +64,28 @@ export const GET_STUDENTS_BY_INSTITUTION = gql`
     }
   }
 `;
+
+export const GET_LABORATORISTS_BY_INSTITUTION = gql`
+  query GetLaboratoristsByInstitution($idInstitution: Int!) {
+    getLaboratoristsByInstitution(id_institution: $idInstitution) {
+      cedula
+      nombre
+      direccion
+      foto_usuario
+      telefono
+      tipo_usuario
+      fecha_nacimiento
+      course {
+        course_token
+        course_name
+        institution {
+          id_institution
+          institution_name
+          city
+          type
+          phone
+        }
+      }
+    }
+  }
+`;
