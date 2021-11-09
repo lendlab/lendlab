@@ -1,6 +1,7 @@
 import { Table } from "@components/Table";
 import TableSkeleton from "@components/Table/TableSkeleton";
-import { useReservationsAndMaxId } from "@graphql/reservations/custom-hooks";
+import { useMe } from "@graphql/auth/custom-hook";
+import { useReservationsByInstitution } from "@graphql/reservations/custom-hooks";
 import { RESERVATIONS_SUSCRIPTION } from "@graphql/reservations/graphql-subscriptions";
 import { groupAndMerge } from "@utils/groupAndMerge";
 import React from "react";
@@ -8,13 +9,22 @@ import React from "react";
 import { COLUMNS } from "./columns";
 
 const ReservationsTable = () => {
-  const [{ subscribeToMore, loading, error, data }] = useReservationsAndMaxId();
+  const { data: dataMe, loading: loadingMe } = useMe();
+
+  const [{ subscribeToMore, loading, error, data }] = useReservationsByInstitution(
+    dataMe?.me.course.institution.id_institution
+  );
+
   let mergedReservations;
 
   if (loading || !data) {
     return <TableSkeleton theads={["ID", "Fecha y Hora", "Finalizada", "Usuario", "Materiales"]} />;
-  } else if (data.getReservations.length > 0) {
-    mergedReservations = groupAndMerge(data?.getReservations, "id_reserva", "material");
+  } else if (data.getReservationsByInstitution.length > 0) {
+    mergedReservations = groupAndMerge(
+      data?.getReservationsByInstitution,
+      "id_reserva",
+      "material"
+    );
   }
 
   if (error) {
@@ -24,7 +34,7 @@ const ReservationsTable = () => {
   return (
     <Table
       columns={COLUMNS}
-      data={data.getReservations.length > 0 ? mergedReservations : []}
+      data={data.getReservationsByInstitution.length > 0 ? mergedReservations : []}
       id="Reservas"
       subscribeToNew={() => {
         subscribeToMore({
@@ -36,7 +46,7 @@ const ReservationsTable = () => {
             const newSuscription = subscriptionData.data.newReservationSubscription;
 
             return Object.assign({}, prev, {
-              getReservations: [newSuscription, ...prev.getReservations],
+              getReservationsByInstitution: [newSuscription, ...prev.getReservationsByInstitution],
             });
           },
         });
