@@ -2,17 +2,17 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/react";
 
 import { CREATE_LEND, UPDATE_LEND } from "./graphql-mutations";
-import { GET_ALL_LENDS } from "./graphql-queries";
+import { GET_ALL_LENDS, GET_LENDS_BY_INSTITUTION, GET_USER_LENDS } from "./graphql-queries";
 
 export const useLends = () => {
-  const result = useQuery(GET_ALL_LENDS, {
-    pollInterval: 10000,
-  });
+  const result = useQuery(GET_ALL_LENDS);
 
   return result;
 };
 
 export const useCreateLend = () => {
+  const toast = useToast();
+
   const [createLend, result] = useMutation(CREATE_LEND, {
     onCompleted: ({ createLend }) => {
       toast({
@@ -35,7 +35,7 @@ export const useUpdateLend = () => {
     onCompleted: ({ updateLend }) => {
       toast({
         title: "Prestamo devuelto con éxito",
-        description: "Se ha devuelto correctamente el prestamo " + updateLend.id_lend,
+        description: "Se ha devuelto correctamente el prestamo ",
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -44,4 +44,24 @@ export const useUpdateLend = () => {
   });
 
   return [updateLend, result];
+};
+
+export const useLendsByInstitution = (id_institution) => {
+  const result = useQuery(GET_LENDS_BY_INSTITUTION, {
+    variables: {
+      idInstitution: id_institution,
+    },
+  });
+
+  return result;
+};
+
+export const useUserLends = (cedula) => {
+  const result = useQuery(GET_USER_LENDS, {
+    variables: {
+      cedula,
+    },
+  });
+
+  return result;
 };
