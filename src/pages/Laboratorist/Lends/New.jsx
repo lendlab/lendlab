@@ -5,6 +5,7 @@ import { useUsersAndMaterials } from "@graphql/shared/custom-hooks";
 import { Form, Formik } from "formik";
 import moment from "moment";
 import React from "react";
+import * as yup from "yup";
 
 import { useMe } from "../../../graphql/auth/custom-hook";
 import { useCreateLend } from "../../../graphql/lends/custom-hooks";
@@ -26,11 +27,18 @@ const NewLend = () => {
 
   if (loading || loadingId || loadingMe) return "loading....";
 
+  const validationSchema = yup.object().shape({
+    cedula: yup.string().required("Campo requerido"),
+    materials: yup.array().min(1, "aaa").required(),
+    fecha_vencimiento: yup.date().required("Campo requerido"),
+  });
+
   return (
     <Dashboard hasNoActions title="Nuevo Prestamo">
       <Formik
         initialValues={{ user: "", materials: [], fecha_vencimiento: "" }}
         validateOnBlur={false}
+        validationSchema={validationSchema}
         onSubmit={async (values, { setErrors }) => {
           values.materials.map((material, i, { length }) => {
             const fecha_hora = moment().add(i, "seconds").format("YYYY-MM-DD HH:mm:ss");
@@ -60,9 +68,10 @@ const NewLend = () => {
                     variables: {
                       data: {
                         fecha_hora_presta: fecha_hora,
-                        fecha_vencimiento: moment(values.fecha_vencimiento).format(
+                        fecha_vencimiento: moment(
+                          values.fecha_vencimiento,
                           "YYYY-MM-DD HH:mm:ss"
-                        ),
+                        ).format("YYYY-MM-DD HH:mm:ss"),
                         reservation: {
                           id_reserva: parseInt(data.createReservation.reservation.id_reserva),
                           fecha_hora: fecha_hora,
