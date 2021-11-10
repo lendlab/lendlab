@@ -59,7 +59,7 @@ const CartModal = () => {
                   variant="primary"
                   onClick={async () => {
                     data.cartItems.map((material, i) => {
-                      const fecha_hora = moment().add(i, "seconds");
+                      const fecha_hora = moment().add(i, "seconds").format("YYYY-MM-DD HH:mm:ss");
 
                       return createReservation({
                         variables: {
@@ -71,7 +71,7 @@ const CartModal = () => {
                             material: {
                               id_material: parseInt(material.id_material),
                             },
-                            fecha_hora,
+                            fecha_hora: fecha_hora,
                             finalizada: false,
                             institution: {
                               id_institution: parseInt(dataMe.me.course.institution.id_institution),
