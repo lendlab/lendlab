@@ -5,6 +5,5 @@ export const toErrorMap = (errors) => {
     errorMap[path] = message;
   });
 
-  console.log(errorMap)
   return errorMap;
 };
