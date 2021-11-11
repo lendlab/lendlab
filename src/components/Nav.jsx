@@ -22,8 +22,6 @@ const Nav = ({ children, studentNav }) => {
   } else {
     options = (
       <>
-        <Text display={{ md: "inline-block", base: "none" }}>Características</Text>
-        <Text display={{ md: "inline-block", base: "none" }}>Sobre nosotros</Text>
         <Link to="/login">
           <Button variant="primary"> Iniciar sesión </Button>
         </Link>
