@@ -16,18 +16,8 @@ export const useUsers = () => {
 };
 
 export const useRegister = () => {
-  const toast = useToast();
 
-  const [register, result] = useMutation(CREATE_USER, {
-    onCompleted: ({ register }) =>
-      toast({
-        title: "Usuario registrado con exito",
-        description: "Se ha registrado el usuario ",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      }),
-  });
+  const [register, result] = useMutation(CREATE_USER);
 
   return [register, result];
 };
