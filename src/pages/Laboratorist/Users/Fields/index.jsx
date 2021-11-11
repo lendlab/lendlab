@@ -43,7 +43,7 @@ const UserFields = ({ isUpdate }) => {
         type="number"
       />
       <Field control="input" label="Fecha de nacimiento" name="fecha_nacimiento" type="date" />
-      <Field control="input" label="Codigo del curso" name="course.course_token" type="text" />
+      <Field control="input" label="Codigo del curso" name="course_token" type="text" />
     </>
   );
 };

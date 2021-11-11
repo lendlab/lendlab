@@ -61,11 +61,9 @@ const Register = () => {
       .required("Campo requerido")
       .matches(/^(?<=\s|^)\d+(?=\s|$)/, "Solo números!")
       .min(8, "Minimo de 8 caracteres")
-      .max(15, "Superaste el máximo de 15 caracteres"),
+      .max(9, "Superaste el máximo de 9 caracteres"),
     fecha_nacimiento: yup.date().required("Campo requerido"),
-    course: yup.object().shape({
       course_token: yup.string().required("Campo requerido"),
-    }),
   });
 
   return (
@@ -84,9 +82,7 @@ const Register = () => {
             telefono: "",
             foto_usuario: "",
             fecha_nacimiento: "",
-            course: {
-              course_token: "",
-            },
+            course_token: "",
           }}
           validateOnBlur={false}
           validateOnChange={true}
@@ -94,7 +90,18 @@ const Register = () => {
           onSubmit={async (values, { setErrors }) => {
             const response = await register({
               variables: {
-                data: values,
+                data: {
+                cedula: values.cedula,
+                nombre: values.nombre,
+                password: values.password,
+                tipo_usuario: "Alumno",
+                direccion: values.direccion,
+                telefono: values.telefono,
+                foto_usuario: values.foto_usuario,
+                fecha_nacimiento: values.fecha_nacimiento,
+                course: {
+                  course_token: values.course_token
+                }},
               },
               update: (cache, { data }) => {
                 cache.writeQuery({
@@ -149,7 +156,7 @@ const Register = () => {
                 <Field label="Fecha de Nacimiento" name="fecha_nacimiento" type="date" />
                 <Field
                   label="Código de curso"
-                  name="course.course_token"
+                  name="course_token"
                   placeholder="ej. qAyu20ñp"
                 />
               </Stack>
@@ -159,7 +166,7 @@ const Register = () => {
                 loadingText="Creando cuenta..."
                 type="submit"
                 variant="primary"
-                çdisabled={!dirty}
+                disabled={!dirty}
               >
                 Crear cuenta
               </Button>

@@ -2,15 +2,19 @@ import { Button } from "@chakra-ui/button";
 import { Stack } from "@chakra-ui/layout";
 import Dashboard from "@components/Dashboard";
 import { Field } from "@components/Field";
+import {useToast} from "@chakra-ui/react"
 import { useRegister } from "@graphql/users/custom-hooks";
 import { Form, Formik } from "formik";
 import React from "react";
 import * as yup from "yup";
+import { toErrorMap } from "@utils/toErrorMap";
 
 import UserFields from "./Fields";
 
 const NewUser = () => {
   const [register, { loading, error }] = useRegister();
+  const toast = useToast();
+
 
   const validationSchema = yup.object().shape({
     cedula: yup
@@ -58,11 +62,9 @@ const NewUser = () => {
       .required("Campo requerido")
       .matches(/^(?<=\s|^)\d+(?=\s|$)/, "Solo números!")
       .min(8, "Minimo de 8 caracteres")
-      .max(15, "Superaste el máximo de 15 caracteres"),
+      .max(9, "Superaste el máximo de 9 caracteres"),
     fecha_nacimiento: yup.date().required("Campo requerido"),
-    course: yup.object().shape({
       course_token: yup.string().required("Campo requerido"),
-    }),
   });
 
   return (
@@ -77,20 +79,40 @@ const NewUser = () => {
           telefono: "",
           tipo_usuario: "Alumno",
           fecha_nacimiento: "",
-          course: {
-            course_token: "",
-          },
+          course_token: "",
         }}
         validateOnBlur={false}
         validationSchema={validationSchema}
-        onSubmit={(values, { resetForm }) => {
-          return register({
-            variables: { data: values },
+        onSubmit={async(values, { resetForm, setErrors }) => {
+          const response = await register({
+            variables: { data: {cedula: values.cedula,
+              nombre: values.nombre,
+              password: values.password,
+              tipo_usuario: "Alumno",
+              direccion: values.direccion,
+              telefono: values.telefono,
+              foto_usuario: values.foto_usuario,
+              fecha_nacimiento: values.fecha_nacimiento,
+              course: {
+                course_token: values.course_token
+              }} },
             update: (cache) => {
               cache.evict({ fieldName: "getStudentsByInstitution" });
-              resetForm();
             },
           });
+          if (response.data?.register.errors) {
+            setErrors(toErrorMap(response.data.register.errors));
+          }
+          else {
+            resetForm();
+            toast({
+              title: "Alumno creado con éxito",
+              description: "Se ha creado el alumno con éxito",
+              status: "success",
+              duration: 2000,
+              isClosable: true,
+            });
+          }
         }}
       >
         {({ dirty }) => (
