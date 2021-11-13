@@ -28,7 +28,6 @@ const NewLend = () => {
   if (loading || loadingId || loadingMe) return "loading....";
 
   const validationSchema = yup.object().shape({
-    cedula: yup.string().required("Campo requerido"),
     fecha_vencimiento: yup.date().required("Campo requerido"),
   });
 
