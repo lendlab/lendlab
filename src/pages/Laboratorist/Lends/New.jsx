@@ -29,7 +29,6 @@ const NewLend = () => {
 
   const validationSchema = yup.object().shape({
     cedula: yup.string().required("Campo requerido"),
-    materials: yup.array().min(1, "aaa").required(),
     fecha_vencimiento: yup.date().required("Campo requerido"),
   });
 
