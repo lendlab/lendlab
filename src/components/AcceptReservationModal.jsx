@@ -106,9 +106,6 @@ const AcceptReservationModal = ({ reservation }) => {
                   min={moment(new Date(), moment.ISO_8601).format("YYYY-MM-DDTHH:mm:ss")}
                   name="fecha_vencimiento"
                   type="datetime-local"
-                  value={moment(new Date(), moment.ISO_8601)
-                    .add("1", "hours")
-                    .format("YYYY-MM-DDTHH:mm:ss")}
                 />
               </Form>
             </Formik>
