@@ -26,7 +26,8 @@ import { Field } from "./Field";
 
 const AcceptReservationModal = ({ reservation }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [, , updateReservation, { loadingUpdate }] = useRejectOrAcceptReservation();
+  const [, , updateReservation, { loadingUpdate }] =
+    useRejectOrAcceptReservation();
 
   const { data: dataMe } = useMe();
 
@@ -46,7 +47,13 @@ const AcceptReservationModal = ({ reservation }) => {
       >
         Aceptar
       </Button>
-      <Modal isCentered isOpen={isOpen} scrollBehavior={"inside"} size="xl" onClose={onClose}>
+      <Modal
+        isCentered
+        isOpen={isOpen}
+        scrollBehavior={"inside"}
+        size="xl"
+        onClose={onClose}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Aceptar reserva</ModalHeader>
@@ -87,7 +94,9 @@ const AcceptReservationModal = ({ reservation }) => {
                             cedula: dataMe?.me.cedula,
                           },
                           institution: {
-                            id_institution: parseInt(reservation.institution.id_institution),
+                            id_institution: parseInt(
+                              reservation.institution.id_institution
+                            ),
                           },
                         },
                       },
@@ -103,7 +112,6 @@ const AcceptReservationModal = ({ reservation }) => {
               <Form id="create-reservation-form">
                 <Field
                   label="Fecha de vencimiento"
-                  min={moment(new Date(), moment.ISO_8601).format("YYYY-MM-DDTHH:mm:ss")}
                   name="fecha_vencimiento"
                   type="datetime-local"
                 />
