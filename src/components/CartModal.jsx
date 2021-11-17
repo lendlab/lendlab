@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useMe } from "@graphql/auth/custom-hook";
@@ -22,8 +23,11 @@ import { cartItemsVar } from "@/cache";
 const CartModal = () => {
   const { data, loading } = useCart();
   const { data: dataMe } = useMe();
-  const [createReservation, { loading: loadingCreate }, { loading: loadingId, data: dataId }] =
-    useCreateReservation();
+  const [
+    createReservation,
+    { loading: loadingCreate },
+    { loading: loadingId, data: dataId },
+  ] = useCreateReservation();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   if (loading || loadingId || !data || !dataId) return null;
@@ -43,9 +47,17 @@ const CartModal = () => {
               <ModalBody>
                 <Stack>
                   {data.cartItems.map((item, i) => (
-                    <Code key={i} size="10">
-                      {JSON.stringify(item)}
-                    </Code>
+                    <Stack
+                      rounded="lg"
+                      borderWidth={1}
+                      borderColor="lendlab.light.black.300"
+                      bg="lendlab.light.black.200"
+                      padding={8}
+                    >
+                      <Text color="lendlab.light.black.1000" fontWeight="bold">
+                        {item.nombre}
+                      </Text>
+                    </Stack>
                   ))}
                 </Stack>
               </ModalBody>
@@ -59,7 +71,9 @@ const CartModal = () => {
                   variant="primary"
                   onClick={async () => {
                     data.cartItems.map((material, i) => {
-                      const fecha_hora = moment().add(i, "seconds").format("YYYY-MM-DD HH:mm:ss");
+                      const fecha_hora = moment()
+                        .add(i, "seconds")
+                        .format("YYYY-MM-DD HH:mm:ss");
 
                       return createReservation({
                         variables: {
@@ -74,13 +88,16 @@ const CartModal = () => {
                             fecha_hora: fecha_hora,
                             finalizada: false,
                             institution: {
-                              id_institution: parseInt(dataMe.me.course.institution.id_institution),
+                              id_institution: parseInt(
+                                dataMe.me.course.institution.id_institution
+                              ),
                             },
                           },
                         },
                         update: (cache) => {
                           cartItemsVar([]);
                           cache.evict({ fieldName: "getMaxId" });
+                          cache.evict({ fieldName: "getUserReservations" });
                           onClose();
                         },
                       });
