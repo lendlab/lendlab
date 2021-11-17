@@ -48,6 +48,7 @@ const CartModal = () => {
                 <Stack>
                   {data.cartItems.map((item, i) => (
                     <Stack
+                      key={i}
                       rounded="lg"
                       borderWidth={1}
                       borderColor="lendlab.light.black.300"
