@@ -25,6 +25,7 @@
     "history": "^4.9.0",
     "moment": "^2.29.1",
     "react": "^17.0.0",
+    "react-cookie-consent": "^6.4.1",
     "react-datepicker": "^4.3.0",
     "react-datetime-picker": "^3.4.0",
     "react-dom": "^17.0.0",
