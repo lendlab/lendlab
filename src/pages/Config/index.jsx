@@ -10,9 +10,11 @@ import ConfigFields from "./Fields";
 
 const Config = () => {
   const { loading, data: dataMe } = useMe();
-  const [updateUser, { loading: loadingUser, data }, { loading: loadingUpdate }] = useUser(
-    dataMe?.me.cedula
-  );
+  const [
+    updateUser,
+    { loading: loadingUser, data },
+    { loading: loadingUpdate },
+  ] = useUser(dataMe?.me.cedula);
 
   if (loading || !dataMe) return "loading...";
 
@@ -40,7 +42,6 @@ const Config = () => {
                 direccion: values.direccion,
                 tipo_usuario: values.tipo_usuario,
                 telefono: values.telefono,
-                tipo_usuario: values.tipo_usuario,
                 fecha_nacimiento: values.fecha_nacimiento,
                 course: {
                   course_token: values.course.course_token,
