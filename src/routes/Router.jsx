@@ -3,7 +3,6 @@ import { types_router } from "@utils/constants/types_routers";
 import { usersTypes } from "@utils/constants/usersTypes";
 import React from "react";
 import { BrowserRouter, Switch } from "react-router-dom";
-import CookieConsent from "react-cookie-consent";
 
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
@@ -28,29 +27,6 @@ export const Router = () => {
 
   return (
     <BrowserRouter>
-      <CookieConsent
-        buttonText="Aceptar"
-        cookieName="myAwesomeCookieName2"
-        style={{
-          background: "#fff",
-          borderTopWidth: 1,
-          borderColor: "#EAEAEA",
-          color: "#000",
-        }}
-        buttonStyle={{
-          color: "#fff",
-          fontWeight: "medium",
-          borderColor: "lendlab.blue.300",
-          backgroundColor: "#0070F3",
-          fontSize: "13px",
-          padding: 8,
-          borderRadius: 6,
-          width: 200,
-        }}
-        expires={150}
-      >
-        Este sitio utiliza cookies para mejorar la experiencia de usuario.
-      </CookieConsent>
       <>
         <Switch>
           <PrivateRoutes
