@@ -17,3 +17,15 @@ export const DELETE_INSTITUTION = gql`
     deleteInstitution(id_institution: $idInstitution)
   }
 `;
+
+export const UPDATE_INSTITUTION = gql`
+  mutation Mutation($idInstitution: Int!, $data: InstitutionUpdateInput!) {
+    updateInstitution(id_institution: $idInstitution, data: $data) {
+      id_institution
+      institution_name
+      city
+      type
+      phone
+    }
+  }
+`;
