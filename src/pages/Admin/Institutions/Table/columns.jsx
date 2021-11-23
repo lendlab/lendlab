@@ -1,11 +1,10 @@
 import { ButtonGroup, IconButton } from "@chakra-ui/button";
 import Icon from "@chakra-ui/icon";
 import { Badge } from "@chakra-ui/layout";
+import { useDeleteInstitution } from "@graphql/institutions/custom-hooks";
 import React from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { useHistory } from "react-router";
-
-import { useDeleteInstitution } from "../../../../graphql/institutions/custom-hooks";
 
 export const COLUMNS = [
   {
@@ -46,7 +45,7 @@ export const COLUMNS = [
       return (
         <ButtonGroup spacing="2" variant="ghost">
           <IconButton
-            aria-label="Borrar Material"
+            aria-label="Borrar Institucion"
             icon={<Icon as={FiTrash} color="lendlab.light.red.400" />}
             isLoading={loading}
             onClick={() => {
@@ -56,17 +55,22 @@ export const COLUMNS = [
                 },
                 update: (cache) => {
                   cache.evict({
-                    id_institution: "Institution:" + row.original.id_institution,
+                    id_institution:
+                      "Institution:" + row.original.id_institution,
                   });
                 },
               });
             }}
           />
           <IconButton
-            aria-label="Editar Material"
+            aria-label="Editar Institucion"
             color="lendlab.light.red.400"
             icon={<Icon as={FiEdit2} color="lendlab.yellow" />}
-            onClick={() => history.push("/dashboard/materiales/" + row.original.id_material)}
+            onClick={() =>
+              history.push(
+                "/admin/instituciones/" + row.original.id_institution
+              )
+            }
           />
         </ButtonGroup>
       );
