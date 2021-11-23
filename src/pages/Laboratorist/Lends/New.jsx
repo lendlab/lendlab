@@ -1,11 +1,13 @@
 import { Button } from "@chakra-ui/button";
 import { Stack } from "@chakra-ui/layout";
+import { Spinner } from "@chakra-ui/spinner";
 import Dashboard from "@components/Dashboard";
 import { useUsersAndMaterials } from "@graphql/shared/custom-hooks";
 import { Form, Formik } from "formik";
 import moment from "moment";
 import React from "react";
 import * as yup from "yup";
+import { EditLoading } from "../../../components/EditLoading";
 
 import { useMe } from "../../../graphql/auth/custom-hook";
 import { useCreateLend } from "../../../graphql/lends/custom-hooks";
@@ -25,10 +27,16 @@ const NewLend = () => {
   ] = useCreateReservation();
   const [createLend, { loading: loadingCreateLend }] = useCreateLend();
 
-  if (loading || loadingId || loadingMe) return "loading....";
+  if (loading || loadingId || loadingMe) return <EditLoading />;
 
   const validationSchema = yup.object().shape({
-    fecha_vencimiento: yup.date().required("Campo requerido"),
+    startDate: yup.date().default(() => new Date()),
+    fecha_vencimiento: yup
+      .date()
+      .min(
+        yup.ref("startDate"),
+        "La fecha de vencimiento no puede ser anterior a la actual"
+      ),
   });
 
   return (
@@ -39,7 +47,9 @@ const NewLend = () => {
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors }) => {
           values.materials.map((material, i, { length }) => {
-            const fecha_hora = moment().add(i, "seconds").format("YYYY-MM-DD HH:mm:ss");
+            const fecha_hora = moment()
+              .add(i, "seconds")
+              .format("YYYY-MM-DD HH:mm:ss");
 
             return createReservation({
               variables: {
@@ -54,7 +64,9 @@ const NewLend = () => {
                   fecha_hora,
                   finalizada: false,
                   institution: {
-                    id_institution: parseInt(dataMe.me.course.institution.id_institution),
+                    id_institution: parseInt(
+                      dataMe.me.course.institution.id_institution
+                    ),
                   },
                 },
               },
@@ -71,17 +83,22 @@ const NewLend = () => {
                           "YYYY-MM-DD HH:mm:ss"
                         ).format("YYYY-MM-DD HH:mm:ss"),
                         reservation: {
-                          id_reserva: parseInt(data.createReservation.reservation.id_reserva),
+                          id_reserva: parseInt(
+                            data.createReservation.reservation.id_reserva
+                          ),
                           fecha_hora: fecha_hora,
                         },
                         user: {
-                          cedula: data.createReservation.reservation.user.cedula,
+                          cedula:
+                            data.createReservation.reservation.user.cedula,
                         },
                         laboratorist: {
                           cedula: dataMe.me.cedula,
                         },
                         institution: {
-                          id_institution: parseInt(dataMe.me.course.institution.id_institution),
+                          id_institution: parseInt(
+                            dataMe.me.course.institution.id_institution
+                          ),
                         },
                       },
                     },
