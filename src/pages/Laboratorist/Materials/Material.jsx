@@ -8,6 +8,8 @@ import { useUpdateMaterial } from "@graphql/materials/custom-hooks";
 import { useMaterial } from "@graphql/materials/custom-hooks";
 
 import MaterialsFields from "./Fields";
+import { Spinner } from "@chakra-ui/spinner";
+import { EditLoading } from "@components/EditLoading";
 
 const Material = () => {
   const { id } = useParams();
@@ -15,10 +17,13 @@ const Material = () => {
   const updateMaterial = useUpdateMaterial();
   const { loading, data, error } = useMaterial(id);
 
-  if (loading) return "loading..";
+  if (loading) return <EditLoading />;
 
   return (
-    <Dashboard hasNoActions title={"Material #" + data?.getMaterial.id_material}>
+    <Dashboard
+      hasNoActions
+      title={"Material #" + data?.getMaterial.id_material}
+    >
       <Formik
         initialValues={{
           nombre: data?.getMaterial.nombre,
@@ -36,9 +41,18 @@ const Material = () => {
               idMaterial: parseInt(id),
             },
             update: (cache, data) => {
-              cache.evict({ id_material: parseInt(id), fieldName: "getMaterial" });
-              cache.evict({ id_material: parseInt(id), fieldName: "getMaterials" });
-              cache.evict({ id_material: parseInt(id), fieldName: "getMaterialsByInstitution" });
+              cache.evict({
+                id_material: parseInt(id),
+                fieldName: "getMaterial",
+              });
+              cache.evict({
+                id_material: parseInt(id),
+                fieldName: "getMaterials",
+              });
+              cache.evict({
+                id_material: parseInt(id),
+                fieldName: "getMaterialsByInstitution",
+              });
               cache.evict({ fieldName: "getReservationsByInstitution" });
               cache.evict({ fieldName: "getLendsByInstitution" });
 

@@ -1,19 +1,25 @@
 import { Button } from "@chakra-ui/button";
 import { Stack } from "@chakra-ui/layout";
+import { Spinner } from "@chakra-ui/spinner";
 import Dashboard from "@components/Dashboard";
 import { useUser } from "@graphql/users/custom-hooks";
 import { Form, Formik } from "formik";
 import React from "react";
 import { useParams } from "react-router";
+import { EditLoading } from "../../../components/EditLoading";
 
 import UserFields from "./Fields";
 
 const User = () => {
   const { cedula } = useParams();
 
-  const [updateUser, { loading: loadingUser, data }, { loading: loadingUpdate }] = useUser(cedula);
+  const [
+    updateUser,
+    { loading: loadingUser, data },
+    { loading: loadingUpdate },
+  ] = useUser(cedula);
 
-  if (loadingUser || !data) return "loading..";
+  if (loadingUser || !data) return <EditLoading />;
 
   return (
     <Dashboard hasNoActions title={"Usuario #" + data?.getUser.cedula}>
@@ -50,7 +56,10 @@ const User = () => {
             update: (cache, data) => {
               cache.evict({ cedula: parseInt(cedula), fieldName: "getUser" });
               cache.evict({ cedula: parseInt(cedula), fieldName: "getUsers" });
-              cache.evict({ cedula: parseInt(cedula), fieldName: "getStudentsByInstitution" });
+              cache.evict({
+                cedula: parseInt(cedula),
+                fieldName: "getStudentsByInstitution",
+              });
               cache.evict({ fieldName: "getReservationsByInstitution" });
               cache.evict({ fieldName: "getLendsByInstitution" });
 

@@ -7,6 +7,8 @@ import Dashboard from "@components/Dashboard";
 import { useUser } from "@graphql/users/custom-hooks";
 
 import ConfigFields from "./Fields";
+import { Spinner } from "@chakra-ui/spinner";
+import { EditLoading } from "../../components/EditLoading";
 
 const Config = () => {
   const { loading, data: dataMe } = useMe();
@@ -16,7 +18,7 @@ const Config = () => {
     { loading: loadingUpdate },
   ] = useUser(dataMe?.me.cedula);
 
-  if (loading || !dataMe) return "loading...";
+  if (loading || !dataMe) return <EditLoading />;
 
   return (
     <Dashboard hasNoActions title="Configuración">

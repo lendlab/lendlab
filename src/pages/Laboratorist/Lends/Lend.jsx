@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { useUsersAndMaterials } from "@graphql/shared/custom-hooks";
 
 import LendFields from "./Fields";
+import { EditLoading } from "../../../components/EditLoading";
 
 const Lend = () => {
   const { id } = useParams();
@@ -15,12 +16,16 @@ const Lend = () => {
 
   const { loading, data } = useUsersAndMaterials();
 
-  if (loading || !data) return "loading";
+  if (loading || !data) return <EditLoading />;
 
   return (
     <Dashboard hasNoActions title="Prestamo">
       <Formik
-        initialValues={{ user: "", materials: [], fecha_vencimiento: moment(new Date()) }}
+        initialValues={{
+          user: "",
+          materials: [],
+          fecha_vencimiento: moment(new Date()),
+        }}
         validateOnChange={false}
         onSubmit={async (values, { setErrors }) => {}}
       >
@@ -34,7 +39,12 @@ const Lend = () => {
               users={data?.getUsers}
             />
 
-            <Button isFullWidth disabled={!dirty} type="submit" variant="primary">
+            <Button
+              isFullWidth
+              disabled={!dirty}
+              type="submit"
+              variant="primary"
+            >
               Crear prestamo
             </Button>
           </Stack>
