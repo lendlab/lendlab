@@ -34,7 +34,13 @@ const AcceptReservationModal = ({ reservation }) => {
   const [createLend, { loading: loadingCreateLend }] = useCreateLend();
 
   const validationSchema = yup.object().shape({
-    fecha_vencimiento: yup.date().required("Campo requerido"),
+    startDate: yup.date().default(() => new Date()),
+    fecha_vencimiento: yup
+      .date()
+      .min(
+        yup.ref("startDate"),
+        "La fecha de vencimiento no puede ser anterior a la actual"
+      ),
   });
 
   return (
