@@ -35,10 +35,16 @@ export const COLUMNS = [
     Header: "Fecha de Nacimiento",
     accessor: "fecha_nacimiento",
     Cell({ row }) {
-      const { slashedFormattedDate } = momentizeDate(row.original.fecha_nacimiento);
+      const { slashedFormattedDate } = momentizeDate(
+        row.original.fecha_nacimiento
+      );
 
       return slashedFormattedDate;
     },
+  },
+  {
+    Header: "Curso",
+    accessor: "course.course_name",
   },
   {
     header: "",
@@ -73,7 +79,9 @@ export const COLUMNS = [
             color="lendlab.light.red.400"
             icon={<Icon as={FiEdit2} color="lendlab.yellow" />}
             variant="ghost"
-            onClick={() => history.push("/dashboard/usuarios/" + row.original.cedula)}
+            onClick={() =>
+              history.push("/dashboard/usuarios/" + row.original.cedula)
+            }
           />
         </Stack>
       );
