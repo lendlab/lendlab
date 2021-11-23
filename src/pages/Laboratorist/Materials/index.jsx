@@ -5,7 +5,11 @@ import MaterialsTable from "./Table";
 
 const Materials = () => {
   return (
-    <Dashboard link="/dashboard/materiales/nuevo" title="Materiales">
+    <Dashboard
+      link="/dashboard/materiales/nuevo"
+      buttonText="Nuevo material"
+      title="Materiales"
+    >
       <MaterialsTable />
     </Dashboard>
   );

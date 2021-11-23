@@ -5,7 +5,11 @@ import UsersTable from "./Table";
 
 const Users = () => {
   return (
-    <Dashboard link="/dashboard/usuarios/nuevo" title="Usuarios">
+    <Dashboard
+      link="/dashboard/usuarios/nuevo"
+      buttonText="Nuevo usuario"
+      title="Usuarios"
+    >
       <UsersTable />
     </Dashboard>
   );
