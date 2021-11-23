@@ -5,7 +5,7 @@ import CoursesTable from "./Table";
 
 const Courses = () => {
   return (
-    <Dashboard link="/director/cursos/nuevo" title="Cursos">
+    <Dashboard link="/director/cursos/nuevo" buttonText="Nuevo curso" title="Cursos">
       <CoursesTable />
     </Dashboard>
   );
