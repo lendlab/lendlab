@@ -15,7 +15,7 @@ import React from "react";
 const testimonials = [
   {
     name: "Gianni Rosas",
-    role: "Chief Marketing Officer",
+    role: "Director",
     content:
       "Realmente me ahorra tiempo y esfuerzo. Es exactamente lo que le ha faltado a nuestro trabajo. LendLab es el recurso más valioso que NUNCA hemos consumido. Realmente lo recomiendo.",
     avatar:
@@ -23,7 +23,7 @@ const testimonials = [
   },
   {
     name: "Mercedes Khars",
-    role: "Entrepreneur",
+    role: "Laboratorista",
     content:
       "¡Buen trabajo, definitivamente volveré a utilizarlo! LendLab superó por completo nuestras expectativas. Es excelente y sorprendentemente todo es simplemente gratuito",
     avatar:
@@ -59,8 +59,14 @@ function TestmonialCard(props) {
 
   return (
     <Flex
-      bg={useColorModeValue("lendlab.light.black.200", "lendlab.light.dark.200")}
-      borderColor={useColorModeValue("lendlab.light.black.300", "lendlab.dark.black.300")}
+      bg={useColorModeValue(
+        "lendlab.light.black.200",
+        "lendlab.light.dark.200"
+      )}
+      borderColor={useColorModeValue(
+        "lendlab.light.black.300",
+        "lendlab.dark.black.300"
+      )}
       borderWidth="1px"
       direction={{ base: "column-reverse", md: "row" }}
       justifyContent={"space-between"}
@@ -69,14 +75,21 @@ function TestmonialCard(props) {
       rounded={"md"}
       width={"full"}
     >
-      <Flex direction={"column"} justifyContent={"space-between"} textAlign={"left"}>
+      <Flex
+        direction={"column"}
+        justifyContent={"space-between"}
+        textAlign={"left"}
+      >
         <Text fontWeight={"medium"} pb={4}>
           {content}
         </Text>
         <Text fontSize={"2"} fontWeight={"bold"}>
           {name}
           <chakra.span
-            color={useColorModeValue("lendlab.light.black.800", "lendlab.dark.black.800")}
+            color={useColorModeValue(
+              "lendlab.light.black.800",
+              "lendlab.dark.black.800"
+            )}
             fontWeight={"medium"}
           >
             {" "}
@@ -113,7 +126,12 @@ export default function Testimonials() {
           instituciones ya utilizan lendlab para administrar sus préstamos
         </Text>
       </Box>
-      <SimpleGrid columns={{ base: 1, xl: 2 }} mt={16} mx={"auto"} spacing={"20"}>
+      <SimpleGrid
+        columns={{ base: 1, xl: 2 }}
+        mt={16}
+        mx={"auto"}
+        spacing={"20"}
+      >
         {testimonials.map((cardInfo, index) => (
           <TestmonialCard key={index} {...cardInfo} index={index} />
         ))}
