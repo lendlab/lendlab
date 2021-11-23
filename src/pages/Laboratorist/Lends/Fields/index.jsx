@@ -13,8 +13,15 @@ import { Input } from "@chakra-ui/input";
 import DatePicker from "react-datepicker";
 
 import { Field } from "../../../../components/Field";
+import { HStack } from "@chakra-ui/react";
 
-const LendFields = ({ setFieldValue, users, materials, startDate, setStartDate }) => {
+const LendFields = ({
+  setFieldValue,
+  users,
+  materials,
+  startDate,
+  setStartDate,
+}) => {
   return (
     <>
       <FormControl>
@@ -22,13 +29,23 @@ const LendFields = ({ setFieldValue, users, materials, startDate, setStartDate }
         <AutoComplete
           openOnFocus
           suggestWhenEmpty
-          emptyState={<Text textAlign="center">No se encontraron opciones</Text>}
+          emptyState={
+            <Text textAlign="center">No se encontraron opciones</Text>
+          }
           onChange={(user) => {
             setFieldValue("user", user);
           }}
         >
-          <AutoCompleteInput autoComplete="off" placeholder="ej. 5454548246" variant="outline" />
-          <AutoCompleteList border="1px solid" borderColor="lendlab.light.black.300" shadow="none">
+          <AutoCompleteInput
+            autoComplete="off"
+            placeholder="ej. 5454548246"
+            variant="outline"
+          />
+          <AutoCompleteList
+            border="1px solid"
+            borderColor="lendlab.light.black.300"
+            shadow="none"
+          >
             {users.map((user, cid) => (
               <AutoCompleteItem
                 key={`option-${cid}`}
@@ -53,11 +70,22 @@ const LendFields = ({ setFieldValue, users, materials, startDate, setStartDate }
 
       <FormControl>
         <FormLabel>Materiales</FormLabel>
-        <AutoComplete multiple openOnFocus onChange={(vals) => setFieldValue("materials", vals)}>
+        <AutoComplete
+          multiple
+          emptyState={
+            <Text textAlign="center">No se encontraron opciones</Text>
+          }
+          openOnFocus
+          onChange={(vals) => setFieldValue("materials", vals)}
+        >
           <AutoCompleteInput variant="outline">
             {({ tags }) =>
               tags.map((tag, tid) => (
-                <AutoCompleteTag key={tid} label={tag.label} onRemove={tag.onRemove} />
+                <AutoCompleteTag
+                  key={tid}
+                  label={tag.label}
+                  onRemove={tag.onRemove}
+                />
               ))
             }
           </AutoCompleteInput>
@@ -70,13 +98,22 @@ const LendFields = ({ setFieldValue, users, materials, startDate, setStartDate }
                 textTransform="capitalize"
                 value={material.id_material.toString()}
               >
-                {material.nombre}
+                <HStack w="100%" justify="space-between">
+                  <Text>
+                    #{material.id_material} {material.nombre}
+                  </Text>
+                  <Text>{material.etiqueta}</Text>
+                </HStack>
               </AutoCompleteItem>
             ))}
           </AutoCompleteList>
         </AutoComplete>
       </FormControl>
-      <Field label="Fecha vencimiento" name="fecha_vencimiento" type="datetime-local" />
+      <Field
+        label="Fecha vencimiento"
+        name="fecha_vencimiento"
+        type="datetime-local"
+      />
     </>
   );
 };
