@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import ExportButton from "./ExportButton";
 
-const Dashboard = ({ children, hasNoActions, title, link }) => {
+const Dashboard = ({ children, hasNoActions, buttonText, title, link }) => {
   const isFullWidth = useBreakpointValue({ base: true, md: false });
 
   return (
@@ -30,8 +30,14 @@ const Dashboard = ({ children, hasNoActions, title, link }) => {
                 spacing="4"
                 w={{ base: "full", md: "auto" }}
               >
-                <Button isFu as={Link} isFullWidth={isFullWidth} to={link} variant="primary">
-                  Nuevo {title}
+                <Button
+                  isFu
+                  as={Link}
+                  isFullWidth={isFullWidth}
+                  to={link}
+                  variant="primary"
+                >
+                  {buttonText}
                 </Button>
                 <ExportButton isFullWidth={isFullWidth} tabla={title} />
               </Stack>
