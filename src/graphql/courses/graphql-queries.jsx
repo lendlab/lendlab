@@ -15,3 +15,12 @@ export const GET_COURSES_BY_INSTITUTION = gql`
     }
   }
 `;
+
+export const GET_COURSE = gql`
+  query GetCourse($courseToken: String!) {
+    getCourse(course_token: $courseToken) {
+      course_token
+      course_name
+    }
+  }
+`;
