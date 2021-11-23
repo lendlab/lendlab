@@ -7,6 +7,7 @@ import Config from "@pages/Config";
 import { ADMIN_ROUTES } from "@utils/constants/routes";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router";
+import Institution from "@pages/Admin/Institutions/Institution";
 
 const AdminRouter = () => {
   return (
@@ -14,7 +15,12 @@ const AdminRouter = () => {
       <TabsNav routes={ADMIN_ROUTES} />
       <Switch>
         <Route exact component={Institutions} path="/admin/instituciones" />
-        <Route exact component={NewInstitution} path="/admin/instituciones/nueva" />
+        <Route
+          exact
+          component={NewInstitution}
+          path="/admin/instituciones/nueva"
+        />
+        <Route exact component={Institution} path="/admin/instituciones/:id" />
         <Route exact component={Config} path="/admin/configuracion" />
         <Redirect to="/admin/instituciones" />
       </Switch>
