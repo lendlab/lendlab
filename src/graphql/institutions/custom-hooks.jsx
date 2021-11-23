@@ -1,8 +1,12 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useToast } from "@chakra-ui/toast";
 
-import { CREATE_INSTITUTION, DELETE_INSTITUTION } from "./graphql-mutations";
-import { GET_INSTITUTIONS } from "./graphql-queries";
+import {
+  CREATE_INSTITUTION,
+  DELETE_INSTITUTION,
+  UPDATE_INSTITUTION,
+} from "./graphql-mutations";
+import { GET_INSTITUTION, GET_INSTITUTIONS } from "./graphql-queries";
 
 export const useInstitutions = () => {
   const result = useQuery(GET_INSTITUTIONS);
@@ -17,7 +21,8 @@ export const useCreateInstitution = () => {
     onCompleted: ({ newInstitution }) =>
       toast({
         title: "Institución creada con exito",
-        description: "Se ha creado la institución " + newInstitution.institution_name,
+        description:
+          "Se ha creado la institución " + newInstitution.institution_name,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -42,4 +47,29 @@ export const useDeleteInstitution = () => {
   });
 
   return [deleteInstitution, result];
+};
+
+export const useUpdateInstitution = () => {
+  const toast = useToast();
+
+  const [updateInstitution, result] = useMutation(UPDATE_INSTITUTION, {
+    onCompleted: () =>
+      toast({
+        title: "Institución actualizada con éxito",
+        description: "La institución se ha actualizado con éxito",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      }),
+  });
+
+  return [updateInstitution, result];
+};
+
+export const useInstitution = (idInstitution) => {
+  const result = useQuery(GET_INSTITUTION, {
+    variables: { idInstitution: parseInt(idInstitution) },
+  });
+
+  return result;
 };
