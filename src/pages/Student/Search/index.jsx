@@ -1,5 +1,6 @@
 import Icon from "@chakra-ui/icon";
 import { Stack, Text } from "@chakra-ui/layout";
+import { Spinner } from "@chakra-ui/spinner";
 import Dashboard from "@components/Dashboard";
 import MaterialSearchItem from "@components/MaterialSearchItem";
 import { useMaterialSearch } from "@graphql/materials/custom-hooks";
@@ -12,7 +13,7 @@ const Search = () => {
 
   const { loading, data } = useMaterialSearch(material);
 
-  if (loading || !data) return "loading...";
+  if (loading || !data) return <Spinner />;
 
   return (
     <Dashboard hasNoActions title={material}>
