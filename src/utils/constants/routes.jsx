@@ -9,13 +9,13 @@ import {
 } from "react-icons/fi";
 
 export const DASHBOARD_ROUTES = [
-  {
+/*   {
     title: "Resumen",
     icon: FiGrid,
     path: "/dashboard/resumen",
-  },
+  }, */
   {
-    title: "Prestamos",
+    title: "Préstamos",
     icon: FiArchive,
     path: "/dashboard/prestamos",
   },
@@ -24,11 +24,11 @@ export const DASHBOARD_ROUTES = [
     icon: FiClock,
     path: "/dashboard/reservas",
   },
-  {
+  /*  {
     title: "Incidentes",
     icon: FiAlertTriangle,
     path: "/dashboard/incidentes",
-  },
+  }, */
   {
     title: "Materiales",
     icon: FiTool,
@@ -43,11 +43,6 @@ export const DASHBOARD_ROUTES = [
 
 export const DIRECTOR_ROUTES = [
   {
-    title: "Resumen",
-    icon: FiGrid,
-    path: "/director/resumen",
-  },
-  {
     title: "Laboratoristas",
     icon: FiArchive,
     path: "/director/laboratoristas",
@@ -60,11 +55,6 @@ export const DIRECTOR_ROUTES = [
 ];
 
 export const ADMIN_ROUTES = [
-  {
-    title: "Resumen",
-    icon: FiGrid,
-    path: "/admin/resumen",
-  },
   {
     title: "Instituciones",
     icon: FiArchive,
