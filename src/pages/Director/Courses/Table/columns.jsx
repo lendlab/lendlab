@@ -20,43 +20,25 @@ export const COLUMNS = [
     Header: "Institución",
     accessor: "institution.institution_name",
   },
-  //   {
-  //     header: "",
-  //     id: "click-me-button",
-  //     Cell({ row }) {
-  //       const [deleteUser, { loading, data }] = useDeleteUser();
+  {
+    header: "",
+    id: "click-me-button",
+    Cell({ row }) {
+      const history = useHistory();
 
-  //       const history = useHistory();
-
-  //       return (
-  //         <Stack direction="row">
-  //           <IconButton
-  //             aria-label="Borrar Material"
-  //             icon={<Icon as={FiTrash} color="lendlab.light.red.400" />}
-  //             isLoading={loading}
-  //             variant="ghost"
-  //             onClick={() => {
-  //               deleteUser({
-  //                 variables: {
-  //                   cedula: row.original.cedula,
-  //                 },
-  //                 update: (cache) => {
-  //                   cache.evict({
-  //                     id_material: "User:" + row.original.cedula,
-  //                   });
-  //                 },
-  //               });
-  //             }}
-  //           />
-  //           <IconButton
-  //             aria-label="Editar Material"
-  //             color="lendlab.light.red.400"
-  //             icon={<Icon as={FiEdit2} color="lendlab.yellow" />}
-  //             variant="ghost"
-  //             onClick={() => history.push("/dashboard/usuarios/" + row.original.cedula)}
-  //           />
-  //         </Stack>
-  //       );
-  //     },
-  //   },
+      return (
+        <Stack direction="row">
+          <IconButton
+            aria-label="Editar Curso"
+            color="lendlab.light.red.400"
+            icon={<Icon as={FiEdit2} color="lendlab.yellow" />}
+            variant="ghost"
+            onClick={() =>
+              history.push("/director/cursos/" + row.original.course_token)
+            }
+          />
+        </Stack>
+      );
+    },
+  },
 ];
