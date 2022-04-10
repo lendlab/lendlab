@@ -18,7 +18,7 @@ npm run dev
 
 ### You also need
 
-1. start mysql service
-2. create a mysql database called `posts`
-3. start `redis-server`
+1. The `backend` correctly working
+2. The `mysql service` running
+3. `Redis-server` running
 
