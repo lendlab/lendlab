@@ -1,23 +1,11 @@
 # lendlab
 
-Tu institución, ahora en forma online.
+Your institución, now online.
 
-## Funciones
-### Para Laboratoristas
-* Administración de prestamos
-* Adminsitración de materiales
-* Administración de usuarios
-* Administración de reservas
-* Administración de salas
-* Soporte en tiempo real
+## How to run the project?
 
-### Para Alumnos
-* Realización de reservas
-
-## ¿Como puedo correr el proyecto?
-
-* Clona este repositorio y el del backend https://github.com/LendLab/lendlab-backend.
-* Ejecutar en la consola:
+* Clone this repository and backend's https://github.com/LendLab/lendlab-backend.
+* Run the following commands on the console
 
 ```bash
 # npm
@@ -28,9 +16,9 @@ npm run dev
 
 ```
 
-### ¿Qué necesito para que funcione correctamente?
+### You also need
 
-* La base de datos correctamente implementada (veasé el repositorio del backend https://github.com/LendLab/lendlab-backend)
-* El servidor corriendo
-* Xampp abierto
+1. start mysql service
+2. create a mysql database called `posts`
+3. start `redis-server`
 
